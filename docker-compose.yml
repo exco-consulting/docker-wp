@@ -1,0 +1,76 @@
+version: '3'
+
+networks:
+  wordpress:
+
+services:
+  site:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    container_name: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./wordpress:/var/www/html:delegated
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - wordpress
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: wp
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - wordpress
+
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: php
+    volumes:
+      - ./wordpress:/var/www/html:delegated
+    networks:
+      - wordpress
+
+  wp:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: wp
+    entrypoint: ['wp', '--allow-root']
+    volumes:
+      - ./wordpress:/var/www/html:delegated
+    networks:
+      - wordpress
+  
+  redis:
+   image: redis:latest
+   container_name: redis
+   ports:
+    - "6379:6379"
+   volumes:
+    - ./redis:/root/redis
+    - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+   environment:
+    - REDIS_HOST=redis
+    - ALLOW_EMPTY_PASSWORD=yes
+    - REDIS_PORT=6379
+    - REDIS_DATABASES=16
+   networks:
+    - wordpress
