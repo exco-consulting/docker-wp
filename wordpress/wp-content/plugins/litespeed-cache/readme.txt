@@ -3,7 +3,7 @@ Contributors: LiteSpeedTech
 Tags: caching, optimize, performance, pagespeed, seo, image optimize, object cache, redis, memcached, database cleaner
 Requires at least: 4.9
 Tested up to: 6.6.1
-Stable tag: 6.4.1
+Stable tag: 6.5.0.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -253,6 +253,27 @@ The vast majority of plugins and themes are compatible with LiteSpeed Cache. The
 You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/litespeed-cache)
 
 == Changelog ==
+
+= 6.5.0.1 - Sep 4 2024 =
+* 🔥**Debug** Fixed a corner case fatal error when Object Cache is ON but failed to connect, and `wp-content/litespeed` directory is not writable, and debug option is ON.
+
+= 6.5 - Sep 4 2024 =
+*❗**Security** This release includes several debug log improvements for improved security, as listed below. Update strongly recommended.
+* **Debug** Moved debug log to litespeed individual folder `/wp-content/litespeed/debug/`.
+* **Debug** Disallowed visits to `/litespeed/debug/` folder log files in .htaccess.
+* **Debug** Dropped const `LSCWP_DEBUG_PATH` support.
+* **Debug** Renamed `debug.purge.log` to `purge.log`.
+* **Debug** Added dummy `index.php` for debug folder.
+* **Debug** Used random string for log filenames.
+* **Debug** Removed cookies-related info. (Thanks to Rafie)
+* **Debug** Dropped `Log Cookies` option.
+* **Report** Escaped report content to protect it from potential XSS attack. (Islam R alsaid #505746)
+* **ESI** Added nonce for Advanced Custom Fields + Advanced Forms. (David Lapointe Gilbert #439)
+* **Purge** Run ACTION_PURGE_EMPTYCACHE even if cache is disabled in network admin. (Philip #453)
+* **Page Optimize** Disable UCSS exclusion when UCSS is inactived. (#640)
+* **3rd** Fixed undefined warning in WooCommerce Widgets. (Lolosan #719)
+* **3rd** Correct the integration with User Switching. (John Blackbourn #725)
+* **3rd** Fixed Admin Bar Missing issue on DIVI + Elementor frontend. (thyran/robertstaddon PR#727)
 
 = 6.4.1 - Aug 19 2024 =
 * ❗**Security** This release patches a security issue that may affect previous LSCWP versions since v1.9.
