@@ -58,3 +58,15 @@ Array
     [postcode] => 04023
     [country] => IT
 )
+Array
+(
+    [first_name] => Shop1
+    [last_name] => 
+    [email] => shop1@test.it
+    [phone] => 43434234324
+    [address_1] => Main Branch
+    [city] => Formia
+    [state] => 
+    [postcode] => 04023
+    [country] => IT
+)

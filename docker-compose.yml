@@ -1,4 +1,3 @@
-version: '3'
 
 networks:
   wordpress:
@@ -88,6 +87,8 @@ services:
     - N8N_BASIC_AUTH_USER=admin
     - N8N_BASIC_AUTH_PASSWORD=admin
    volumes:
-   - n8n_data:/home/node/.n8n
+    - n8n_data:/home/node/.n8n
+   networks:
+    - wordpress
 volumes:
    n8n_data:
