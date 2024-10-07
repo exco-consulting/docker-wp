@@ -10,6 +10,7 @@
 
 namespace VitePos\Api\V1;
 
+use Appsbd\V1\libs\ACL;
 use VitePos\Libs\API_Base;
 use VitePos\Libs\Manifest;
 use Vitepos\Models\Database\Mapbd_Pos_Purchase;
@@ -62,12 +63,19 @@ class Heartbit_Api extends API_Base {
 		$resdata->is_change    = false;
 		$resdata->is_logged_in = is_user_logged_in();
 		$resdata->settings     = POS_Settings::get_settings( 'hbit' );
+		if ( current_user_can( 'pos-menu' ) || current_user_can( 'cashier-menu' ) ) {
+			$resdata->drawer_info = POS_Settings::get_drawer_info( $this->get_outlet_id(), $this->get_counter_id(), 'hbit' );
+		}
 		$resdata->sync_id      = POS_Settings::get_current_sync_id();
-		$resdata->rec_req      = 0; 		$resdata->dec_req      = 0; 		$resdata->up_pro_count = 0; 		if ( $resdata->is_logged_in ) {
+		$resdata->rec_req      = 0; 
+		$resdata->dec_req      = 0; 
+		$resdata->up_pro_count = 0; 
+		if ( $resdata->is_logged_in ) {
 			$resdata->user    = get_user_by( 'id', $this->get_current_user_id() )->display_name;
 			$resdata->rec_req = Mapbd_Pos_Stock_Transfer::get_receive_count( $this->get_outlet_id() );
 			$resdata->dec_req = Mapbd_Pos_Stock_Transfer::get_declined_count( $this->get_outlet_id() );
-					} else {
+			
+		} else {
 			$resdata->user = null;
 		}
 		$resdata->id = $this->get_current_user_id();

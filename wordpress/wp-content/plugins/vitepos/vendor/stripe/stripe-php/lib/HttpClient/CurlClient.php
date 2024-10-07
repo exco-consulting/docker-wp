@@ -8,9 +8,17 @@ use Stripe\Util;
 
 
 
+
+
+
+
+
+
 if (!\defined('CURL_SSLVERSION_TLSv1_2')) {
     \define('CURL_SSLVERSION_TLSv1_2', 6);
 }
+
+
 
 if (!\defined('CURL_HTTP_VERSION_2TLS')) {
     \define('CURL_HTTP_VERSION_2TLS', 4);
@@ -152,6 +160,7 @@ class CurlClient implements ClientInterface, StreamingClientInterface
     }
 
     
+
     const DEFAULT_TIMEOUT = 80;
     const DEFAULT_CONNECT_TIMEOUT = 30;
 
@@ -183,16 +192,19 @@ class CurlClient implements ClientInterface, StreamingClientInterface
     }
 
     
+
     private function constructRequest($method, $absUrl, $headers, $params, $hasFile)
     {
         $method = \strtolower($method);
 
         $opts = [];
-        if (\is_callable($this->defaultOptions)) {             $opts = \call_user_func_array($this->defaultOptions, \func_get_args());
+        if (\is_callable($this->defaultOptions)) { 
+            $opts = \call_user_func_array($this->defaultOptions, \func_get_args());
             if (!\is_array($opts)) {
                 throw new Exception\UnexpectedValueException('Non-array value returned by defaultOptions CurlClient callback');
             }
-        } elseif (\is_array($this->defaultOptions)) {             $opts = $this->defaultOptions;
+        } elseif (\is_array($this->defaultOptions)) { 
+            $opts = $this->defaultOptions;
         }
 
         $params = Util\Util::objectsToIds($params);
@@ -221,13 +233,27 @@ class CurlClient implements ClientInterface, StreamingClientInterface
             throw new Exception\UnexpectedValueException("Unrecognized method {$method}");
         }
 
-                        if (('post' === $method) && (Stripe::$maxNetworkRetries > 0)) {
+        
+        
+        if (('post' === $method) && (Stripe::$maxNetworkRetries > 0)) {
             if (!$this->hasHeader($headers, 'Idempotency-Key')) {
                 $headers[] = 'Idempotency-Key: ' . $this->randomGenerator->uuid();
             }
         }
 
-                                                                                                        $headers[] = 'Expect: ';
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        $headers[] = 'Expect: ';
 
         $absUrl = Util\Util::utf8($absUrl);
         $opts[\CURLOPT_URL] = $absUrl;
@@ -241,10 +267,16 @@ class CurlClient implements ClientInterface, StreamingClientInterface
         }
 
         if (!isset($opts[\CURLOPT_HTTP_VERSION]) && $this->getEnableHttp2()) {
-                        $opts[\CURLOPT_HTTP_VERSION] = \CURL_HTTP_VERSION_2TLS;
+            
+            $opts[\CURLOPT_HTTP_VERSION] = \CURL_HTTP_VERSION_2TLS;
         }
 
-                                                if (!isset($opts[\CURLOPT_IPRESOLVE])) {
+        
+        
+        
+        
+        
+        if (!isset($opts[\CURLOPT_IPRESOLVE])) {
             $opts[\CURLOPT_IPRESOLVE] = \CURL_IPRESOLVE_V4;
         }
 
@@ -339,13 +371,17 @@ class CurlClient implements ClientInterface, StreamingClientInterface
         /** @var int */
         $numRetries = 0;
 
-                        /** @var null|string */
+        
+        
+        /** @var null|string */
         $rbody = null;
 
-                /** @var null|bool */
+        
+        /** @var null|bool */
         $rcode = null;
 
-                /** @var null|array */
+        
+        /** @var null|array */
         $lastRHeaders = null;
 
         $errno = null;
@@ -365,11 +401,14 @@ class CurlClient implements ClientInterface, StreamingClientInterface
 
             $rcode = \curl_getinfo($this->curlHandle, \CURLINFO_HTTP_CODE);
 
-                        if ($rcode < 300) {
+            
+            if ($rcode < 300) {
                 $rbody = null;
 
                 return function ($curl, $data) use (&$readBodyChunk) {
-                                                            \call_user_func_array($readBodyChunk, [$data]);
+                    
+                    
+                    \call_user_func_array($readBodyChunk, [$data]);
 
                     return \strlen($data);
                 };
@@ -377,12 +416,15 @@ class CurlClient implements ClientInterface, StreamingClientInterface
 
             $shouldRetry = $this->shouldRetry($errno, $rcode, $rheaders, $numRetries);
 
-                        if ($shouldRetry) {
+            
+            if ($shouldRetry) {
                 return function ($curl, $data) {
                     return \strlen($data);
                 };
             } else {
-                                                $rbody = '';
+                
+                
+                $rbody = '';
 
                 return function ($curl, $data) use (&$rbody) {
                     $rbody .= $data;
@@ -446,7 +488,8 @@ class CurlClient implements ClientInterface, StreamingClientInterface
             $errno = 0;
             $message = null;
 
-                        $rheaders = new Util\CaseInsensitiveArray();
+            
+            $rheaders = new Util\CaseInsensitiveArray();
             $headerCallback = function ($curl, $header_line) use (&$rheaders) {
                 return CurlClient::parseLineIntoHeaderArray($header_line, $rheaders);
             };
@@ -554,15 +597,21 @@ class CurlClient implements ClientInterface, StreamingClientInterface
             return false;
         }
 
-                if (\CURLE_OPERATION_TIMEOUTED === $errno) {
+        
+        if (\CURLE_OPERATION_TIMEOUTED === $errno) {
             return true;
         }
 
-                                if (\CURLE_COULDNT_CONNECT === $errno) {
+        
+        
+        
+        if (\CURLE_COULDNT_CONNECT === $errno) {
             return true;
         }
 
-                        if (isset($rheaders['stripe-should-retry'])) {
+        
+        
+        if (isset($rheaders['stripe-should-retry'])) {
             if ('false' === $rheaders['stripe-should-retry']) {
                 return false;
             }
@@ -571,11 +620,17 @@ class CurlClient implements ClientInterface, StreamingClientInterface
             }
         }
 
-                if (409 === $rcode) {
+        
+        if (409 === $rcode) {
             return true;
         }
 
-                                                if ($rcode >= 500) {
+        
+        
+        
+        
+        
+        if ($rcode >= 500) {
             return true;
         }
 
@@ -592,16 +647,23 @@ class CurlClient implements ClientInterface, StreamingClientInterface
      */
     private function sleepTime($numRetries, $rheaders)
     {
-                                $sleepSeconds = \min(
+        
+        
+        
+        $sleepSeconds = \min(
             Stripe::getInitialNetworkRetryDelay() * 1.0 * 2 ** ($numRetries - 1),
             Stripe::getMaxNetworkRetryDelay()
         );
 
-                        $sleepSeconds *= 0.5 * (1 + $this->randomGenerator->randFloat());
+        
+        
+        $sleepSeconds *= 0.5 * (1 + $this->randomGenerator->randFloat());
 
-                $sleepSeconds = \max(Stripe::getInitialNetworkRetryDelay(), $sleepSeconds);
+        
+        $sleepSeconds = \max(Stripe::getInitialNetworkRetryDelay(), $sleepSeconds);
 
-                $retryAfter = isset($rheaders['retry-after']) ? (float) ($rheaders['retry-after']) : 0.0;
+        
+        $retryAfter = isset($rheaders['retry-after']) ? (float) ($rheaders['retry-after']) : 0.0;
         if (\floor($retryAfter) === $retryAfter && $retryAfter <= Stripe::getMaxRetryAfter()) {
             $sleepSeconds = \max($sleepSeconds, $retryAfter);
         }
@@ -649,7 +711,9 @@ class CurlClient implements ClientInterface, StreamingClientInterface
      */
     private function canSafelyUseHttp2()
     {
-                        $curlVersion = \curl_version()['version'];
+        
+        
+        $curlVersion = \curl_version()['version'];
 
         return \version_compare($curlVersion, '7.60.0') >= 0;
     }

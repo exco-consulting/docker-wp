@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class TokenService extends \Stripe\Service\AbstractService

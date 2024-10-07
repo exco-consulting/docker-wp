@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class SubscriptionService extends \Stripe\Service\AbstractService

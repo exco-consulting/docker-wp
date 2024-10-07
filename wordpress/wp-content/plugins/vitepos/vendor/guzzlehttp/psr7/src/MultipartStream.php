@@ -77,7 +77,8 @@ final class MultipartStream implements StreamInterface
             $this->addElement($stream, $element);
         }
 
-                $stream->addStream(Utils::streamFor("--{$this->boundary}--\r\n"));
+        
+        $stream->addStream(Utils::streamFor("--{$this->boundary}--\r\n"));
 
         return $stream;
     }
@@ -113,7 +114,8 @@ final class MultipartStream implements StreamInterface
 
     private function createElement(string $name, StreamInterface $stream, ?string $filename, array $headers): array
     {
-                $disposition = $this->getHeader($headers, 'content-disposition');
+        
+        $disposition = $this->getHeader($headers, 'content-disposition');
         if (!$disposition) {
             $headers['Content-Disposition'] = ($filename === '0' || $filename)
                 ? sprintf(
@@ -124,14 +126,16 @@ final class MultipartStream implements StreamInterface
                 : "form-data; name=\"{$name}\"";
         }
 
-                $length = $this->getHeader($headers, 'content-length');
+        
+        $length = $this->getHeader($headers, 'content-length');
         if (!$length) {
             if ($length = $stream->getSize()) {
                 $headers['Content-Length'] = (string) $length;
             }
         }
 
-                $type = $this->getHeader($headers, 'content-type');
+        
+        $type = $this->getHeader($headers, 'content-type');
         if (!$type && ($filename === '0' || $filename)) {
             if ($type = MimeType::fromFilename($filename)) {
                 $headers['Content-Type'] = $type;

@@ -40,6 +40,7 @@ class Pusher implements LoggerAwareInterface, PusherInterface
      * @var null|resource
      */
     private $client = null; 
+
     /**
      * Initializes a new Pusher instance with key, secret, app ID and channel.
      *
@@ -88,12 +89,14 @@ class Pusher implements LoggerAwareInterface, PusherInterface
         $this->settings['base_path'] = '/apps/' . $this->settings['app_id'];
 
         foreach ($options as $key => $value) {
-                        if (isset($this->settings[$key])) {
+            
+            if (isset($this->settings[$key])) {
                 $this->settings[$key] = $value;
             }
         }
 
-                if (!array_key_exists('host', $this->settings)) {
+        
+        if (!array_key_exists('host', $this->settings)) {
             if (array_key_exists('host', $options)) {
                 $this->settings['host'] = $options['host'];
             } elseif (array_key_exists('cluster', $options)) {
@@ -103,7 +106,8 @@ class Pusher implements LoggerAwareInterface, PusherInterface
             }
         }
 
-                $this->settings['host'] = preg_replace('/http[s]?\:\/\//', '', $this->settings['host'], 1);
+        
+        $this->settings['host'] = preg_replace('/http[s]?\:\/\//', '', $this->settings['host'], 1);
 
         if (!array_key_exists('encryption_master_key_base64', $options)) {
             $options['encryption_master_key_base64'] = '';
@@ -146,7 +150,8 @@ class Pusher implements LoggerAwareInterface, PusherInterface
             return;
         }
 
-                $msg = sprintf('Pusher: %s: %s', strtoupper($level), $msg);
+        
+        $msg = sprintf('Pusher: %s: %s', strtoupper($level), $msg);
         $replacement = [];
 
         foreach ($context as $k => $v) {
@@ -352,7 +357,8 @@ class Pusher implements LoggerAwareInterface, PusherInterface
 
         if ($has_encrypted_channel) {
             if (count($channels) > 1) {
-                                throw new PusherException('You cannot trigger to multiple channels when using encrypted channels');
+                
+                throw new PusherException('You cannot trigger to multiple channels when using encrypted channels');
             } else {
                 try {
                     $data_encoded = $this->crypto->encrypt_payload(
@@ -375,7 +381,8 @@ class Pusher implements LoggerAwareInterface, PusherInterface
 
         $path = $this->settings['base_path'] . '/events';
 
-                if (!$data_encoded) {
+        
+        if (!$data_encoded) {
             $this->log('Failed to perform json_encode on the the provided data: {error}', [
                 'error' => print_r($data, true),
             ], LogLevel::ERROR);
@@ -885,7 +892,8 @@ class Pusher implements LoggerAwareInterface, PusherInterface
         }
 
         $signature = ['auth' => $this->settings['auth_key'] . ':' . $signature];
-                if ($custom_data) {
+        
+        if ($custom_data) {
             $signature['channel_data'] = $custom_data;
         }
 
@@ -1082,7 +1090,8 @@ class Pusher implements LoggerAwareInterface, PusherInterface
             }
         }
 
-                if (!$data_encoded) {
+        
+        if (!$data_encoded) {
             $this->log('Failed to perform json_encode on the the provided data: {error}', [
                 'error' => print_r($data, true),
             ], LogLevel::ERROR);

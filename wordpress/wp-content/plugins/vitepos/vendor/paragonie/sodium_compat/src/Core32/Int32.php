@@ -183,7 +183,8 @@ class ParagonIE_Sodium_Core32_Int32
      */
     public function mulIntFast($int)
     {
-                $aNeg = ($this->limbs[0] >> 15) & 1;
+        
+        $aNeg = ($this->limbs[0] >> 15) & 1;
         $bNeg = ($int >> 31) & 1;
         $a = array_reverse($this->limbs);
         $b = array(
@@ -202,13 +203,16 @@ class ParagonIE_Sodium_Core32_Int32
             }
             ++$b[0];
         }
-                $res = $this->multiplyLong($a, $b);
+        
+        $res = $this->multiplyLong($a, $b);
 
-                if ($aNeg !== $bNeg) {
+        
+        if ($aNeg !== $bNeg) {
             for ($i = 0; $i < 2; ++$i) {
                 $res[$i] = (0xffff ^ $res[$i]) & 0xffff;
             }
-                        $c = 1;
+            
+            $c = 1;
             for ($i = 0; $i < 2; ++$i) {
                 $res[$i] += $c;
                 $c = $res[$i] >> 16;
@@ -216,7 +220,8 @@ class ParagonIE_Sodium_Core32_Int32
             }
         }
 
-                $return = new ParagonIE_Sodium_Core32_Int32();
+        
+        $return = new ParagonIE_Sodium_Core32_Int32();
         $return->limbs = array(
             $res[1] & 0xffff,
             $res[0] & 0xffff
@@ -304,7 +309,8 @@ class ParagonIE_Sodium_Core32_Int32
         $return = new ParagonIE_Sodium_Core32_Int32();
         $return->unsignedInt = $this->unsignedInt;
 
-                $ret0 = 0;
+        
+        $ret0 = 0;
         $ret1 = 0;
         $a0 = $a->limbs[0];
         $a1 = $a->limbs[1];
@@ -359,7 +365,8 @@ class ParagonIE_Sodium_Core32_Int32
         $return = new ParagonIE_Sodium_Core32_Int32();
         $return->unsignedInt = $this->unsignedInt;
 
-                $ret0 = 0;
+        
+        $ret0 = 0;
         $ret1 = 0;
         $a0 = $a->limbs[0];
         $a1 = $a->limbs[1];
@@ -455,7 +462,8 @@ class ParagonIE_Sodium_Core32_Int32
         $return->unsignedInt = $this->unsignedInt;
         $c &= 31;
         if ($c === 0) {
-                        $return->limbs = $this->limbs;
+            
+            $return->limbs = $this->limbs;
         } else {
             /** @var int $c */
 
@@ -508,7 +516,8 @@ class ParagonIE_Sodium_Core32_Int32
         $c &= 31;
         /** @var int $c */
         if ($c === 0) {
-                        $return->limbs = $this->limbs;
+            
+            $return->limbs = $this->limbs;
         } else {
             /** @var int $c */
 
@@ -623,7 +632,8 @@ class ParagonIE_Sodium_Core32_Int32
                 throw new TypeError();
             }
             /** @var int $c */
-                        $carryLeft = (int) ($this->overflow & ((1 << ($c + 1)) - 1));
+            
+            $carryLeft = (int) ($this->overflow & ((1 << ($c + 1)) - 1));
             $return->limbs[0] = (int) ((($this->limbs[0] >> $c) | ($carryLeft << (16 - $c))) & 0xffff);
             $carryRight = (int) ($this->limbs[0] & ((1 << ($c + 1)) - 1));
             $return->limbs[1] = (int) ((($this->limbs[1] >> $c) | ($carryRight << (16 - $c))) & 0xffff);
@@ -855,7 +865,8 @@ class ParagonIE_Sodium_Core32_Int32
         try {
             return $this->toString();
         } catch (TypeError $ex) {
-                        return '';
+            
+            return '';
         }
     }
 }

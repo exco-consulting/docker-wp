@@ -166,7 +166,8 @@ final class Utils
         if (!isset($changes['uri'])) {
             $uri = $request->getUri();
         } else {
-                        if ($host = $changes['uri']->getHost()) {
+            
+            if ($host = $changes['uri']->getHost()) {
                 $changes['set_headers']['Host'] = $host;
 
                 if ($port = $changes['uri']->getPort()) {
@@ -239,7 +240,8 @@ final class Utils
                 return $buffer;
             }
             $buffer .= $byte;
-                        if ($byte === "\n" || ++$size === $maxLength - 1) {
+            
+            if ($byte === "\n" || ++$size === $maxLength - 1) {
                 break;
             }
         }

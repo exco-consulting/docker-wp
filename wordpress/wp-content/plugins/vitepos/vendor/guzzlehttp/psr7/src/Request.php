@@ -140,7 +140,9 @@ class Request implements RequestInterface
             $header = 'Host';
             $this->headerNames['host'] = 'Host';
         }
-                        $this->headers = [$header => [$host]] + $this->headers;
+        
+        
+        $this->headers = [$header => [$host]] + $this->headers;
     }
 
     /**

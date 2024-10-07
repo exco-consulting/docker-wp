@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Radar;
 
 class EarlyFraudWarningService extends \Stripe\Service\AbstractService

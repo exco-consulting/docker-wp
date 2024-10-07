@@ -29,7 +29,8 @@ final class Utils
             default:
                 \ob_start();
                 \var_dump($input);
-                                /** @var string $varDumpContent */
+                
+                /** @var string $varDumpContent */
                 $varDumpContent = \ob_get_clean();
 
                 return \str_replace('double(', 'float(', \rtrim($varDumpContent));
@@ -134,13 +135,20 @@ final class Utils
     {
         static $cached = null;
         static $cafiles = [
-                        '/etc/pki/tls/certs/ca-bundle.crt',
-                        '/etc/ssl/certs/ca-certificates.crt',
-                        '/usr/local/share/certs/ca-root-nss.crt',
-                        '/var/lib/ca-certificates/ca-bundle.pem',
-                        '/usr/local/etc/openssl/cert.pem',
-                        '/etc/ca-certificates.crt',
-                        'C:\\windows\\system32\\curl-ca-bundle.crt',
+            
+            '/etc/pki/tls/certs/ca-bundle.crt',
+            
+            '/etc/ssl/certs/ca-certificates.crt',
+            
+            '/usr/local/share/certs/ca-root-nss.crt',
+            
+            '/var/lib/ca-certificates/ca-bundle.pem',
+            
+            '/usr/local/etc/openssl/cert.pem',
+            
+            '/etc/ca-certificates.crt',
+            
+            'C:\\windows\\system32\\curl-ca-bundle.crt',
             'C:\\windows\\curl-ca-bundle.crt',
         ];
 
@@ -219,21 +227,27 @@ EOT
             throw new InvalidArgumentException('Empty host provided');
         }
 
-                [$host] = \explode(':', $host, 2);
+        
+        [$host] = \explode(':', $host, 2);
 
         foreach ($noProxyArray as $area) {
-                        if ($area === '*') {
+            
+            if ($area === '*') {
                 return true;
             }
 
             if (empty($area)) {
-                                continue;
+                
+                continue;
             }
 
             if ($area === $host) {
-                                return true;
+                
+                return true;
             }
-                                    $area = '.' . \ltrim($area, '.');
+            
+            
+            $area = '.' . \ltrim($area, '.');
             if (\substr($host, -(\strlen($area))) === $area) {
                 return true;
             }
@@ -333,7 +347,8 @@ EOT
                 throw new InvalidArgumentException($errorMessage);
             }
             if ($uri->getHost() !== $asciiHost) {
-                                $uri = $uri->withHost($asciiHost);
+                
+                $uri = $uri->withHost($asciiHost);
             }
         }
 

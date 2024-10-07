@@ -6,8 +6,9 @@
  *
  * @package vitepos
  */
+
 ?>
-<!DOCTYPE html><html lang="en" ><head><meta charset="utf-8">
+<!DOCTYPE html><html dir="<?php echo esc_attr( \VitePos\Modules\POS_Settings::get_lan_dir() ); ?>" lang="en" ><head><meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="theme-color" content="<?php echo esc_html( $this->get_pos_color_code() ); ?>">
@@ -16,7 +17,7 @@
 	<title>pos</title>
 	<script>
 		var vitePosBase="<?php echo esc_url( get_rest_url( null, 'vitepos/v1' ) ); ?>/";
-		var viteposSWJs="<?php echo $this->get_sw_link(); ?>";
+		var viteposSWJs="<?php echo esc_url( $this->get_sw_link() ); ?>";
 		var vitePos= {
 			version:"<?php echo esc_html( $this->kernel_object->plugin_version ); ?>",
 			heart_bit: 30000,
@@ -30,15 +31,15 @@
 			date_format: "<?php echo esc_html( vitepos_get_client_date_format() ); ?>",
 			time_format: "<?php echo esc_html( vitepos_get_client_time_format() ); ?>",
 			wc_amount: function ($amount) {
-			    try {
-			        if(isNaN($amount)){
-			            return 0.0;
-                    }
-                    return $amount.toFixed(vitePos.decimalPlaces);
-                }catch (e) {
-                    $amount=parseFloat($amount);
-                    return $amount.toFixed(vitePos.decimalPlaces);
-                }
+				try {
+					if(isNaN($amount)){
+						return 0.0;
+					}
+					return $amount.toFixed(vitePos.decimalPlaces);
+				}catch (e) {
+					$amount=parseFloat($amount);
+					return $amount.toFixed(vitePos.decimalPlaces);
+				}
 			},
 			wc_price: function ($amount) {
 				$amount = parseFloat($amount);
@@ -73,15 +74,15 @@
 				product_list: vitePosBase + "product/list",
 				list_variation: vitePosBase + "product/list-variation",
 				order_list: vitePosBase + "order/order-list",
-                refund_list: vitePosBase + "order/refund-list",
-                orders_for_refund: vitePosBase + "order/orders-for-refund",
+				refund_list: vitePosBase + "order/refund-list",
+				orders_for_refund: vitePosBase + "order/orders-for-refund",
 				online_list: vitePosBase + "order/online-list",
 				order_details: vitePosBase + "order/details",
 				change_status: vitePosBase + "order/change-status",
 				complete_order: vitePosBase + "order/complete-order",
 				initials_data: vitePosBase + "product/initial-data",
 				make_payment: vitePosBase + "order/make-payment",
-                order_refund: vitePosBase + "order/order-refund",
+				order_refund: vitePosBase + "order/order-refund",
 				send_email: vitePosBase + "order/email",
 				order_cancel: vitePosBase + "order/order-cancel",
 				order_complete: vitePosBase + "order/order-complete",
@@ -109,7 +110,10 @@
 				all_outlet_list: vitePosBase + "outlet/all-outlet-list",
 				cash_drawer_info: vitePosBase + "outlet/cash-drawer-info",
 				cash_drawer_log: vitePosBase + "outlet/cash-drawer-log",
+				withdraw_cash: vitePosBase + "outlet/withdraw-cash",
+				close_drawer: vitePosBase + "outlet/close-drawer",
 				drawer_log_details: vitePosBase + "outlet/details",
+				drawer_summary: vitePosBase + "outlet/summary",
 				purchase_list: vitePosBase + "purchase/list",
 				updated_price_list: vitePosBase + "purchase/updated-price-list",
 				create_purchase: vitePosBase + "purchase/create",
@@ -141,6 +145,7 @@
 				change_addon_status: vitePosBase + "addon/change-status",
 				//restaurant
 				sync_order_list: vitePosBase + "restaurant/sync-order-list",
+				sync_order: vitePosBase + "restaurant/sync-order",
 				canned_message: vitePosBase + "restaurant/canned-message",
 				//table
 				table_list: vitePosBase + "table/list",
@@ -156,19 +161,26 @@
 				cancel_order: vitePosBase + "restaurant/cancel-order",
 				cancel_order_request: vitePosBase + "restaurant/cancel-order-request",
 				cancel_request_ans: vitePosBase + "restaurant/cancel-request-ans",
-                change_order_table: vitePosBase + "restaurant/change-table",
+				change_order_table: vitePosBase + "restaurant/change-table",
 				//Cashier
 				served_list: vitePosBase + "restaurant/served-list",
 				cashier_details: vitePosBase + "restaurant/cashier-details",
 				restaurant_payment: vitePosBase + "restaurant/restaurant-payment",
-
+				//itemwise
+				deny_item: vitePosBase + "restaurant/deny-item",
+				remove_item: vitePosBase + "restaurant/remove-item",
+				cancel_item_request: vitePosBase + "restaurant/cancel-item-request",
+				item_cancel_req_ans: vitePosBase + "restaurant/item-cancel-req-ans",
+				start_item: vitePosBase + "restaurant/start-item",
+				complete_item: vitePosBase + "restaurant/complete-item",
+				serve_item: vitePosBase + "restaurant/serve-item",
+				update_order: vitePosBase + "restaurant/update-order",
 				//kitchen
 				kitchen_order_list: vitePosBase + "restaurant/kitchen-order-list",
 				start_preparing: vitePosBase + "restaurant/start-preparing",
 				complete_preparing: vitePosBase + "restaurant/complete-preparing",
 				deny_order: vitePosBase + "restaurant/deny-order",
 				add_kitchen_note: vitePosBase + "restaurant/add-kitchen-note",
-
 				//transfer
 				stock_transfer: vitePosBase + "purchase/stock-transfer",
 				stock_receive: vitePosBase + "purchase/stock-receive",
@@ -178,8 +190,10 @@
 				stock_decline: vitePosBase + "purchase/stock-decline",
 				stock_accept: vitePosBase + "purchase/stock-accept",
 				stock_log: vitePosBase + "purchase/stock-log",
-                all_taxes: vitePosBase + "product/all-taxes",
-            },
+				all_taxes: vitePosBase + "product/all-taxes",
+
+				product_stocks: vitePosBase + "purchase/product-stocks",
+			},
 			translationObj: {
 				availableLanguages: {
 					en_US: "American English"

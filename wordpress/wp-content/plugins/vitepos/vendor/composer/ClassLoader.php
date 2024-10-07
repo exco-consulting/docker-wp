@@ -40,7 +40,8 @@ class ClassLoader
     /** @var ?string */
     private $vendorDir;
 
-        /**
+    
+    /**
      * @var array[]
      * @psalm-var array<string, array<string, int>>
      */
@@ -56,7 +57,8 @@ class ClassLoader
      */
     private $fallbackDirsPsr4 = array();
 
-        /**
+    
+    /**
      * @var array[]
      * @psalm-var array<string, array<string, string[]>>
      */
@@ -227,7 +229,8 @@ class ClassLoader
     public function addPsr4($prefix, $paths, $prepend = false)
     {
         if (!$prefix) {
-                        if ($prepend) {
+            
+            if ($prepend) {
                 $this->fallbackDirsPsr4 = array_merge(
                     (array) $paths,
                     $this->fallbackDirsPsr4
@@ -239,19 +242,22 @@ class ClassLoader
                 );
             }
         } elseif (!isset($this->prefixDirsPsr4[$prefix])) {
-                        $length = strlen($prefix);
+            
+            $length = strlen($prefix);
             if ('\\' !== $prefix[$length - 1]) {
                 throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
             }
             $this->prefixLengthsPsr4[$prefix[0]][$prefix] = $length;
             $this->prefixDirsPsr4[$prefix] = (array) $paths;
         } elseif ($prepend) {
-                        $this->prefixDirsPsr4[$prefix] = array_merge(
+            
+            $this->prefixDirsPsr4[$prefix] = array_merge(
                 (array) $paths,
                 $this->prefixDirsPsr4[$prefix]
             );
         } else {
-                        $this->prefixDirsPsr4[$prefix] = array_merge(
+            
+            $this->prefixDirsPsr4[$prefix] = array_merge(
                 $this->prefixDirsPsr4[$prefix],
                 (array) $paths
             );
@@ -433,7 +439,8 @@ class ClassLoader
      */
     public function findFile($class)
     {
-                if (isset($this->classMap[$class])) {
+        
+        if (isset($this->classMap[$class])) {
             return $this->classMap[$class];
         }
         if ($this->classMapAuthoritative || isset($this->missingClasses[$class])) {
@@ -448,7 +455,8 @@ class ClassLoader
 
         $file = $this->findFileWithExtension($class, '.php');
 
-                if (false === $file && defined('HHVM_VERSION')) {
+        
+        if (false === $file && defined('HHVM_VERSION')) {
             $file = $this->findFileWithExtension($class, '.hh');
         }
 
@@ -457,7 +465,8 @@ class ClassLoader
         }
 
         if (false === $file) {
-                        $this->missingClasses[$class] = true;
+            
+            $this->missingClasses[$class] = true;
         }
 
         return $file;
@@ -480,7 +489,8 @@ class ClassLoader
      */
     private function findFileWithExtension($class, $ext)
     {
-                $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;
+        
+        $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;
 
         $first = $class[0];
         if (isset($this->prefixLengthsPsr4[$first])) {
@@ -499,17 +509,21 @@ class ClassLoader
             }
         }
 
-                foreach ($this->fallbackDirsPsr4 as $dir) {
+        
+        foreach ($this->fallbackDirsPsr4 as $dir) {
             if (file_exists($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr4)) {
                 return $file;
             }
         }
 
-                if (false !== $pos = strrpos($class, '\\')) {
-                        $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)
+        
+        if (false !== $pos = strrpos($class, '\\')) {
+            
+            $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)
                 . strtr(substr($logicalPathPsr4, $pos + 1), '_', DIRECTORY_SEPARATOR);
         } else {
-                        $logicalPathPsr0 = strtr($class, '_', DIRECTORY_SEPARATOR) . $ext;
+            
+            $logicalPathPsr0 = strtr($class, '_', DIRECTORY_SEPARATOR) . $ext;
         }
 
         if (isset($this->prefixesPsr0[$first])) {
@@ -524,13 +538,15 @@ class ClassLoader
             }
         }
 
-                foreach ($this->fallbackDirsPsr0 as $dir) {
+        
+        foreach ($this->fallbackDirsPsr0 as $dir) {
             if (file_exists($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr0)) {
                 return $file;
             }
         }
 
-                if ($this->useIncludePath && $file = stream_resolve_include_path($logicalPathPsr0)) {
+        
+        if ($this->useIncludePath && $file = stream_resolve_include_path($logicalPathPsr0)) {
             return $file;
         }
 

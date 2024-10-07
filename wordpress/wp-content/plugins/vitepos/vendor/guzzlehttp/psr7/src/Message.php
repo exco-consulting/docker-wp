@@ -75,7 +75,9 @@ final class Message
             $summary .= ' (truncated...)';
         }
 
-                        if (preg_match('/[^\pL\pM\pN\pP\pS\pZ\n\r\t]/u', $summary)) {
+        
+        
+        if (preg_match('/[^\pL\pM\pN\pP\pS\pZ\n\r\t]/u', $summary)) {
             return null;
         }
 
@@ -125,7 +127,8 @@ final class Message
         }
 
         [$rawHeaders, $body] = $messageParts;
-        $rawHeaders .= "\r\n";         $headerParts = preg_split("/\r?\n/", $rawHeaders, 2);
+        $rawHeaders .= "\r\n"; 
+        $headerParts = preg_split("/\r?\n/", $rawHeaders, 2);
 
         if ($headerParts === false || count($headerParts) !== 2) {
             throw new \InvalidArgumentException('Invalid message: Missing status line');
@@ -134,14 +137,17 @@ final class Message
         [$startLine, $rawHeaders] = $headerParts;
 
         if (preg_match("/(?:^HTTP\/|^[A-Z]+ \S+ HTTP\/)(\d+(?:\.\d+)?)/i", $startLine, $matches) && $matches[1] === '1.0') {
-                        $rawHeaders = preg_replace(Rfc7230::HEADER_FOLD_REGEX, ' ', $rawHeaders);
+            
+            $rawHeaders = preg_replace(Rfc7230::HEADER_FOLD_REGEX, ' ', $rawHeaders);
         }
 
         /** @var array[] $headerLines */
         $count = preg_match_all(Rfc7230::HEADER_REGEX, $rawHeaders, $headerLines, PREG_SET_ORDER);
 
-                if ($count !== substr_count($rawHeaders, "\n")) {
-                        if (preg_match(Rfc7230::HEADER_FOLD_REGEX, $rawHeaders)) {
+        
+        if ($count !== substr_count($rawHeaders, "\n")) {
+            
+            if (preg_match(Rfc7230::HEADER_FOLD_REGEX, $rawHeaders)) {
                 throw new \InvalidArgumentException('Invalid header syntax: Obsolete line folding');
             }
 
@@ -170,12 +176,14 @@ final class Message
     public static function parseRequestUri(string $path, array $headers): string
     {
         $hostKey = array_filter(array_keys($headers), function ($k) {
-                        $k = (string) $k;
+            
+            $k = (string) $k;
 
             return strtolower($k) === 'host';
         });
 
-                if (!$hostKey) {
+        
+        if (!$hostKey) {
             return $path;
         }
 
@@ -219,7 +227,10 @@ final class Message
     public static function parseResponse(string $message): ResponseInterface
     {
         $data = self::parseMessage($message);
-                                if (!preg_match('/^HTTP\/.* [0-9]{3}( .*|$)/', $data['start-line'])) {
+        
+        
+        
+        if (!preg_match('/^HTTP\/.* [0-9]{3}( .*|$)/', $data['start-line'])) {
             throw new \InvalidArgumentException('Invalid response string: ' . $data['start-line']);
         }
         $parts = explode(' ', $data['start-line'], 3);

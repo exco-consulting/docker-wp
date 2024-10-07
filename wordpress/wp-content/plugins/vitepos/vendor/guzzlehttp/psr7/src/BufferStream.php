@@ -107,10 +107,12 @@ final class BufferStream implements StreamInterface
         $currentLength = strlen($this->buffer);
 
         if ($length >= $currentLength) {
-                        $result = $this->buffer;
+            
+            $result = $this->buffer;
             $this->buffer = '';
         } else {
-                        $result = substr($this->buffer, 0, $length);
+            
+            $result = substr($this->buffer, 0, $length);
             $this->buffer = substr($this->buffer, $length);
         }
 

@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\TestHelpers\Issuing;
 
 class CardService extends \Stripe\Service\AbstractService

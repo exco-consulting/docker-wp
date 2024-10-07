@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\FinancialConnections;
 
 class SessionService extends \Stripe\Service\AbstractService

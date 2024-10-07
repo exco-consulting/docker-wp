@@ -255,7 +255,8 @@ class Mapbd_Pos_Addon_Field extends ViteposModel {
 		foreach ( $fields as &$field ) {
 			$field->options = array();
 			$field->type    = strtoupper( $field->type );
-			if ( in_array( $field->type, array( 'D', 'C', 'R' ) ) ) {   				$field->options = Mapbd_Pos_Addon_Field_Option::find_all_grid_data_by( 'field_id', $field->id );
+			if ( in_array( $field->type, array( 'D', 'C', 'R' ) ) ) {   
+				$field->options = Mapbd_Pos_Addon_Field_Option::find_all_grid_data_by( 'field_id', $field->id );
 			}
 		}
 		return $fields;

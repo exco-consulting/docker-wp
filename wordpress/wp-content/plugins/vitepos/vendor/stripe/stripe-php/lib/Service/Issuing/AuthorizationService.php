@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Issuing;
 
 class AuthorizationService extends \Stripe\Service\AbstractService

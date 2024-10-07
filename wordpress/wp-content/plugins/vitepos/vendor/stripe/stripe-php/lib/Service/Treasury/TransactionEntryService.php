@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Treasury;
 
 class TransactionEntryService extends \Stripe\Service\AbstractService

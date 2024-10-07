@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe;
 
 /**
@@ -49,7 +50,11 @@ class File extends ApiResource
     const PURPOSE_TAX_DOCUMENT_USER_UPLOAD = 'tax_document_user_upload';
     const PURPOSE_TERMINAL_READER_SPLASHSCREEN = 'terminal_reader_splashscreen';
 
-                    const OBJECT_NAME_ALT = 'file_upload';
+    
+    
+    
+    
+    const OBJECT_NAME_ALT = 'file_upload';
 
     use ApiOperations\Create {
         create as protected _create;
@@ -69,7 +74,9 @@ class File extends ApiResource
         if (null === $opts->apiBase) {
             $opts->apiBase = Stripe::$apiUploadBase;
         }
-                        $flatParams = \array_column(\Stripe\Util\Util::flattenParams($params), 1, 0);
+        
+        
+        $flatParams = \array_column(\Stripe\Util\Util::flattenParams($params), 1, 0);
 
         return static::_create($flatParams, $opts);
     }

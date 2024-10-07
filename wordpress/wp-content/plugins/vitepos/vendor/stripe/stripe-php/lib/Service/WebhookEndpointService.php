@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class WebhookEndpointService extends \Stripe\Service\AbstractService

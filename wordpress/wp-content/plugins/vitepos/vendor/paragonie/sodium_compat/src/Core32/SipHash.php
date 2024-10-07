@@ -19,33 +19,47 @@ class ParagonIE_Sodium_Core32_SipHash extends ParagonIE_Sodium_Core32_Util
      */
     public static function sipRound(array $v)
     {
-                $v[0] = $v[0]->addInt64($v[1]);
+        
+        $v[0] = $v[0]->addInt64($v[1]);
 
-                $v[1] = $v[1]->rotateLeft(13);
+        
+        $v[1] = $v[1]->rotateLeft(13);
 
-                $v[1] = $v[1]->xorInt64($v[0]);
+        
+        $v[1] = $v[1]->xorInt64($v[0]);
 
-                $v[0] = $v[0]->rotateLeft(32);
+        
+        $v[0] = $v[0]->rotateLeft(32);
 
-                $v[2] = $v[2]->addInt64($v[3]);
+        
+        $v[2] = $v[2]->addInt64($v[3]);
 
-                $v[3] = $v[3]->rotateLeft(16);
+        
+        $v[3] = $v[3]->rotateLeft(16);
 
-                $v[3] = $v[3]->xorInt64($v[2]);
+        
+        $v[3] = $v[3]->xorInt64($v[2]);
 
-                $v[0] = $v[0]->addInt64($v[3]);
+        
+        $v[0] = $v[0]->addInt64($v[3]);
 
-                $v[3] = $v[3]->rotateLeft(21);
+        
+        $v[3] = $v[3]->rotateLeft(21);
 
-                $v[3] = $v[3]->xorInt64($v[0]);
+        
+        $v[3] = $v[3]->xorInt64($v[0]);
 
-                $v[2] = $v[2]->addInt64($v[1]);
+        
+        $v[2] = $v[2]->addInt64($v[1]);
 
-                $v[1] = $v[1]->rotateLeft(17);
+        
+        $v[1] = $v[1]->rotateLeft(17);
 
-                $v[1] = $v[1]->xorInt64($v[2]);
+        
+        $v[1] = $v[1]->xorInt64($v[2]);
 
-                $v[2] = $v[2]->rotateLeft(32);
+        
+        $v[2] = $v[2]->rotateLeft(32);
 
         return $v;
     }
@@ -63,7 +77,12 @@ class ParagonIE_Sodium_Core32_SipHash extends ParagonIE_Sodium_Core32_Util
     {
         $inlen = self::strlen($in);
 
-                                                $v = array(
+        
+        
+        
+        
+        
+        $v = array(
             new ParagonIE_Sodium_Core32_Int64(
                 array(0x736f, 0x6d65, 0x7073, 0x6575)
             ),
@@ -78,7 +97,9 @@ class ParagonIE_Sodium_Core32_SipHash extends ParagonIE_Sodium_Core32_Util
             )
         );
 
-                        $k = array(
+        
+        
+        $k = array(
             ParagonIE_Sodium_Core32_Int64::fromReverseString(
                 self::substr($key, 0, 8)
             ),
@@ -87,33 +108,55 @@ class ParagonIE_Sodium_Core32_SipHash extends ParagonIE_Sodium_Core32_Util
             )
         );
 
-                $b = new ParagonIE_Sodium_Core32_Int64(
+        
+        $b = new ParagonIE_Sodium_Core32_Int64(
             array(($inlen << 8) & 0xffff, 0, 0, 0)
         );
 
-                $v[3] = $v[3]->xorInt64($k[1]);
-                $v[2] = $v[2]->xorInt64($k[0]);
-                $v[1] = $v[1]->xorInt64($k[1]);
-                $v[0] = $v[0]->xorInt64($k[0]);
+        
+        $v[3] = $v[3]->xorInt64($k[1]);
+        
+        $v[2] = $v[2]->xorInt64($k[0]);
+        
+        $v[1] = $v[1]->xorInt64($k[1]);
+        
+        $v[0] = $v[0]->xorInt64($k[0]);
 
         $left = $inlen;
-                while ($left >= 8) {
-                        $m = ParagonIE_Sodium_Core32_Int64::fromReverseString(
+        
+        while ($left >= 8) {
+            
+            $m = ParagonIE_Sodium_Core32_Int64::fromReverseString(
                 self::substr($in, 0, 8)
             );
 
-                        $v[3] = $v[3]->xorInt64($m);
+            
+            $v[3] = $v[3]->xorInt64($m);
 
-                                    $v = self::sipRound($v);
+            
+            
+            $v = self::sipRound($v);
             $v = self::sipRound($v);
 
-                        $v[0] = $v[0]->xorInt64($m);
+            
+            $v[0] = $v[0]->xorInt64($m);
 
             $in = self::substr($in, 8);
             $left -= 8;
         }
 
-                                                                                                switch ($left) {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        switch ($left) {
             case 7:
                 $b = $b->orInt64(
                     ParagonIE_Sodium_Core32_Int64::fromInts(
@@ -160,21 +203,33 @@ class ParagonIE_Sodium_Core32_SipHash extends ParagonIE_Sodium_Core32_Util
                 break;
         }
 
-                $v[3] = $v[3]->xorInt64($b);
+        
+        $v[3] = $v[3]->xorInt64($b);
 
-                        $v = self::sipRound($v);
-        $v = self::sipRound($v);
-
-                $v[0] = $v[0]->xorInt64($b);
-
-                        $v[2]->limbs[3] ^= 0xff;
-
-                                        $v = self::sipRound($v);
-        $v = self::sipRound($v);
+        
+        
         $v = self::sipRound($v);
         $v = self::sipRound($v);
 
-                        return $v[0]
+        
+        $v[0] = $v[0]->xorInt64($b);
+
+        
+        
+        $v[2]->limbs[3] ^= 0xff;
+
+        
+        
+        
+        
+        $v = self::sipRound($v);
+        $v = self::sipRound($v);
+        $v = self::sipRound($v);
+        $v = self::sipRound($v);
+
+        
+        
+        return $v[0]
             ->xorInt64($v[1])
             ->xorInt64($v[2])
             ->xorInt64($v[3])

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VitePOS\n"
 "POT-Creation-Date: 2022-11-05 10:35+0000\n"
-"PO-Revision-Date: 2023-06-13 08:56+0000\n"
+"PO-Revision-Date: 2024-03-11 12:09+0000\n"
 "Last-Translator: \n"
-"Language-Team: Bengali (Bangladesh)\n"
+"Language-Team: বাংলা\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "Language: bn_BD\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Loco-Version: 2.6.2; wp-6.0.3"
+"X-Loco-Version: 2.6.6; wp-6.4.2"
 
 #, php-format
 msgid " %s are required"
@@ -42,7 +42,7 @@ msgstr "%s প্রয়োজন"
 
 #, php-format
 msgid " %s should be greater than %s"
-msgstr ""
+msgstr "%s %s এর চেয়ে বড় হওয়া উচিত"
 
 #, php-format
 msgid " %s should be less than %s"
@@ -52,8 +52,12 @@ msgid " should be hexadecimal"
 msgstr "হেক্সাডেসিমেল হওয়া উচিত"
 
 #, php-format
+msgid "%s field is required"
+msgstr "%s ক্ষেত্র প্রয়োজন"
+
+#, php-format
 msgid "%s out of stock"
-msgstr ""
+msgstr "%s স্টক নেই"
 
 #, php-format
 msgid "%s should be a valid email address"
@@ -76,14 +80,20 @@ msgstr "প্রতি সারিতে %{col}টি পণ্য"
 msgid "%{fld_name} does not match with its password"
 msgstr "%{fld_name} এর পাসওয়ার্ডের সাথে মেলে না"
 
+msgid "%{fld_name} is invalid"
+msgstr "%{fld_name} অবৈধ"
+
 msgid "%{fld_name} is required"
 msgstr "%{fld_name} প্রয়োজন"
 
 msgid "%{qty} of %{items}"
 msgstr "%{items} এর %{qty}"
 
+msgid "(Items : %{totalItem} and quantity : %{totalQty} )"
+msgstr "(মোট আইটেম: %{totalItem} এবং পরিমাণ: %{totalQty})"
+
 msgid "[Coming Soon]"
-msgstr ""
+msgstr "[শীঘ্রই আসছে]"
 
 msgid "About"
 msgstr "সম্পর্কিত"
@@ -91,8 +101,17 @@ msgstr "সম্পর্কিত"
 msgid "About VitePos"
 msgstr "VitePos সম্পর্কে"
 
+msgid "Above the buttons"
+msgstr "বাটনের উপরে"
+
 msgid "Accept"
-msgstr ""
+msgstr "গ্রহণ করুন"
+
+msgid "Accept Cancel Request"
+msgstr "বাতিল অনুরোধ গ্রহণ করুন"
+
+msgid "Accepted Cancel"
+msgstr "গৃহীত বাতিল"
 
 msgid "Action"
 msgstr "কর্ম"
@@ -110,10 +129,10 @@ msgid "Add"
 msgstr "যোগ করুন"
 
 msgid "Add Addon"
-msgstr ""
+msgstr "অ্যাডন যোগ করুন"
 
 msgid "Add Addons"
-msgstr ""
+msgstr "অ্যাডঅন যোগ করুন"
 
 msgid "Add Attributes"
 msgstr "এট্টিবিউট যোগ করুন"
@@ -122,13 +141,13 @@ msgid "Add Counter"
 msgstr "কাউন্টার যোগ করুন"
 
 msgid "Add Custom Field"
-msgstr ""
+msgstr "কাস্টম ক্ষেত্র যোগ করুন"
 
 msgid "Add Customer"
 msgstr "গ্রাহক যোগ করুন"
 
 msgid "Add Deny Reason"
-msgstr ""
+msgstr "অস্বীকার কারণ যোগ করুন"
 
 msgid "Add Discount"
 msgstr "ডিসকাউন্ট যোগ করুন"
@@ -137,7 +156,7 @@ msgid "Add Fee"
 msgstr "ফি যোগ করুন"
 
 msgid "Add Field"
-msgstr ""
+msgstr "ক্ষেত্র যোগ করুন"
 
 msgid "Add items to add fee"
 msgstr "ফি যোগ করতে আইটেম যোগ করুন"
@@ -146,19 +165,19 @@ msgid "Add items to give discount"
 msgstr "ডিসকাউন্ট দিতে আইটেম যোগ করুন"
 
 msgid "Add Message"
-msgstr ""
+msgstr "বার্তা যুক্ত কর"
 
 msgid "Add message"
-msgstr ""
+msgstr "বার্তা যুক্ত কর"
 
 msgid "Add Note"
 msgstr "নোট যোগ করুন"
 
 msgid "Add note befor decline"
-msgstr ""
+msgstr "প্রত্যাখ্যান করার আগে নোট যোগ করুন"
 
 msgid "Add Option"
-msgstr ""
+msgstr "বিকল্প যোগ করুন"
 
 msgid "Add Options"
 msgstr "অপশন যোগ করুন"
@@ -167,7 +186,7 @@ msgid "Add Outlet"
 msgstr "আউটলেট যোগ করুন"
 
 msgid "Add page break counter"
-msgstr ""
+msgstr "পৃষ্ঠা বিরতি কাউন্টার যোগ করুন"
 
 msgid "Add payment note"
 msgstr "পেমেন্ট নোট যোগ করুন"
@@ -182,13 +201,13 @@ msgid "Add Role"
 msgstr "রোল যোগ করুন"
 
 msgid "Add Rules"
-msgstr ""
+msgstr "নিয়ম যোগ করুন"
 
 msgid "Add Rules Group"
-msgstr ""
+msgstr "নিয়ম গ্রুপ যোগ করুন"
 
 msgid "Add Shortcut Message"
-msgstr ""
+msgstr "শর্টকাট বার্তা যোগ করুন"
 
 msgid "Add Stock"
 msgstr "স্টক যোগ করুন"
@@ -197,7 +216,7 @@ msgid "Add Supplier"
 msgstr "সরবরাহকারী যোগ করুন"
 
 msgid "Add Table"
-msgstr ""
+msgstr "টেবিল যোগ করুন"
 
 msgid "Add To Cart"
 msgstr "কার্টে যোগ করুন"
@@ -233,22 +252,22 @@ msgid "Adding Role"
 msgstr "রোল যোগ করা হচ্ছে"
 
 msgid "Addon delete failed"
-msgstr ""
+msgstr "Addon মুছে ফেলতে ব্যর্থ হয়েছে"
 
 msgid "Addon deleted successfully"
-msgstr ""
+msgstr "Addon সফলভাবে মুছে ফেলা হয়েছে"
 
 msgid "Addon updated successfully"
-msgstr ""
+msgstr "অ্যাডন সফলভাবে আপডেট হয়েছে"
 
 msgid "Addons"
-msgstr ""
+msgstr "অ্যাডঅনস"
 
 msgid "Addons List Loading..."
-msgstr ""
+msgstr "অ্যাডঅন তালিকা লোড হচ্ছে..."
 
 msgid "Addons Panel"
-msgstr ""
+msgstr "অ্যাডঅন প্যানেল"
 
 msgid "Address"
 msgstr "ঠিকানা"
@@ -271,17 +290,24 @@ msgstr "সব ধরনের"
 msgid "All Category"
 msgstr "সমস্ত বিভাগ"
 
+msgid "All items refunded"
+msgstr "সমস্ত আইটেম ফেরত"
+
 msgid "Allowed Ip"
 msgstr "অনুমোদিত আইপি"
 
 msgid ""
 "Allowing the order to be completed by the chef rather than by the cashier."
 msgstr ""
+"অর্ডারটি ক্যাশিয়ারের পরিবর্তে শেফের দ্বারা সম্পূর্ণ করার অনুমতি দেওয়া।"
 
 msgid ""
 "Alternatively, you can be link your online sales to a specific outlet, and "
 "the system will use the stock from the linked outlet for online sales."
 msgstr ""
+"বিকল্পভাবে, আপনি একটি নির্দিষ্ট আউটলেটের সাথে আপনার অনলাইন বিক্রয় লিঙ্ক "
+"করতে পারেন এবং সিস্টেম অনলাইন বিক্রয়ের জন্য লিঙ্কযুক্ত আউটলেট থেকে স্টক "
+"ব্যবহার করবে।"
 
 msgid "Amount"
 msgstr "অ্যামাউন্ড"
@@ -290,67 +316,70 @@ msgid "Amount:"
 msgstr "অ্যামাউন্ড:"
 
 msgid "AND"
-msgstr ""
+msgstr "এবং"
 
 msgid "And More.."
 msgstr "এবং আরো.."
 
 msgid "and person count"
-msgstr ""
+msgstr "এবং ব্যক্তি গণনা"
 
 msgid "Any Options"
 msgstr "যেকোনো বিকল্প"
 
 msgid "App ID"
-msgstr ""
+msgstr "অ্যাপ আইডি"
 
 msgid "Aprox"
-msgstr ""
+msgstr "ca"
 
 msgid "Are sure to accept cancel?"
-msgstr ""
+msgstr "বাতিল গ্রহণ নিশ্চিত?"
 
 msgid "Are sure to deny cancel request?"
-msgstr ""
+msgstr "অনুরোধ বাতিল করতে নিশ্চিত?"
 
 msgid "Are you sure clear cart?"
 msgstr "আপনি কি কার্ট কিলিয়ার করার জন্য নিশ্চিত?"
 
 msgid "Are you sure order is ready to serve?"
-msgstr ""
+msgstr "আপনি কি নিশ্চিত অর্ডার পরিবেশন করার জন্য প্রস্তুত?"
 
 msgid "Are you sure to %{status}?"
 msgstr "আপনি কি %{status} সম্পর্কে নিশ্চিত?"
 
+msgid "Are you sure to accept cancel for this item?"
+msgstr "আপনি কি এই আইটেমটির জন্য বাতিল স্বীকার করতে নিশ্চিত?"
+
 msgid "Are you sure to cancel the order?"
-msgstr ""
+msgstr "আপনি অর্ডার বাতিল করতে নিশ্চিত?"
 
 msgid "Are you sure to delete this counter: %{counter}?"
 msgstr "আপনি কি %{counter} কাউন্টারটি মুছে ফেলার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to delete this custom field?"
-msgstr ""
+msgstr "আপনি এই কাস্টম ক্ষেত্র মুছে ফেলার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to delete this Customer: %{customer}?"
 msgstr "আপনি কি %{customer} গ্রাহককে মুছে ফেলার ব্যাপারে নিশ্চিত?"
 
 msgid "Are you sure to delete this deny message?"
-msgstr ""
+msgstr "আপনি এই অস্বীকার বার্তা মুছে ফেলার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to delete this message?"
-msgstr ""
+msgstr "আপনি এই বার্তা মুছে ফেলার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to delete this outlet: %{outlet}?"
 msgstr "আপনি কি %{outlet} আউটলেটটি মুছে ফেলার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to delete this page style?"
-msgstr ""
+msgstr "আপনি কি এই পৃষ্ঠা শৈলী মুছে ফেলার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to delete this product: %{product}?"
 msgstr "আপনি কি %{product} পণ্যটি মুছে ফেলার বিষয়ে নিশ্চিত: ?"
 
 msgid "Are you sure to delete this Table: %{table}?"
-msgstr ""
+msgstr "আপনি কি এই টেবিলটি মুছে ফেলার ব্যাপারে নিশ্চিত: %{table}?"
 
 msgid "Are you sure to delete this user: %{user}?"
 msgstr "আপনি কি %{user} ব্যবহারকারীকে মুছে ফেলার ব্যাপারে নিশ্চিত?"
@@ -358,32 +387,38 @@ msgstr "আপনি কি %{user} ব্যবহারকারীকে ম�
 msgid "Are you sure to delete this vendor: %{vendor}?"
 msgstr "আপনি কি %{vendor} বিক্রেতা মুছে ফেলার ব্যাপারে নিশ্চিত?"
 
-msgid "Are you sure to delete?"
-msgstr "আপনি মুছে ফেলার বিষয়ে নিশ্চিত?"
+msgid "Are you sure to deny cancel for this item?"
+msgstr "আপনি কি এই আইটেমটির জন্য বাতিল করার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to disable %{name}?"
-msgstr ""
+msgstr "আপনি কি %{name} নিষ্ক্রিয় করার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to enable %{name}?"
-msgstr ""
+msgstr "আপনি কি %{name} সক্ষম করার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to give access to %{role}?"
 msgstr "আপনি কি %{role}-এ অ্যাক্সেস দেওয়ার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure to ignore this update of price ?"
-msgstr ""
+msgstr "আপনি মূল্য এই আপডেট উপেক্ষা করতে নিশ্চিত?"
 
 msgid "Are you sure to make this active??"
-msgstr ""
+msgstr "আপনি এই সক্রিয় করতে নিশ্চিত??"
+
+msgid "Are you sure to make this field hidden?"
+msgstr "আপনি কি নিশ্চিত এই ক্ষেত্রটি লুকিয়ে রাখতে চান?"
+
+msgid "Are you sure to make this field not required?"
+msgstr "আপনি কি নিশ্চিত যে এই ক্ষেত্রের প্রয়োজন নেই?"
 
 msgid "Are you sure to make this inactive?"
-msgstr ""
+msgstr "আপনি কি এই নিষ্ক্রিয় করতে নিশ্চিত?"
 
 msgid "Are you sure to make this main branch?"
 msgstr "আপনি এটি প্রধান শাখা করতে নিশ্চিত?"
 
 msgid "Are you sure to make this product favorite"
-msgstr ""
+msgstr "আপনি এই পণ্য প্রিয় করতে নিশ্চিত"
 
 msgid "Are you sure to remove access from %{role}?"
 msgstr "আপনি কি %{role} থেকে অ্যাক্সেস মুছে ফেলার বিষয়ে নিশ্চিত?"
@@ -392,7 +427,7 @@ msgid "Are you sure to remove all item from cart?"
 msgstr "আপনি কি কার্ট থেকে সমস্ত আইটেম সরাতে নিশ্চিত?"
 
 msgid "Are you sure to remove it?"
-msgstr ""
+msgstr "আপনি এটি অপসারণ করতে নিশ্চিত?"
 
 msgid "Are you sure to remove item from cart?"
 msgstr "আপনি কার্ট থেকে আইটেম সরাতে নিশ্চিত?"
@@ -400,20 +435,26 @@ msgstr "আপনি কার্ট থেকে আইটেম সরাত�
 msgid "Are you sure to remove item from Holds?"
 msgstr "আপনি কি হোল্ডস থেকে আইটেম সরাতে নিশ্চিত?"
 
+msgid "Are you sure to remove this item?"
+msgstr "আপনি কি এই আইটেমটি সরাতে নিশ্চিত?"
+
 msgid "Are you sure to remove this user from this outlet ?"
-msgstr ""
+msgstr "আপনি কি এই আউটলেট থেকে এই ব্যবহারকারীকে সরাতে নিশ্চিত?"
 
 msgid "Are you sure to serve the order?"
-msgstr ""
+msgstr "আপনি অর্ডার পরিবেশন নিশ্চিত?"
 
 msgid "Are you sure to transfer online stock to  %{outlet}?"
-msgstr ""
+msgstr "আপনি কি %{outlet}-এ অনলাইন স্টক স্থানান্তর করার বিষয়ে নিশ্চিত?"
 
 msgid "Are you sure you are starting?"
-msgstr ""
+msgstr "আপনি কি নিশ্চিত আপনি শুরু করছেন?"
+
+msgid "Are you sure,want to make cancel request for this item?"
+msgstr "আপনি কি নিশ্চিত, এই আইটেমটির জন্য অনুরোধ বাতিল করতে চান?"
 
 msgid "Are you sure,want to make cancel request?"
-msgstr ""
+msgstr "আপনি কি নিশ্চিত, বাতিলের অনুরোধ করতে চান?"
 
 msgid "Are you sure?"
 msgstr "আপনি কি নিশ্চিত?"
@@ -425,13 +466,13 @@ msgid "Attributes Loading"
 msgstr "এট্টিবিউট লোড হচ্ছে"
 
 msgid "Authorize Settings"
-msgstr ""
+msgstr "অনুমোদন সেটিংস"
 
 msgid "Auto capture on payment auth"
-msgstr ""
+msgstr "পেমেন্ট প্রমাণীকরণে স্বয়ংক্রিয় ক্যাপচার"
 
 msgid "Back"
-msgstr ""
+msgstr "পেছনে"
 
 msgid "Balance"
 msgstr "ব্যালেন্স"
@@ -446,22 +487,22 @@ msgid "Barcode Field"
 msgstr "বারকোড ফিল্ড"
 
 msgid "Barcode Height"
-msgstr ""
+msgstr "বারকোড উচ্চতা"
 
 msgid "Barcode Position"
-msgstr ""
+msgstr "বারকোড অবস্থান"
 
 msgid "Barcode Value"
 msgstr "বারকোড মান"
 
 msgid "Barcode width"
-msgstr ""
+msgstr "বারকোড প্রস্থ"
 
 msgid "Barcode width is required"
-msgstr ""
+msgstr "বারকোড প্রস্থ প্রয়োজন"
 
 msgid "Barcode width must be numeric"
-msgstr ""
+msgstr "বারকোডের প্রস্থ অবশ্যই সাংখ্যিক হতে হবে"
 
 msgid "Based on outlet order(s)"
 msgstr "আউটলেট অর্ডার(গুলির) উপর ভিত্তি করে"
@@ -472,20 +513,23 @@ msgstr "বেসিক হেল্প"
 msgid "Basic Settings"
 msgstr "বেসিক সেটিং"
 
+msgid "Below the buttons"
+msgstr "বাটনের নিচে"
+
 msgid "Best size is %{logoWidth} in width and %{logoHeight} in height."
 msgstr "সর্বোত্তম আকার হল %{logoWidth} প্রস্থে এবং %{logoHeight} উচ্চতা৷"
 
 msgid "Best size is 100px in width and 60px in height."
-msgstr ""
+msgstr "সর্বোত্তম আকার হল প্রস্থে 100px এবং উচ্চতায় 60px।"
 
 msgid "Best size is 166px in width and 60px in height."
 msgstr "সর্বোত্তম আকার হল প্রস্থে 166px এবং উচ্চতায় 60px।"
 
 msgid "Blank for auto"
-msgstr ""
+msgstr "অটোর জন্য ফাঁকা"
 
 msgid "Bottom"
-msgstr ""
+msgstr "নীচে"
 
 msgid "Brand"
 msgstr "ব্র্যান্ড"
@@ -500,10 +544,10 @@ msgid "Built-in"
 msgstr "বিল্ড-ইন"
 
 msgid "Calculate tax after discounts and fees"
-msgstr ""
+msgstr "ডিসকাউন্ট এবং ফি পরে ট্যাক্স গণনা"
 
 msgid "Calculate tax before discounts and fees"
-msgstr ""
+msgstr "ডিসকাউন্ট এবং ফি আগে ট্যাক্স গণনা"
 
 msgid "Calculator"
 msgstr "ক্যালকুলেটর"
@@ -518,22 +562,22 @@ msgid "Cancel"
 msgstr "বাতিল করুন"
 
 msgid "Cancel requested"
-msgstr ""
+msgstr "বাতিল অনুরোধ করা হয়েছে"
 
 msgid "Canceled"
-msgstr ""
+msgstr "বাতিল"
 
 msgid "Cancelled"
-msgstr ""
+msgstr "বাতিল"
 
 msgid "Captcha error, please try again"
 msgstr "ক্যাপচা ত্রুটি, আবার চেষ্টা করুন"
 
 msgid "Capture Method"
-msgstr ""
+msgstr "ক্যাপচার পদ্ধতি"
 
 msgid "Capture on order complete"
-msgstr ""
+msgstr "অর্ডার সম্পূর্ণ ক্যাপচার"
 
 msgid "Card"
 msgstr "কার্ড"
@@ -565,11 +609,20 @@ msgstr "ক্যাশ তথ্য"
 msgid "Cash Summary"
 msgstr "ক্যাশ সারাংশ"
 
+msgid "Cash withdraw failed"
+msgstr "নগদ উত্তোলন ব্যর্থ হয়েছে"
+
+msgid "Cash withdraw succeeded"
+msgstr "নগদ তোলা সফল হয়েছে৷"
+
+msgid "Cash withdraw succeeded and closed"
+msgstr "নগদ উত্তোলন সফল এবং বন্ধ"
+
 msgid "Cashier"
 msgstr "ক্যাশিয়ার"
 
 msgid "Cashier Panel"
-msgstr ""
+msgstr "ক্যাশিয়ার প্যানেল"
 
 msgid "Category"
 msgstr "বিভাগ"
@@ -593,15 +646,17 @@ msgid "Changed Amount"
 msgstr "পরিবর্তিত অ্যামাউন্ড"
 
 msgid "Channels"
-msgstr ""
+msgstr "চ্যানেল"
 
 msgid ""
 "check for add this product to update price list, if need to update product "
 "price"
 msgstr ""
+"পণ্যের মূল্য আপডেট করার প্রয়োজন হলে মূল্য তালিকা আপডেট করতে এই পণ্যটি যোগ "
+"করার জন্য চেক করুন"
 
 msgid "Checkbox"
-msgstr ""
+msgstr "চেকবক্স"
 
 msgid "Checkout"
 msgstr "চেকআউট"
@@ -610,7 +665,7 @@ msgid "Checkout Page"
 msgstr "চেকআউট পেজ"
 
 msgid "Chef"
-msgstr ""
+msgstr "পাচক"
 
 msgid "Choose a Outlet"
 msgstr "একটি আউটলেট নির্বাচন করুন"
@@ -619,43 +674,49 @@ msgid "Choose a paper settings"
 msgstr "একটি কাগজ সেটিংস নির্বাচন করুন"
 
 msgid "Choose item(s) to refund"
-msgstr ""
+msgstr "ফেরত দিতে আইটেম(গুলি) চয়ন করুন"
 
 msgid "Choose Outlet"
 msgstr "আউটলেট নির্বাচন করুন"
 
 msgid "Choose Panel"
-msgstr ""
+msgstr "প্যানেল নির্বাচন করুন"
 
 msgid "Choose property"
-msgstr "সম্পত্তি নির্বাচন করুন"
+msgstr "বৈশিষ্ট্য নির্বাচন করুন"
 
 msgid "Choose Role"
 msgstr "রোল নির্বাচন করুন"
 
 msgid "Choose Table"
-msgstr ""
+msgstr "টেবিল নির্বাচন করুন"
 
 msgid "Choose table and persons"
-msgstr ""
+msgstr "টেবিল এবং ব্যক্তি নির্বাচন করুন"
 
 msgid "Choose Table to enter person"
-msgstr ""
+msgstr "ব্যক্তি প্রবেশ করতে টেবিল নির্বাচন করুন"
 
 msgid "Choose type of code"
-msgstr ""
+msgstr "কোডের ধরন নির্বাচন করুন"
+
+msgid "Choose Waiters"
+msgstr "ওয়েটার নির্বাচন করুন"
 
 msgid "Choose/Search Product"
 msgstr "পণ্য নির্বাচন/অনুসন্ধান করুন"
 
 msgid "Chose Operator"
-msgstr ""
+msgstr "অপারেটর বেছে নিন"
 
 msgid "City"
 msgstr "শহর"
 
 msgid "Clear"
 msgstr "মুছে ফেলুন"
+
+msgid "Clear Cache"
+msgstr "ক্যাশে সাফ করুন"
 
 msgid "Clear Cart"
 msgstr "কার্ট খালি করুন"
@@ -684,13 +745,15 @@ msgstr "বন্ধ করুন এবং লগআউট করুন"
 msgid "Close :"
 msgstr "বন্ধ করুন:"
 
+msgid "Close Drawer"
+msgstr "ড্রয়ার বন্ধ করুন"
+
 msgid "Close fullscreen"
 msgstr "ফুলস্ক্রিন বন্ধ করুন"
 
-#, fuzzy
 #| msgid "CLOSED BY"
 msgid "Closed By"
-msgstr "ক্লোজ বাই"
+msgstr "ক্লোজ করেছেন "
 
 msgid "Closing Balance"
 msgstr "ক্লোজিং ব্যালেন্স"
@@ -699,13 +762,13 @@ msgid "Closing Time"
 msgstr "বন্ধের সময়"
 
 msgid "Cluster"
-msgstr ""
+msgstr "ক্লাস্টার"
 
 msgid "Code Type"
-msgstr ""
+msgstr "কোড টাইপ"
 
 msgid "Code type is required"
-msgstr ""
+msgstr "কোড টাইপ প্রয়োজন"
 
 msgid "Completed"
 msgstr "সম্পন্ন"
@@ -729,19 +792,19 @@ msgid "Contact:"
 msgstr "যোগাযোগ:"
 
 msgid "Container Margin"
-msgstr ""
+msgstr "ধারক মার্জিন"
 
 msgid "Container margin left,right must be numeric"
-msgstr ""
+msgstr "কন্টেইনার মার্জিন বাম, ডান অবশ্যই সাংখ্যিক হতে হবে"
 
 msgid "Container margin top,bottom can not be empty"
-msgstr ""
+msgstr "ধারক মার্জিন শীর্ষ, নীচে খালি হতে পারে না"
 
 msgid "Container margin top,bottom must be numeric"
-msgstr ""
+msgstr "ধারক মার্জিন শীর্ষ, নীচে সংখ্যাসূচক হতে হবে"
 
 msgid "Container Size"
-msgstr ""
+msgstr "ধারক আকার"
 
 msgid "Copy from"
 msgstr "কপি ফ্রোম"
@@ -759,7 +822,7 @@ msgid "Counter"
 msgstr "কাউন্টার"
 
 msgid "Counter :"
-msgstr ""
+msgstr "কাউন্টার:"
 
 msgid "Counter Info"
 msgstr "কাউন্টার তথ্য"
@@ -792,16 +855,16 @@ msgid "Create"
 msgstr "তৈরি করুন"
 
 msgid "Create a channel or manage existing channel"
-msgstr ""
+msgstr "একটি চ্যানেল তৈরি করুন বা বিদ্যমান চ্যানেল পরিচালনা করুন"
 
 msgid "Create New"
 msgstr "নতুন তৈরী করা"
 
 msgid "Create New Order"
-msgstr ""
+msgstr "নতুন অর্ডার তৈরি করুন"
 
 msgid "Create Order"
-msgstr ""
+msgstr "অর্ডার তৈরি করুন"
 
 msgid "Create Purchase"
 msgstr "ক্রয় তৈরি করুন"
@@ -816,7 +879,10 @@ msgid "Cross Sells"
 msgstr "ক্রস সেলস"
 
 msgid "Current"
-msgstr ""
+msgstr "কারেন্ট"
+
+msgid "Current Balance"
+msgstr "বর্তমান হিসাব"
 
 msgid "Current Cash"
 msgstr "বর্তমান ক্যাশ"
@@ -828,7 +894,7 @@ msgid "Current cash drawer order list"
 msgstr "বর্তমান ক্যাশ ড্রয়ার অর্ডার তালিকা"
 
 msgid "Current Cost"
-msgstr ""
+msgstr "বর্তমান খরচ"
 
 msgid "Current Outlet:"
 msgstr "বর্তমান আউটলেট:"
@@ -837,16 +903,19 @@ msgid "Current password"
 msgstr "বর্তমান পাসওয়ার্ড"
 
 msgid "Current purchase cost :"
-msgstr ""
+msgstr "বর্তমান ক্রয় খরচ:"
 
 msgid "Current Purchase Price"
-msgstr ""
+msgstr "বর্তমান ক্রয় মূল্য"
 
 msgid "Current Status"
-msgstr ""
+msgstr "এখনকার অবস্থা"
 
 msgid "Current Stock"
-msgstr ""
+msgstr "বর্তমান তহবিল"
+
+msgid "Custom"
+msgstr "কাস্টম"
 
 msgid "Custom Barcode"
 msgstr "কাস্টম বারকোড"
@@ -855,22 +924,25 @@ msgid "Custom Field"
 msgstr "কাস্টম ফিল্ড"
 
 msgid "custom field"
-msgstr ""
+msgstr "কাস্টম ক্ষেত্র"
 
 msgid "Custom Field List"
-msgstr ""
+msgstr "কাস্টম ক্ষেত্র তালিকা"
 
 msgid "Custom Field Settings"
-msgstr ""
+msgstr "কাস্টম ফিল্ড সেটিংস"
 
 msgid "Custom Fields"
-msgstr ""
+msgstr "কাস্টম"
+
+msgid "Custom Price"
+msgstr "কাস্টম মূল্য"
 
 msgid "Custom Size Title"
-msgstr ""
+msgstr "কাস্টম সাইজ শিরোনাম"
 
 msgid "Customer"
-msgstr ""
+msgstr "ক্রেতা"
 
 msgid "customer"
 msgstr "গ্রাহক"
@@ -880,6 +952,12 @@ msgstr "গ্রাহক যোগ অফলাইনে সাপর্ট �
 
 msgid "Customer Address"
 msgstr "গ্রাহকের ঠিকানা"
+
+msgid "Customer Custom Fields"
+msgstr "গ্রাহক কাস্টম ক্ষেত্র"
+
+msgid "Customer Form Fields "
+msgstr "গ্রাহক ফর্ম ক্ষেত্র"
 
 msgid "Customer Id"
 msgstr "গ্রাহক আইডি"
@@ -917,6 +995,9 @@ msgstr "কাস্টমার ভিউ"
 msgid "Customers"
 msgstr "গ্রাহক"
 
+msgid "Customization"
+msgstr "কাস্টমাইজেশন"
+
 msgid "Customization of color support in pro version"
 msgstr "রঙ কাস্টমাইজেশন প্রো সংস্করণে সমর্থন করে"
 
@@ -939,13 +1020,13 @@ msgid "Deactivate License"
 msgstr "লাইসেন্স নিষ্ক্রিয় করুন"
 
 msgid "Decline"
-msgstr ""
+msgstr "প্রত্যাখ্যান"
 
 msgid "Declined By"
-msgstr ""
+msgstr "দ্বারা প্রত্যাখ্যান"
 
 msgid "Declined Note"
-msgstr ""
+msgstr "প্রত্যাখ্যান নোট"
 
 msgid "Default"
 msgstr "ডিফল্ট"
@@ -954,13 +1035,13 @@ msgid "Default Customer (Optional)"
 msgstr "ডিফল্ট গ্রাহক (ঐচ্ছিক)"
 
 msgid "Default value"
-msgstr ""
+msgstr "ডিফল্ট মান"
 
 msgid "Delete"
 msgstr "মুছে ফেলা"
 
 msgid "Delete custom page size"
-msgstr ""
+msgstr "কাস্টম পৃষ্ঠার আকার মুছুন"
 
 msgid "Delete failed"
 msgstr "মুছে ফেলতে ব্যর্থ হয়েছে"
@@ -968,29 +1049,38 @@ msgstr "মুছে ফেলতে ব্যর্থ হয়েছে"
 msgid "Delete failed try again"
 msgstr "মুছে ফেলতে ব্যর্থ, আবার চেষ্টা করুন"
 
-msgid "Delete is temporary disabled"
-msgstr "মুছে ফেলা অস্থায়ীভাবে অক্ষম আছে"
-
 msgid "Delete Role"
 msgstr "রোল মুছুন"
 
 msgid "Delete Role Details"
 msgstr "রোলর বিবরণ মুছুন"
 
+msgid "Denied"
+msgstr "অস্বীকৃত"
+
 msgid "Deny"
-msgstr ""
+msgstr "অস্বীকার করুন"
+
+msgid "Deny Cancel Request"
+msgstr "বাতিল অনুরোধ অস্বীকার করুন"
+
+msgid "Deny item"
+msgstr "আইটেম অস্বীকার করুন"
 
 msgid "Deny Message"
-msgstr ""
+msgstr "বার্তা অস্বীকার করুন"
 
 msgid "Deny Order"
-msgstr ""
+msgstr "আদেশ অস্বীকার করুন"
 
 msgid "Deny order"
-msgstr ""
+msgstr "আদেশ অস্বীকার করুন"
 
 msgid "Deny Reason"
-msgstr ""
+msgstr "কারণ অস্বীকার করুন"
+
+msgid "Deny reason is required"
+msgstr "অস্বীকার কারণ প্রয়োজন"
 
 msgid "Description"
 msgstr "বর্ণনা"
@@ -1008,6 +1098,8 @@ msgid ""
 "Different linked outlet found in database. Would you please save the setting "
 "before transfer the stock"
 msgstr ""
+"ডাটাবেস পাওয়া বিভিন্ন লিঙ্ক আউটলেট. আপনি স্টক স্থানান্তর করার আগে সেটিং "
+"সংরক্ষণ করুন"
 
 msgid "Dimension and Tax"
 msgstr "ডাইমেনশন এন্ড ট্যাক্স"
@@ -1021,6 +1113,9 @@ msgstr "নিষ্ক্রিয় করুন"
 msgid "Discount"
 msgstr "ছাড়"
 
+msgid "Discount "
+msgstr "ছাড়"
+
 msgid "Do you want to close cash drawer & logout?"
 msgstr "আপনি ক্যাশ ড্রয়ার বন্ধ করতে এবং লগআউট হতে চান?"
 
@@ -1029,7 +1124,7 @@ msgstr ""
 "আপনি কি বর্তমান ক্যাশ ড্রয়ার বন্ধ করে নতুন ক্যাশ ড্রয়ার তৈরি করতে চান?"
 
 msgid "Done"
-msgstr ""
+msgstr "সম্পন্ন"
 
 msgid "Download "
 msgstr "ডাউনলোড করুন"
@@ -1038,13 +1133,16 @@ msgid "Download PDF"
 msgstr "PDF ডাউনলোড করুন"
 
 msgid "Draft"
-msgstr ""
+msgstr "খসড়া"
 
 msgid "Drawer close failed"
 msgstr "ড্রয়ার বন্ধ করা ব্যর্থ হয়েছে৷"
 
 msgid "Drawer closed"
 msgstr "ড্রয়ার বন্ধ"
+
+msgid "Drawer closed successfully"
+msgstr "ড্রয়ার সফলভাবে বন্ধ হয়েছে৷"
 
 msgid "Drawer list not found"
 msgstr "ড্রয়ারের তালিকা পাওয়া যায়নি"
@@ -1065,7 +1163,7 @@ msgid "Drawer opened"
 msgstr "ড্রয়ার খুলেছে"
 
 msgid "Dropdown"
-msgstr ""
+msgstr "ড্রপডাউন"
 
 msgid "E004"
 msgstr "E004"
@@ -1081,16 +1179,16 @@ msgid "Edit Counter"
 msgstr "কাউন্টার ইডিট করুন"
 
 msgid "Edit custom page size"
-msgstr ""
+msgstr "কাস্টম পৃষ্ঠার আকার সম্পাদনা করুন"
 
 msgid "Edit Customer"
 msgstr "গ্রাহক ইডিট করুন"
 
 msgid "Edit Deny Reason"
-msgstr ""
+msgstr "কারণ অস্বীকার করুন"
 
 msgid "Edit Message"
-msgstr ""
+msgstr "বার্তা সম্পাদনা করুন"
 
 msgid "Edit Outlet"
 msgstr "আউটলেট ইডিট করুন"
@@ -1102,7 +1200,7 @@ msgid "Edit Role"
 msgstr "রোল ইডিট করুন"
 
 msgid "Edit Table"
-msgstr ""
+msgstr "সারণী সম্পাদনা করুন"
 
 msgid "Edit User"
 msgstr "ব্যবহারকারী ইডিট করুন"
@@ -1129,34 +1227,40 @@ msgid "Empty"
 msgstr "খালি"
 
 msgid "Empty intend id"
-msgstr ""
+msgstr "খালি উদ্দেশ্য আইডি"
 
 msgid "Empty order id"
-msgstr ""
+msgstr "খালি অর্ডার আইডি"
 
 msgid "Empty seat:"
-msgstr ""
+msgstr "খালি আসন:"
 
 msgid "Enable"
 msgstr "সক্ষম করুন"
 
 msgid "Enable %{brand} Payment"
-msgstr ""
+msgstr "%{brand} পেমেন্ট সক্রিয় করুন"
 
 msgid "Enable full stock management"
-msgstr ""
+msgstr "সম্পূর্ণ স্টক ব্যবস্থাপনা সক্ষম করুন"
 
 msgid "Enable Other Method"
-msgstr ""
+msgstr "অন্য পদ্ধতি সক্ষম করুন"
 
 msgid "Enable reCaptcha V3"
 msgstr "reCaptcha V3 সক্ষম করুন"
 
+msgid "Enable RTL"
+msgstr "RTL সক্ষম করুন৷"
+
+msgid "Enable Single Cash Drawer"
+msgstr "একক নগদ ড্রয়ার সক্ষম করুন"
+
 msgid "Enable Swipe Payment"
-msgstr ""
+msgstr "সোয়াইপ পেমেন্ট সক্ষম করুন"
 
 msgid "Enabling the Kitchen Involvement, It does not support offline order."
-msgstr ""
+msgstr "রান্নাঘরের সম্পৃক্ততা সক্ষম করা, এটি অফলাইন অর্ডার সমর্থন করে না।"
 
 msgid ""
 "Enabling the toggle button, below can incorporate the kitchen procedure, "
@@ -1164,17 +1268,56 @@ msgid ""
 "Additionally, the order status can be displayed on a large screen for easy "
 "tracking."
 msgstr ""
+"টগল বোতামটি সক্ষম করার মাধ্যমে, নীচে রান্নাঘরের পদ্ধতি অন্তর্ভুক্ত করা যেতে "
+"পারে, যাতে ক্যাশিয়ারের পরিবর্তে শেফের দ্বারা অর্ডারটি সম্পূর্ণ করা যায়৷ "
+"উপরন্তু, সহজ ট্র্যাকিংয়ের জন্য অর্ডারের স্থিতি একটি বড় স্ক্রিনে প্রদর্শিত "
+"হতে পারে।"
+
+msgid "Enabling this feature, will enable RTL mode on POS."
+msgstr "এই বৈশিষ্ট্যটি সক্ষম করলে, POS-এ RTL মোড সক্ষম করবে৷"
+
+msgid ""
+"Enabling this feature, will enable single cash drawer by outlet and counter."
+"After enabling this feature you can not create multiple cash drawer on same "
+"outlet with same counter."
+msgstr ""
+"এই বৈশিষ্ট্যটি সক্রিয় করা, আউটলেট এবং কাউন্টার দ্বারা একক নগদ ড্রয়ার সক্ষম "
+"করবে৷ এই বৈশিষ্ট্যটি সক্ষম করার পরে আপনি একই কাউন্টার সহ একই আউটলেটে একাধিক "
+"নগদ ড্রয়ার তৈরি করতে পারবেন না৷"
+
+msgid ""
+"Enabling this feature, will enable user to change price of any product while "
+"ordering (on cart)."
+msgstr ""
+"এই বৈশিষ্ট্যটি সক্রিয় করা, ব্যবহারকারীকে অর্ডার করার সময় (কার্টে) যেকোনো "
+"পণ্যের মূল্য পরিবর্তন করতে সক্ষম করবে।"
 
 msgid ""
 "Enabling this feature, will trigger an email to be sent to the customer once "
 "their order is complete."
 msgstr ""
+"এই বৈশিষ্ট্যটি সক্রিয় করলে, গ্রাহকের অর্ডার সম্পূর্ণ হলে, একটি ইমেল প্রেরণ "
+"হবে।"
+
+msgid ""
+"Enabling this feature, will trigger an email to be sent to the user who will "
+"completed the order form vitepos."
+msgstr ""
+"এই বৈশিষ্ট্যটি সক্রিয় করলে, Vitepos অর্ডার সম্পূর্ণ করা ব্যবহারকারীকে ইমেল "
+"প্রেরণ করা হবে।"
+
+msgid ""
+"Enabling this will allow item wise interaction for a single order where the "
+"status of that order items can be change individually"
+msgstr ""
+"এটি সক্ষম করা একটি একক অর্ডারের জন্য আইটেম অনুসারে ইন্টারঅ্যাকশনের অনুমতি "
+"দেবে যেখানে সেই অর্ডার আইটেমগুলির স্থিতি পৃথকভাবে পরিবর্তন করা যেতে পারে"
 
 msgid "Enter amount"
 msgstr "পরিমান লিখুন"
 
 msgid "Equal to"
-msgstr ""
+msgstr "সমান"
 
 msgid "Example `Color`"
 msgstr "উদাহরণ `রঙ`"
@@ -1183,10 +1326,10 @@ msgid "Example Red|Blue|Green "
 msgstr "উদাহরণ লাল|নীল|সবুজ"
 
 msgid "Failed"
-msgstr ""
+msgstr "ব্যর্থ"
 
 msgid "Failed to ignore"
-msgstr ""
+msgstr "উপেক্ষা করতে ব্যর্থ"
 
 msgid "Failed to reset try again"
 msgstr "রিসেট করতে ব্যর্থ,আবার চেষ্টা করুন"
@@ -1195,13 +1338,13 @@ msgid "Failed to update"
 msgstr "আপডেট করতে ব্যর্থ হয়েছে"
 
 msgid "Failed to update stock"
-msgstr ""
+msgstr "স্টক আপডেট করতে ব্যর্থ হয়েছে"
 
 msgid "Favicon"
 msgstr "ফেভআইকন"
 
 msgid "Favorite"
-msgstr ""
+msgstr "প্রিয়"
 
 msgid "Feature Image"
 msgstr "ফিচার ইমেজ"
@@ -1210,10 +1353,13 @@ msgid "Fee"
 msgstr "ফি"
 
 msgid "Field label"
-msgstr ""
+msgstr "ক্ষেত্র লেবেল"
+
+msgid "Field Name"
+msgstr "ক্ষেত্র নাম"
 
 msgid "Fields"
-msgstr ""
+msgstr "ক্ষেত্র"
 
 msgid "First Name"
 msgstr "নামের প্রথম অংশ"
@@ -1222,18 +1368,20 @@ msgid ""
 "First, It calculate the subtotal including any discounts and fees, and then "
 "it apply the tax based on the discounted price."
 msgstr ""
+"প্রথমত, এটি যেকোন ডিসকাউন্ট এবং ফি সহ সাবটোটাল গণনা করে এবং তারপরে ডিসকাউন্ট "
+"মূল্যের উপর ভিত্তি করে ট্যাক্স প্রয়োগ করে।"
 
 msgid "Font Size"
 msgstr "অক্ষরের আকার"
 
 msgid "Font size is required"
-msgstr ""
+msgstr "ফন্ট সাইজ প্রয়োজন"
 
 msgid "Font size must be numeric"
-msgstr ""
+msgstr "ফন্ট সাইজ সংখ্যাসূচক হতে হবে"
 
 msgid "Footer"
-msgstr ""
+msgstr "ফুটার"
 
 msgid "Footer Panel"
 msgstr "ফুটার প্যানেল"
@@ -1247,20 +1395,26 @@ msgstr "আরো বিস্তারিত জানার জন্য অ�
 msgid "For multiple outlet you need to active pro version."
 msgstr "একাধিক আউটলেটের জন্য আপনাকে প্রো সংস্করণ সক্রিয় করতে হবে।"
 
+msgid "Form Customization"
+msgstr "ফর্ম কাস্টমাইজেশন"
+
 msgid "Form is not valid"
 msgstr "ফর্ম বৈধ নয়"
 
 msgid "From Outlet"
-msgstr ""
+msgstr "আউটলেট থেকে"
 
 msgid "From outlet"
-msgstr ""
+msgstr "আউটলেট থেকে"
 
 msgid "From Outlet:"
-msgstr ""
+msgstr "আউটলেট থেকে:"
 
 msgid "Full Refund"
-msgstr ""
+msgstr "পুরো টাকা ফেরত পাবার"
+
+msgid "Full Withdraw"
+msgstr "সম্পূর্ণ প্রত্যাহার"
 
 msgid "Full-screen/Normal-screen"
 msgstr "পূর্ণ-স্ক্রীন/সাধারণ-স্ক্রীন"
@@ -1292,23 +1446,26 @@ msgstr "ক্রয় করতে যান"
 msgid "Go With Current Balance"
 msgstr "গো উইথ কারেন্ট ব্যালেন্স"
 
+msgid "Go With Current Drawer"
+msgstr "বর্তমান ড্রয়ারের সাথে যান"
+
 msgid "Grand Total"
 msgstr "সর্বমোট"
 
 msgid "Grand-total :"
-msgstr ""
+msgstr "সর্বমোট :"
 
 msgid "Grocery"
-msgstr ""
+msgstr "মুদিখানা"
 
 msgid "Half Field"
-msgstr ""
+msgstr "হাফ ফিল্ড"
 
 msgid "have two sides. One admin panel and another is client panel."
 msgstr "দুটি দিক আছে। একটি অ্যাডমিন প্যানেল এবং অন্যটি ক্লায়েন্ট প্যানেল।"
 
 msgid "Header"
-msgstr ""
+msgstr "হেডার"
 
 msgid "Header Panel"
 msgstr "হেডার প্যানেল"
@@ -1326,7 +1483,10 @@ msgid "Help and info"
 msgstr "সাহায্য এবং তথ্য"
 
 msgid "Help text"
-msgstr ""
+msgstr "সাহায্যকারী লেখা"
+
+msgid "Hide"
+msgstr "লুকান"
 
 msgid "Hold"
 msgstr "রাখা"
@@ -1367,20 +1527,25 @@ msgid ""
 "stockable feature before, you may need to transfer your online inventory to "
 "your linked outlet to %{outletname}"
 msgstr ""
+"আপনি যদি আগে একটি পুরানো সংস্করণ ব্যবহার করে থাকেন বা যদি আপনি আগে স্টকযোগ্য "
+"বৈশিষ্ট্যটি সক্ষম না করে থাকেন, তাহলে আপনাকে আপনার অনলাইন ইনভেন্টরিটি আপনার "
+"লিঙ্ক করা আউটলেটে %{outletname} এ স্থানান্তর করতে হতে পারে"
 
 msgid ""
 "If you want to transfer your current online stock to %{outletname} then "
 "click the button below"
 msgstr ""
+"আপনি যদি আপনার বর্তমান অনলাইন স্টকটি %{outletname}-এ স্থানান্তর করতে চান "
+"তাহলে নীচের বোতামে ক্লিক করুন"
 
 msgid "Ignore"
-msgstr ""
+msgstr "উপেক্ষা করুন"
 
 msgid "Ignore successful"
-msgstr ""
+msgstr "সফল উপেক্ষা করুন"
 
 msgid "Ignore Update"
-msgstr ""
+msgstr "আপডেট উপেক্ষা করুন"
 
 msgid "Image"
 msgstr "ছবি"
@@ -1395,10 +1560,10 @@ msgstr ""
 "দায়িত্ব ও কর্তব্য।"
 
 msgid "In Dine"
-msgstr ""
+msgstr "ডাইনে"
 
 msgid "In Kitchen"
-msgstr ""
+msgstr "রান্নাঘরে"
 
 msgid ""
 "In the traditional procedure, a waiter takes the customers order and sends "
@@ -1406,21 +1571,27 @@ msgid ""
 "notified to serve it. After the order has been served, the cashier can "
 "process the payment."
 msgstr ""
+"প্রচলিত পদ্ধতিতে, একজন ওয়েটার গ্রাহকদের অর্ডার নেয় এবং রান্নাঘরে পাঠায়। "
+"রান্নাঘর অর্ডার প্রস্তুত করার পরে, ওয়েটারকে এটি পরিবেশন করার জন্য অবহিত করা "
+"হয়। অর্ডার পরিবেশিত হওয়ার পরে, ক্যাশিয়ার অর্থপ্রদান প্রক্রিয়া করতে পারেন।"
 
 msgid "In-stock"
-msgstr ""
+msgstr "ইন-স্টক"
 
 msgid "Inactive"
 msgstr "নিষ্ক্রিয়"
 
 msgid "Input is empty"
-msgstr ""
+msgstr "ইনপুট খালি"
+
+msgid "Into the buttons"
+msgstr "বাটনের মধ্যে"
 
 msgid "Invalid login information"
 msgstr "অবৈধ লগইন তথ্য"
 
 msgid "Invalid param"
-msgstr ""
+msgstr "অবৈধ পরাম"
 
 msgid "Invalid Request"
 msgstr "ইনভ্যালিড রিকোয়েস্ট"
@@ -1429,42 +1600,46 @@ msgid "Invalid request"
 msgstr "ইনভ্যালিড রিকোয়েস্ট"
 
 msgid "Invalid request param"
-msgstr ""
+msgstr "অবৈধ অনুরোধ প্যারাম"
 
 msgid "Invalid request3"
 msgstr "ইনভ্যালিড রিকোয়েস্ট3"
 
 msgid "Invoice"
-msgstr ""
+msgstr "চালান"
 
 msgid "Invoice Print Settings"
 msgstr "ইনভয়েস প্রিন্ট সেটিংস"
 
 msgid "Is Calculable"
-msgstr ""
+msgstr "গণনাযোগ্য"
 
 msgid "Is Mergeable?"
-msgstr ""
+msgstr "একত্রীকরণযোগ্য?"
 
 msgid "Is Required"
-msgstr ""
+msgstr "প্রয়োজন"
+
+msgid "Is Required Card Last 4 Digit"
+msgstr "শেষ 4 ডিজিটের কার্ড প্রয়োজন"
 
 msgid "Is Required?"
-msgstr ""
+msgstr "প্রয়োজন?"
 
 msgid "Is Selected?"
-msgstr ""
+msgstr "নির্বাচিত?"
 
 msgid "Is Separate Tax?"
-msgstr ""
+msgstr "আলাদা ট্যাক্স কি?"
 
 msgid "It is custom barcode data of woocommerce for vitepos"
 msgstr "এটি VitePOS জন্য WooCommerce-এর কাস্টম বারকোড ডেটা"
 
 msgid "It requires vitepos lite, please install and active vitepos lite first"
 msgstr ""
+"এটির জন্য vitepos lite প্রয়োজন, অনুগ্রহ করে প্রথমে vitepos lite ইনস্টল করুন "
+"এবং সক্রিয় করুন"
 
-#, fuzzy
 #| msgid "It requires woocommerce, please install woocommerce first"
 msgid "It requires woocommerce, please install and active woocommerce first"
 msgstr ""
@@ -1474,39 +1649,68 @@ msgid ""
 "It will allow you to take payment using %{brand} Payment gateway, make sure "
 "you have added %{brand} api info in %{brand} settings tab."
 msgstr ""
+"এটি আপনাকে %{brand} পেমেন্ট গেটওয়ে ব্যবহার করে অর্থপ্রদান করার অনুমতি দেবে, "
+"নিশ্চিত করুন যে আপনি %{brand} সেটিংস ট্যাবে %{brand} api তথ্য যোগ করেছেন।"
 
 msgid "It will allows to take payment using others method."
-msgstr ""
+msgstr "এটি অন্য পদ্ধতি ব্যবহার করে অর্থ প্রদানের অনুমতি দেবে।"
 
 msgid "It will allows to take payment using swipe machine."
-msgstr ""
+msgstr "এটি সোয়াইপ মেশিন ব্যবহার করে অর্থ প্রদানের অনুমতি দেবে।"
 
 msgid "It will protect order if there is not stock of the item"
-msgstr ""
+msgstr "আইটেমটির স্টক না থাকলে এটি অর্ডার রক্ষা করবে"
 
 msgid "Item"
 msgstr "আইটেম"
 
+msgid "Item cancel request is not possible"
+msgstr "আইটেম বাতিল অনুরোধ সম্ভব নয়"
+
+msgid "Item denied from kitchen"
+msgstr "রান্নাঘর থেকে আইটেম অস্বীকার করা হয়েছে"
+
+msgid "Item deny not possible"
+msgstr "আইটেম অস্বীকার সম্ভব নয়"
+
 msgid "Item Details"
 msgstr "আইটেম বিবরণ"
 
+msgid "Item has been cancelled"
+msgstr "আইটেম বাতিল করা হয়েছে"
+
 msgid "Item is not available"
-msgstr ""
+msgstr "আইটেম উপলব্ধ নয়"
+
+msgid "Item is ready"
+msgstr "আইটেম প্রস্তুত"
+
+msgid "Item is ready to serve"
+msgstr "আইটেম পরিবেশন করার জন্য প্রস্তুত"
 
 msgid "Item Name"
 msgstr "আইটেম নাম"
 
 msgid "Item no"
-msgstr ""
+msgstr "আইটেম নংঃ"
+
+msgid "Item remove is not possible"
+msgstr "আইটেম অপসারণ সম্ভব নয়"
+
+msgid "Item started successfully"
+msgstr "আইটেম সফলভাবে শুরু হয়েছে"
+
+msgid "Item wise interaction"
+msgstr "আইটেম অনুযায়ী ইন্টারঅ্যাকশন"
 
 msgid "Items empty"
-msgstr ""
+msgstr "আইটেম খালি"
 
 msgid "Items Price"
 msgstr "আইটেম মূল্য"
 
 msgid "Keep blank for auto height"
-msgstr ""
+msgstr "স্বয়ংক্রিয় উচ্চতার জন্য ফাঁকা রাখুন"
 
 msgid "Keep blank to use default WordPress login."
 msgstr "ডিফল্ট ওয়ার্ডপ্রেস লগইন ব্যবহার করতে ফাঁকা রাখুন।"
@@ -1515,30 +1719,34 @@ msgid ""
 "Keep in mind that this procedure will reset the stock of the WooCommerce "
 "product to zero."
 msgstr ""
+"মনে রাখবেন যে এই পদ্ধতিটি WooCommerce পণ্যের স্টক শূন্যে পুনরায় সেট করবে।"
 
 msgid "Key"
-msgstr ""
+msgstr "চাবি"
 
 msgid "Kitchen"
-msgstr ""
+msgstr "রান্নাঘর"
 
 msgid "Kitchen Involvement"
-msgstr ""
+msgstr "রান্নাঘর জড়িত"
 
 msgid "Kitchen Panel"
-msgstr ""
+msgstr "রান্নাঘর প্যানেল"
 
 msgid "Label"
-msgstr ""
+msgstr "লেবেল"
 
 msgid "Label is required"
-msgstr ""
+msgstr "লেবেল প্রয়োজন"
+
+msgid "Large Screen"
+msgstr "বড় পর্দা"
 
 msgid "Last 4 Digit:"
 msgstr "শেষ 4 ডিজিট:"
 
 msgid "Last 5 Purchase History"
-msgstr ""
+msgstr "শেষ 5 ক্রয়ের ইতিহাস"
 
 msgid "Last 7 days cash drawer logs"
 msgstr "গত 7 দিনের ক্যাশ ড্রয়ার লগ"
@@ -1553,7 +1761,7 @@ msgid "Last sync :"
 msgstr "শেষ সিঙ্ক:"
 
 msgid "Left,Right"
-msgstr ""
+msgstr "বাম ডান"
 
 msgid "Length"
 msgstr "দৈর্ঘ্য"
@@ -1580,16 +1788,16 @@ msgid "Loading ..."
 msgstr "লোড হচ্ছে..."
 
 msgid "Loading Addon Details..."
-msgstr ""
+msgstr "অ্যাডঅনের বিবরণ লোড হচ্ছে..."
 
 msgid "Loading cash drawer details..."
-msgstr ""
+msgstr "নগদ ড্রয়ারের বিবরণ লোড হচ্ছে..."
 
 msgid "Loading Custom Field Details"
-msgstr ""
+msgstr "কাস্টম ফিল্ডের বিবরণ লোড হচ্ছে"
 
 msgid "Loading Custom Fields..."
-msgstr ""
+msgstr "কাস্টম ক্ষেত্র লোড হচ্ছে..."
 
 msgid "Loading Customer Details..."
 msgstr "গ্রাহকের বিবরণ লোড হচ্ছে..."
@@ -1598,22 +1806,22 @@ msgid "Loading Data"
 msgstr "তথ্য লোড হচ্ছে"
 
 msgid "Loading Deny Reasons..."
-msgstr ""
+msgstr "কারণ অস্বীকার লোড হচ্ছে..."
 
 msgid "Loading From"
 msgstr "লোডিং ফ্রোম"
 
 msgid "Loading Message Details..."
-msgstr ""
+msgstr "বার্তার বিশদ বিবরণ লোড হচ্ছে..."
 
 msgid "Loading Messages..."
-msgstr ""
+msgstr "বার্তা লোড হচ্ছে..."
 
 msgid "Loading order details..."
-msgstr ""
+msgstr "অর্ডারের বিশদ বিবরণ লোড হচ্ছে..."
 
 msgid "Loading orders..."
-msgstr ""
+msgstr "অর্ডার লোড হচ্ছে..."
 
 msgid "Loading Outlet"
 msgstr "আউটলেট লোড হচ্ছে"
@@ -1637,13 +1845,13 @@ msgid "Loading Settings"
 msgstr "সেটিংস লোড হচ্ছে"
 
 msgid "Loading Stock Logs..."
-msgstr ""
+msgstr "স্টক লগ লোড হচ্ছে..."
 
 msgid "Loading Table Details..."
-msgstr ""
+msgstr "সারণী বিশদ লোড হচ্ছে..."
 
 msgid "Loading Transfer Details..."
-msgstr ""
+msgstr "স্থানান্তরের বিবরণ লোড হচ্ছে..."
 
 msgid "Loading User Details..."
 msgstr "ব্যবহারকারীর বিবরণ লোড হচ্ছে..."
@@ -1663,8 +1871,11 @@ msgstr "তালা"
 msgid "Lock Screen"
 msgstr "লক স্ক্রিন"
 
+msgid "Log"
+msgstr "লগ"
+
 msgid "Login to pusher.com"
-msgstr ""
+msgstr "pusher.com এ লগইন করুন"
 
 msgid "Logo"
 msgstr "লোগো"
@@ -1676,22 +1887,22 @@ msgid "Main Branch"
 msgstr "প্রধান শাখা"
 
 msgid "Make Active"
-msgstr ""
+msgstr "সক্রিয় করুন"
 
 msgid "Make Completed"
-msgstr ""
+msgstr "সম্পন্ন করা"
 
 msgid "Make favorite"
 msgstr "পছন্দসই করা"
 
 msgid "Make Inactive"
-msgstr ""
+msgstr "নিষ্ক্রিয় করুন"
 
 msgid "Make Main"
 msgstr "মেক মেইন"
 
 msgid "Make Serve"
-msgstr ""
+msgstr "পরিবেশন করুন"
 
 msgid "Manage Barcode"
 msgstr "বারকোড পরিচালনা করুন"
@@ -1700,7 +1911,7 @@ msgid "Manage Customer"
 msgstr "গ্রাহক পরিচালনা করুন"
 
 msgid "Manage Drawer Log"
-msgstr ""
+msgstr "ড্রয়ার লগ পরিচালনা করুন"
 
 msgid "Manage Orders"
 msgstr "অর্ডার পরিচালনা করুন"
@@ -1723,23 +1934,29 @@ msgstr "ব্যবহারকারী পরিচালনা করুন"
 msgid "Manage Vendor"
 msgstr "বিক্রেতা পরিচালনা করুন"
 
+msgid "Margin Left"
+msgstr "মার্জিন বাম"
+
+msgid "Margin Right"
+msgstr "ডান মার্জিন"
+
 msgid "Max Discount"
 msgstr "সর্বোচ্চ ছাড়"
 
 msgid "Max Limit"
-msgstr ""
+msgstr "সর্বোচ্চ সীমা"
 
 msgid "Menu"
 msgstr "মেনু"
 
 msgid "Message"
-msgstr ""
+msgstr "বার্তা"
 
 msgid "Message Type"
-msgstr ""
+msgstr "বার্তার ধরন"
 
 msgid "Messages"
-msgstr ""
+msgstr "বার্তা"
 
 msgid "Missing dependency"
 msgstr "মিসিং ডিপেন্ডেন্সি"
@@ -1750,8 +1967,11 @@ msgstr "মিমি"
 msgid "Mobile"
 msgstr "মুঠোফোন"
 
+msgid "Mobile Screen"
+msgstr "মোবাইল স্ক্রীন"
+
 msgid "Module"
-msgstr ""
+msgstr "মডিউল"
 
 msgid "More Details"
 msgstr "আরো বিস্তারিত"
@@ -1763,13 +1983,13 @@ msgid "Move to role does not exists"
 msgstr "রোলে সরানো বিদ্যমান নেই৷"
 
 msgid "Mute"
-msgstr ""
+msgstr "নিঃশব্দ"
 
 msgid "Name"
 msgstr "নাম"
 
 msgid "Name :"
-msgstr ""
+msgstr "নাম:"
 
 msgid "Need to close cash drawer to change outlet. Do you want to close now?"
 msgstr ""
@@ -1781,11 +2001,14 @@ msgstr "নেট ইউনিট খরচ"
 msgid "new"
 msgstr "নতুন"
 
+msgid "New Drawer"
+msgstr "নতুন ড্রয়ার"
+
 msgid "New Field"
-msgstr ""
+msgstr "নূতন ক্ষেত্র"
 
 msgid "New Order"
-msgstr ""
+msgstr "নতুন আদেশ"
 
 msgid "New password"
 msgstr "নতুন পাসওয়ার্ড"
@@ -1802,11 +2025,14 @@ msgstr "না"
 msgid "No %{type} found"
 msgstr "কোনো %{type} পাওয়া যায়নি"
 
+msgid "No action initialize"
+msgstr "কোন কাজ শুরু করা হয় না"
+
 msgid "No active orders found"
-msgstr ""
+msgstr "কোনো সক্রিয় আদেশ পাওয়া যায়নি"
 
 msgid "No addon found with this param"
-msgstr ""
+msgstr "এই প্যারামের সাথে কোন অ্যাডন পাওয়া যায়নি"
 
 msgid "No address found"
 msgstr "কোনো ঠিকানা পাওয়া যায়নি"
@@ -1815,7 +2041,7 @@ msgid "No barcode found for this product"
 msgstr "এই পণ্যের জন্য কোন বারকোড পাওয়া যায়নি"
 
 msgid "No cancelled order found"
-msgstr ""
+msgstr "কোন বাতিল আদেশ পাওয়া যায়নি"
 
 msgid "No cash drawer info found"
 msgstr "কোন ক্যাশ ড্রয়ার তথ্য পাওয়া যায়নি"
@@ -1826,17 +2052,23 @@ msgstr "কোন ক্যাশ ড্রয়ার তথ্য পাও�
 msgid "No change for update"
 msgstr "আপডেটের জন্য কোন পরিবর্তন নেই"
 
+msgid "No change for update "
+msgstr "আপডেটের জন্য কোন পরিবর্তন নেই"
+
+msgid "No change to update"
+msgstr "আপডেট করার জন্য কোন পরিবর্তন নেই"
+
 msgid "No counter found with these ids"
 msgstr "এই আইডিগুলির সাথে কোন কাউন্টার পাওয়া যায়নি"
 
 msgid "No custom field found with these ids"
-msgstr ""
+msgstr "এই আইডিগুলির সাথে কোনও কাস্টম ক্ষেত্র পাওয়া যায়নি৷"
 
 msgid "No Customer found"
 msgstr "কোন গ্রাহক পাওয়া যায়নি"
 
 msgid "No customer found"
-msgstr ""
+msgstr "কোনো গ্রাহক পাওয়া যায়নি"
 
 msgid "No customer found to add"
 msgstr "কোন গ্রাহক পাওয়া যায়নি যোগ করার জন্য"
@@ -1848,28 +2080,28 @@ msgid "No expiry"
 msgstr "কোন মেয়াদ নেই"
 
 msgid "No fields Added"
-msgstr ""
+msgstr "কোন ক্ষেত্র যোগ করা হয়নি"
 
 msgid "No history found"
-msgstr ""
+msgstr "কোনো ইতিহাস পাওয়া যায়নি"
 
 msgid "No item found for this category or search"
 msgstr "এই বিভাগ বা অনুসন্ধানের জন্য কোন আইটেম পাওয়া যায়নি"
 
 msgid "No item found to transfer"
-msgstr ""
+msgstr "স্থানান্তর করার জন্য কোনো আইটেম পাওয়া যায়নি"
 
 msgid "No lined outlet found"
-msgstr ""
+msgstr "কোনো রেখাযুক্ত আউটলেট পাওয়া যায়নি"
 
 msgid "No logged in user"
 msgstr "কোন লগইন ব্যবহারকারী নাই"
 
 msgid "No logs found for this product"
-msgstr ""
+msgstr "এই পণ্যের জন্য কোন লগ পাওয়া যায়নি"
 
 msgid "No message found"
-msgstr ""
+msgstr "কোন বার্তা পাওয়া যায়নি"
 
 msgid "No name found"
 msgstr "কোনো নাম পাওয়া যায়নি"
@@ -1878,18 +2110,17 @@ msgid "No number found"
 msgstr "কোনো নম্বর পাওয়া যায়নি"
 
 msgid "No Offline order for restaurent"
-msgstr ""
+msgstr "রেস্টুরেন্টের জন্য কোন অফলাইন অর্ডার নেই"
 
 msgid "No offline outlet and counter found"
 msgstr "কোনো অফলাইন আউটলেট এবং কাউন্টার পাওয়া যায়নি"
 
 msgid "No option added"
-msgstr ""
+msgstr "কোনো বিকল্প যোগ করা হয়নি"
 
 msgid "No order found"
-msgstr ""
+msgstr "কোনো অর্ডার পাওয়া যায়নি"
 
-#, fuzzy
 #| msgid "No item found"
 msgid "No outlet found"
 msgstr "কোন আইটেম পাওয়া যায়নি"
@@ -1898,7 +2129,7 @@ msgid "No Outlet found with these ids"
 msgstr "এই আইডিগুলির সাথে কোন আউটলেট পাওয়া যায়নি"
 
 msgid "No outlet found:"
-msgstr ""
+msgstr "কোন আউটলেট পাওয়া যায়নি:"
 
 msgid "No permission to add discount"
 msgstr "ছাড় যোগ করার অনুমতি নেই"
@@ -1913,31 +2144,31 @@ msgid "No role found with this request param"
 msgstr "এই রিকোয়েস্ট পেরামের সাথে কোন রোল পাওয়া যায়নি"
 
 msgid "No Rules Added"
-msgstr ""
+msgstr "কোন নিয়ম যোগ করা হয়নি"
 
 msgid "No Rules Group Added"
-msgstr ""
+msgstr "কোন নিয়ম গ্রুপ যোগ করা হয়নি"
 
 msgid "No short messages found"
-msgstr ""
+msgstr "কোন সংক্ষিপ্ত বার্তা পাওয়া যায়নি"
 
 msgid "No table found please add some table"
-msgstr ""
+msgstr "কোন টেবিল পাওয়া যায়নি কিছু টেবিল যোগ করুন"
 
 msgid "No Table found please add table first"
-msgstr ""
+msgstr "কোন টেবিল পাওয়া যায়নি দয়া করে প্রথমে টেবিল যোগ করুন"
 
 msgid "No Table found with this param"
-msgstr ""
+msgstr "এই প্যারামের সাথে কোন টেবিল পাওয়া যায়নি"
 
 msgid "No transfer %{type} found"
-msgstr ""
+msgstr "কোনো স্থানান্তর %{type} পাওয়া যায়নি"
 
 msgid "No Variants Selected"
 msgstr "কোন ভেরিয়েন্ট নির্বাচিত হয়নি"
 
 msgid "No variations"
-msgstr ""
+msgstr "কোন বৈচিত্র নেই"
 
 msgid "No vendor found with this param"
 msgstr "এই প্যারামের সাথে কোন বিক্রেতা পাওয়া যায়নি"
@@ -1945,23 +2176,26 @@ msgstr "এই প্যারামের সাথে কোন বিক্�
 msgid "Non editable role"
 msgstr "ইডিটযোগ্য রোল নেই"
 
+msgid "Nonce error"
+msgstr "কোন ত্রুটি"
+
 msgid "None"
 msgstr "কোনোটিই নয়"
 
 msgid "Not equal to"
-msgstr ""
+msgstr "অসমান"
 
 msgid "Not Received yet"
-msgstr ""
+msgstr "এখনও প্রাপ্ত হয়নি"
 
 msgid "Not Updated"
-msgstr ""
+msgstr "আপডেট করা হয়নি"
 
 msgid "Not updated"
 msgstr "আপডেট করা হয়নি"
 
 msgid "Not valid"
-msgstr ""
+msgstr "বৈধ না"
 
 msgid "Note"
 msgstr "নোট"
@@ -1970,13 +2204,13 @@ msgid "Note :"
 msgstr "নোট :"
 
 msgid "NOTE : Regular price is less than purchase price"
-msgstr ""
+msgstr "দ্রষ্টব্য: নিয়মিত মূল্য ক্রয় মূল্যের চেয়ে কম"
 
 msgid "Note:"
 msgstr "নোট:"
 
 msgid "Notes"
-msgstr ""
+msgstr "মন্তব্য"
 
 msgid "Notification details"
 msgstr "নোটিফিকেশন বিবরণ"
@@ -1988,15 +2222,19 @@ msgid ""
 "WooCommerce admin panel. Vitepos purchase or add stock will not work for "
 "online stock."
 msgstr ""
+"এখন Vitepos প্রতিটি আউটলেটের নিজস্ব আলাদা স্টক থাকবে। আপনার ওয়েবসাইটে "
+"অনলাইন বিক্রয়ের জন্য, সিস্টেমটি WooCommerce থেকে ডিফল্ট স্টক ব্যবহার করবে। "
+"অনলাইন বিক্রয় স্টক পরিচালনা করতে, কেবল WooCommerce অ্যাডমিন প্যানেল থেকে "
+"স্টক যোগ করুন। Vitepos ক্রয় বা স্টক যোগ অনলাইন স্টক জন্য কাজ করবে না."
 
 msgid "Number"
-msgstr ""
+msgstr "সংখ্যা"
 
 msgid "Number of barcode in a page"
-msgstr ""
+msgstr "একটি পৃষ্ঠায় বারকোডের সংখ্যা"
 
 msgid "Number of person"
-msgstr ""
+msgstr "ব্যক্তির সংখ্যা"
 
 msgid "Offline"
 msgstr "অফলাইন"
@@ -2016,11 +2254,17 @@ msgstr "অফলাইন বিক্রয়"
 msgid "Offline sale allowed in pro version"
 msgstr "প্রো সংস্করণে অফলাইন বিক্রয় অনুমোদিত"
 
+msgid "On Cart/Invoice"
+msgstr "কার্ট/ইনভয়েসে"
+
 msgid "On going"
 msgstr "চলছে"
 
 msgid "On hold"
-msgstr ""
+msgstr "স্হগিত"
+
+msgid "On Printed Receipt/Invoice"
+msgstr "মুদ্রিত রসিদ/চালানের উপর"
 
 msgid ""
 "On the other hand, on the client side, you can set the outlet agents you "
@@ -2033,10 +2277,10 @@ msgid "Online"
 msgstr "অনলাইন"
 
 msgid "Online stock link with outlet"
-msgstr ""
+msgstr "আউটলেট সহ অনলাইন স্টক লিঙ্ক"
 
 msgid "Online Stock Outlet"
-msgstr ""
+msgstr "অনলাইন স্টক আউটলেট"
 
 msgid "Oops !! "
 msgstr "উফ!!"
@@ -2069,19 +2313,22 @@ msgid "Options"
 msgstr "অপশন"
 
 msgid "OR"
-msgstr ""
+msgstr "বা"
 
 msgid "Order # %{ordNumber}"
 msgstr "অর্ডার # %{ordNumber}"
 
 msgid "Order already in completed status, it is not cancelable"
-msgstr ""
+msgstr "অর্ডার ইতিমধ্যেই সম্পূর্ণ অবস্থায় আছে, এটি বাতিলযোগ্য নয়"
 
 msgid "Order already refunded"
-msgstr ""
+msgstr "অর্ডার ইতিমধ্যে ফেরত"
 
 msgid "Order cancellation is not possible"
-msgstr ""
+msgstr "অর্ডার বাতিল করা সম্ভব নয়"
+
+msgid "Order Custom Fields"
+msgstr "কাস্টম ক্ষেত্রগুলি অর্ডার করুন"
 
 msgid "Order Details"
 msgstr "অর্ডার বিবরণী"
@@ -2090,22 +2337,22 @@ msgid "Order Details Loading..."
 msgstr "অর্ডারের বিবরণ লোড হচ্ছে..."
 
 msgid "Order has been partially refunded before this request"
-msgstr ""
+msgstr "এই অনুরোধের আগে অর্ডারটি আংশিকভাবে ফেরত দেওয়া হয়েছে"
 
 msgid "Order Has been refunded successfully"
-msgstr ""
+msgstr "অর্ডার সফলভাবে ফেরত দেওয়া হয়েছে"
 
 msgid "Order Info"
-msgstr ""
+msgstr "অর্ডার তথ্য"
 
 msgid "Order info"
-msgstr ""
+msgstr "অর্ডার তথ্য"
 
 msgid "Order is cancelled"
-msgstr ""
+msgstr "অর্ডার বাতিল করা হয়েছে"
 
 msgid "Order is loading..."
-msgstr ""
+msgstr "অর্ডার লোড হচ্ছে..."
 
 msgid "Order List Loading ..."
 msgstr "অর্ডার তালিকা লোড হচ্ছে..."
@@ -2117,43 +2364,49 @@ msgid "Order no label"
 msgstr "অর্ডার নম্বর লেবেল"
 
 msgid "Order No:"
-msgstr ""
+msgstr "আদেশ নং:"
 
 msgid "Order not found"
-msgstr ""
+msgstr "অর্ডার পাওয়া যায়নি"
 
 msgid "Order Note"
-msgstr ""
+msgstr "অর্ডার নোট"
 
 msgid "Order requires payment process"
-msgstr ""
+msgstr "অর্ডার পেমেন্ট প্রক্রিয়া প্রয়োজন"
 
 msgid "Order Status :"
 msgstr "অর্ডারের অবস্থা :"
 
-msgid "Order successfully completed"
-msgstr ""
+msgid "Order successful"
+msgstr "অর্ডার সফল"
 
 msgid "Order successfully sent to kitchen"
-msgstr ""
+msgstr "অর্ডার সফলভাবে রান্নাঘরে পাঠানো হয়েছে"
 
 msgid "Order Tax"
 msgstr "অর্ডার ট্যাক্স"
 
 msgid "Order Time"
-msgstr ""
+msgstr "অর্ডার করার সময়"
 
 msgid "Order Total"
 msgstr "অর্ডার মোট"
 
 msgid "Order Type"
-msgstr ""
+msgstr "আদেশ মত"
+
+msgid "Order update failed"
+msgstr "অর্ডার আপডেট ব্যর্থ হয়েছে"
+
+msgid "Order updated successfully"
+msgstr "অর্ডার সফলভাবে আপডেট করা হয়েছে"
 
 msgid "Orders"
 msgstr "অর্ডার"
 
 msgid "Orders Details"
-msgstr ""
+msgstr "অর্ডার বিশদ"
 
 msgid "Orders Item*"
 msgstr "অর্ডার আইটেম*"
@@ -2165,13 +2418,13 @@ msgid "Others"
 msgstr "অন্যান্য"
 
 msgid "others"
-msgstr ""
+msgstr "অন্যান্য"
 
 msgid "Out of Stock"
-msgstr ""
+msgstr "স্টক আউট"
 
 msgid "Out of stock"
-msgstr ""
+msgstr "স্টক শেষ"
 
 msgid "Outlet"
 msgstr "আউটলেট"
@@ -2183,7 +2436,7 @@ msgid "Outlet - Counter"
 msgstr "আউটলেট - কাউন্টার"
 
 msgid "Outlet :"
-msgstr ""
+msgstr "আউটলেট:"
 
 msgid "Outlet added successfully"
 msgstr "আউটলেট সফলভাবে যোগ করা হয়েছে"
@@ -2210,7 +2463,7 @@ msgid "Outlet Name"
 msgstr "আউটলেটের নাম"
 
 msgid "Outlet param missing"
-msgstr ""
+msgstr "আউটলেট প্যারাম অনুপস্থিত"
 
 msgid "Outlet Phone"
 msgstr "আউটলেট ফোন"
@@ -2222,7 +2475,7 @@ msgid "Outlet User List"
 msgstr "আউটলেট ব্যবহারকারীর তালিকা"
 
 msgid "Outlet wise stock (Multi stocks)"
-msgstr ""
+msgstr "আউটলেট অনুযায়ী স্টক (মাল্টি স্টক)"
 
 msgid "Outlet:"
 msgstr "আউটলেট:"
@@ -2231,28 +2484,28 @@ msgid "Page"
 msgstr "পেজ"
 
 msgid "Page break counter"
-msgstr ""
+msgstr "পৃষ্ঠা বিরতি পাল্টা"
 
 msgid "Page Height"
-msgstr ""
+msgstr "পৃষ্ঠার উচ্চতা"
 
 msgid "Page height must be numeric"
-msgstr ""
+msgstr "পৃষ্ঠার উচ্চতা সাংখ্যিক হতে হবে"
 
 msgid "Page Padding"
-msgstr ""
+msgstr "পৃষ্ঠা প্যাডিং"
 
 msgid "Page padding left,right can not be empty"
-msgstr ""
+msgstr "পৃষ্ঠা প্যাডিং বাম, ডান খালি করা যাবে না"
 
 msgid "Page padding left,right must be numeric"
-msgstr ""
+msgstr "পৃষ্ঠা প্যাডিং বাম, ডান সংখ্যাসূচক হতে হবে"
 
 msgid "Page padding top,bottom can not be empty"
-msgstr ""
+msgstr "পৃষ্ঠা প্যাডিং শীর্ষ, নীচে খালি করা যাবে না"
 
 msgid "Page padding top,bottom must be numeric"
-msgstr ""
+msgstr "পৃষ্ঠা প্যাডিং শীর্ষ, নীচে সংখ্যাসূচক হতে হবে"
 
 msgid "Page Settings"
 msgstr "পেজ সেটিংস"
@@ -2261,10 +2514,10 @@ msgid "Page Width"
 msgstr "পেজর প্রস্থ"
 
 msgid "Page width is required"
-msgstr ""
+msgstr "পৃষ্ঠার প্রস্থ প্রয়োজন"
 
 msgid "Page width must be numeric"
-msgstr ""
+msgstr "পৃষ্ঠার প্রস্থ অবশ্যই সাংখ্যিক হতে হবে"
 
 msgid "Paid"
 msgstr "পেইড"
@@ -2276,10 +2529,13 @@ msgid "Paper Size"
 msgstr "কাগজের আকার"
 
 msgid "Parcel"
-msgstr ""
+msgstr "পার্সেল"
 
 msgid "Parcel mode is chosen"
-msgstr ""
+msgstr "পার্সেল মোড নির্বাচন করা হয়"
+
+msgid "Partial"
+msgstr "আংশিক"
 
 msgid "Password"
 msgstr "পাসওয়ার্ড"
@@ -2294,7 +2550,7 @@ msgid "Pay"
 msgstr "পরিশোধ"
 
 msgid "Pay First"
-msgstr ""
+msgstr "আগে পরিশোধ"
 
 msgid ""
 "Pay first procedure, customers are required to pay for their meal upfront at "
@@ -2302,18 +2558,23 @@ msgid ""
 "seated or served. After paying, the customer is given a receipt or a token, "
 "which they can then present to the server to receive their food."
 msgstr ""
+"প্রথম পদ্ধতিতে অর্থ প্রদান করুন, গ্রাহকদের তাদের বসার বা পরিবেশন করার আগে "
+"একটি নির্দিষ্ট স্থানে, সাধারণত ক্যাশিয়ার কাউন্টারে তাদের খাবারের জন্য "
+"অগ্রিম অর্থ প্রদান করতে হবে। অর্থ প্রদানের পরে, গ্রাহককে একটি রসিদ বা একটি "
+"টোকেন দেওয়া হয়, যা তারা তাদের খাবার গ্রহণের জন্য সার্ভারে উপস্থাপন করতে "
+"পারে।"
 
 msgid "Pay Now"
-msgstr "এখন পরিশোধ করুন"
+msgstr "পরিশোধ করুন"
 
 msgid "Payment"
-msgstr ""
+msgstr "পেমেন্ট"
 
 msgid "Payment Amount"
 msgstr "পরিশোধিত অর্থ"
 
 msgid "Payment data missing"
-msgstr ""
+msgstr "পেমেন্ট ডেটা অনুপস্থিত"
 
 msgid "Payment Method"
 msgstr "মূল্যপরিশোধ পদ্ধতি"
@@ -2325,16 +2586,16 @@ msgid "Payment processing ..."
 msgstr "পেমেন্ট প্রসেসিং ..."
 
 msgid "Payment Settings"
-msgstr ""
+msgstr "পেমেন্ট সেটিংস"
 
 msgid "Payment Status:"
 msgstr "লেনদেনের অবস্থা:"
 
 msgid "Pending"
-msgstr ""
+msgstr "বিচারাধীন"
 
 msgid "Pending payment"
-msgstr ""
+msgstr "অপেক্ষারত পেমেন্ট"
 
 msgid "Personal Information"
 msgstr "ব্যক্তিগত তথ্য"
@@ -2343,18 +2604,20 @@ msgid "Phone"
 msgstr "ফোন"
 
 msgid "Place to show"
-msgstr ""
+msgstr "দেখানোর জায়গা"
 
 msgid "Placeholder"
 msgstr "প্লেসহোল্ডের"
 
 msgid "Please add a width for paper size"
-msgstr ""
+msgstr "কাগজ আকারের জন্য একটি প্রস্থ যোগ করুন"
 
 msgid ""
 "Please install and activate Vitepos Lite version greater than 2.0.3 as there "
 "is a mismatch with the Vitepos Lite version."
 msgstr ""
+"অনুগ্রহ করে 2.0.3-এর থেকে বড় Vitepos Lite সংস্করণটি ইনস্টল এবং সক্রিয় করুন "
+"কারণ Vitepos Lite সংস্করণের সাথে কোনো মিল নেই।"
 
 msgid "Please login again,no user found logged in."
 msgstr ""
@@ -2370,7 +2633,7 @@ msgid "Please provide valid variation SKU or change name of product"
 msgstr "অনুগ্রহ করে বৈধ বৈচিত্র্য SKU প্রদান করুন বা পণ্যের নাম পরিবর্তন করুন"
 
 msgid "Please return amount"
-msgstr ""
+msgstr "টাকা ফেরত দয়া করে"
 
 msgid "Please wait .."
 msgstr "অনুগ্রহপূর্বক অপেক্ষা করুন .."
@@ -2400,7 +2663,7 @@ msgid "Pos Menu"
 msgstr "Pos মেনু"
 
 msgid "POS Mode"
-msgstr ""
+msgstr "POS মোড"
 
 msgid "POS Page"
 msgstr "POS পেজ"
@@ -2408,8 +2671,8 @@ msgstr "POS পেজ"
 msgid "POS Products Per Row"
 msgstr "প্রতি সারি POS পণ্য"
 
-msgid "Pos Purchase"
-msgstr "Pos ক্রয়"
+msgid "Position"
+msgstr "অবস্থান"
 
 msgid "Post Code"
 msgstr "পোস্ট কোড"
@@ -2418,49 +2681,55 @@ msgid "Premium Support"
 msgstr "প্রিমিয়াম সমর্থন"
 
 msgid "Preparing"
-msgstr ""
+msgstr "প্রস্তুতি নিচ্ছে"
 
 msgid "Previous"
-msgstr ""
+msgstr "আগে"
 
 msgid "Previous Balance"
-msgstr ""
+msgstr "পূর্বের হিসাব"
 
 msgid "Previous Balance :"
 msgstr "পূর্বের হিসাব :"
 
 msgid "Previous Cost"
-msgstr ""
+msgstr "পূর্ববর্তী খরচ"
 
 msgid "Previous purchase cost :"
-msgstr ""
+msgstr "আগের ক্রয় খরচ:"
 
 msgid "Previous Purchase Price"
-msgstr ""
+msgstr "পূর্ববর্তী ক্রয় মূল্য"
 
 msgid "Price"
 msgstr "দাম"
 
 msgid "Price :"
-msgstr ""
+msgstr "মূল্য:"
+
+msgid "Price Customization"
+msgstr "মূল্য কাস্টমাইজেশন"
 
 msgid "Price Update list"
-msgstr ""
+msgstr "মূল্য আপডেট তালিকা"
 
 msgid "price updated product"
-msgstr ""
+msgstr "মূল্য আপডেট পণ্য"
+
+msgid "Price will be "
+msgstr "দাম হবে"
 
 msgid "Prices not updated "
-msgstr ""
+msgstr "দাম আপডেট করা হয়নি"
 
 msgid "Prices updated "
-msgstr ""
+msgstr "দাম আপডেট করা হয়েছে"
 
 msgid "Print"
 msgstr "প্রিন্ট"
 
 msgid "Print Order"
-msgstr ""
+msgstr "মুদ্রণ অর্ডার"
 
 msgid "Print Receipt"
 msgstr "প্রিন্ট রসিদ"
@@ -2469,7 +2738,7 @@ msgid "Print Settings"
 msgstr "প্রিন্ট সেটিংস"
 
 msgid "Private"
-msgstr ""
+msgstr "ব্যক্তিগত"
 
 msgid "Pro version required"
 msgstr "প্রো সংস্করণ প্রয়োজন"
@@ -2481,7 +2750,7 @@ msgid "Processed By"
 msgstr "প্রসেসেড বাই"
 
 msgid "Processing"
-msgstr ""
+msgstr "প্রক্রিয়াকরণ"
 
 msgid "Product"
 msgstr "পণ্য"
@@ -2514,13 +2783,13 @@ msgid "Product Name"
 msgstr "পণ্যের নাম"
 
 msgid "Product name :"
-msgstr ""
+msgstr "পণ্যের নাম :"
 
 msgid "Product Status"
-msgstr ""
+msgstr "পণ্যের অবস্থা"
 
 msgid "Product Stock Logs"
-msgstr ""
+msgstr "পণ্য স্টক লগ"
 
 msgid "Product Syncing"
 msgstr "পণ্য সিঙ্কিং"
@@ -2544,22 +2813,19 @@ msgid "Profile Info"
 msgstr "প্রোফাইল তথ্য"
 
 msgid "Property"
-msgstr "সম্পত্তি"
+msgstr "বৈশিষ্ট্য"
 
 msgid "Publishable key"
-msgstr ""
+msgstr "প্রকাশযোগ্য কী"
 
 msgid "Published"
-msgstr ""
+msgstr "প্রকাশিত হয়েছে"
 
 msgid "Purchase"
 msgstr "ক্রয়"
 
 msgid "Purchase Details"
 msgstr "ক্রয় বিবরণ"
-
-msgid "Purchase Item"
-msgstr "আইটেম ক্রয়"
 
 msgid "Purchase List"
 msgstr "ক্রয় তালিকা"
@@ -2576,9 +2842,6 @@ msgstr "ক্রয় করেছে:"
 msgid "Purchased Date:"
 msgstr "কেনার তারিখ:"
 
-msgid "Purchased failed"
-msgstr "ক্রয় করা ব্যর্থ হয়েছে৷"
-
 msgid "Purchased Items"
 msgstr "আইটেম কেনা"
 
@@ -2586,16 +2849,16 @@ msgid "Purchased No:"
 msgstr "ক্রয়কৃত নম্বর:"
 
 msgid "Push Settings"
-msgstr ""
+msgstr "পুশ সেটিংস"
 
 msgid "px"
 msgstr "px"
 
 msgid "QR-code"
-msgstr ""
+msgstr "QR-কোড"
 
 msgid "Qrcode"
-msgstr ""
+msgstr "Qrcode"
 
 msgid "Qty:"
 msgstr "পরিমাণ:"
@@ -2604,100 +2867,104 @@ msgid "Quantity"
 msgstr "পরিমাণ"
 
 msgid "quantity is"
-msgstr ""
+msgstr "পরিমাণ হয়"
 
 msgid "Radio"
-msgstr ""
+msgstr "রেডিও"
 
 msgid "Re-type New password"
 msgstr "নতুন পাসওয়ার্ড পুনরায় টাইপ করুন"
 
+msgid "Ready"
+msgstr "প্রস্তুত"
+
 msgid "Ready to Serve"
-msgstr ""
+msgstr "পরিবেশন করার জন্য প্রস্তুত"
 
 msgid "Ready to serve"
-msgstr ""
+msgstr "পরিবেশন করার জন্য প্রস্তুত"
 
 msgid "Receive"
-msgstr ""
+msgstr "গ্রহণ করুন"
 
 msgid "Receive By"
-msgstr ""
+msgstr "দ্বারা গ্রহণ"
 
 msgid "Receive Date"
-msgstr ""
+msgstr "গ্রহণের তারিখ"
 
 msgid "Receive Note:"
-msgstr ""
+msgstr "নোট গ্রহণ করুন:"
 
 msgid "Receive Transfer"
-msgstr ""
+msgstr "স্থানান্তর গ্রহণ"
 
 msgid "Receiving Stocks"
-msgstr ""
+msgstr "স্টক গ্রহণ"
 
 msgid "Recommend logo height %{logoHeight}."
 msgstr "লোগোর উচ্চতা %{logoHeight} সুপারিশ করুন।"
 
 msgid "Recommend logo height 60px."
-msgstr ""
+msgstr "লোগোর উচ্চতা 60px সুপারিশ করুন।"
 
 msgid "Reduced rate"
 msgstr "হ্রাসকৃত মূল্য"
 
 msgid "Ref"
-msgstr ""
+msgstr "রেফ"
 
 msgid "Refresh App"
 msgstr "অ্যাপ রিফ্রেশ করুন"
 
 msgid "Refund"
-msgstr ""
+msgstr "ফেরত"
 
 msgid "Refund Discount:"
-msgstr ""
+msgstr "রিফান্ড ডিসকাউন্ট:"
 
 msgid "Refund Fee :"
-msgstr ""
+msgstr "ফেরত ফি:"
 
 msgid "Refund Grand-total :"
-msgstr ""
+msgstr "রিফান্ড গ্র্যান্ড-মোট:"
 
 msgid "Refund Id "
-msgstr ""
+msgstr "রিফান্ড আইডি"
 
-msgid "Refund Info\""
-msgstr ""
+#| msgid "Refund Info\""
+msgid "Refund Info"
+msgstr "ফেরতের তথ্য"
 
 msgid "Refund is not possible, no cash drawer found"
-msgstr ""
+msgstr "ফেরত সম্ভব নয়, নগদ ড্রয়ার পাওয়া যায়নি"
 
 msgid "Refund List"
-msgstr ""
+msgstr "ফেরত তালিকা"
 
 msgid "Refund Orders"
-msgstr ""
+msgstr "ফেরত আদেশ"
 
 msgid "Refund Qty"
-msgstr ""
+msgstr "ফেরতের পরিমাণ"
 
 msgid "Refund Reason"
-msgstr ""
+msgstr "রিফান্ডের কারণ"
 
 msgid "Refund Sub-total :"
-msgstr ""
+msgstr "ফেরত উপ-মোট:"
 
 msgid "Refund Tax-total :"
-msgstr ""
+msgstr "রিফান্ড ট্যাক্স-মোট:"
 
 msgid "Refunded"
-msgstr ""
+msgstr "ফেরত দেওয়া হয়েছে"
 
 msgid "Refunded but cash drawer amount update failed"
-msgstr ""
+msgstr "ফেরত দেওয়া হয়েছে কিন্তু নগদ ড্রয়ার পরিমাণ আপডেট ব্যর্থ হয়েছে"
 
 msgid "Refunding Order..."
-msgstr ""
+msgstr "রিফান্ডিং অর্ডার..."
 
 msgid "Regular Price"
 msgstr "নিয়মিত দাম"
@@ -2706,7 +2973,7 @@ msgid "Regular unit price: %{reg_price}, sale price: %{sale}"
 msgstr "নিয়মিত ইউনিট মূল্য: %{reg_price}, বিক্রয় মূল্য: %{sale}"
 
 msgid "Reload Caps"
-msgstr ""
+msgstr "ক্যাপ পুনরায় লোড করুন"
 
 msgid "Remove"
 msgstr "রিমুভ"
@@ -2715,22 +2982,49 @@ msgid "Remove from cart?"
 msgstr "কার্ট থেকে সরান?"
 
 msgid "Remove from favorite"
-msgstr ""
+msgstr "প্রিয় থেকে সরান"
 
 msgid "Remove from hold"
 msgstr "হোল্ড থেকে সরান"
 
+msgid "Remove Item"
+msgstr "আইটেম অপসারণ"
+
+msgid "Remove item"
+msgstr "আইটেম অপসারণ"
+
+msgid "Request Cancel"
+msgstr "অনুরোধ বাতিল"
+
 msgid "Request canceled"
-msgstr ""
+msgstr "অনুরোধ বাতিল করা হয়েছে"
+
+msgid "Request failed: %{errorMsg}"
+msgstr "অনুরোধ ব্যর্থ হয়েছে: %{errorMsg}"
 
 msgid "Request outlet or counter empty"
 msgstr "রিকোয়েস্ট আউটলেট বা খালি কাউন্টার"
 
 msgid "Request param is empty"
-msgstr ""
+msgstr "অনুরোধ প্যারাম খালি"
 
 msgid "Request to cancel order"
-msgstr ""
+msgstr "অর্ডার বাতিল করার অনুরোধ"
+
+msgid "Request to cancel this item"
+msgstr "এই আইটেমটি বাতিল করার জন্য অনুরোধ করুন"
+
+msgid "Requested Cancel"
+msgstr "বাতিল অনুরোধ করা হয়েছে"
+
+msgid "Requested for cancel"
+msgstr "বাতিলের জন্য অনুরোধ করা হয়েছে"
+
+msgid "Requested to cancel"
+msgstr "বাতিল করার জন্য অনুরোধ করা হয়েছে"
+
+msgid "Required"
+msgstr "প্রয়োজন"
 
 msgid "Reset"
 msgstr "রিসেট"
@@ -2742,10 +3036,10 @@ msgid "Reset Role"
 msgstr "রোল রিসেট করুন"
 
 msgid "Restaurant"
-msgstr ""
+msgstr "রেঁস্তোরা"
 
 msgid "Restaurant Payment Type"
-msgstr ""
+msgstr "রেস্তোরাঁর অর্থপ্রদানের ধরন"
 
 msgid "Restore From Hold"
 msgstr "হোল্ড থেকে পুনরুদ্ধার করুন"
@@ -2787,10 +3081,10 @@ msgid "Roles Loading"
 msgstr "রোল লোড হচ্ছে"
 
 msgid "Rule Group"
-msgstr ""
+msgstr "নিয়ম গ্রুপ"
 
 msgid "Rules"
-msgstr ""
+msgstr "নিয়ম"
 
 msgid "Sale History"
 msgstr "বিক্রয় ইতিহাস"
@@ -2799,22 +3093,22 @@ msgid "Sale Price"
 msgstr "বিক্রয় মূল্য"
 
 msgid "Sale Tax"
-msgstr ""
+msgstr "বিক্রয় কর"
 
 msgid "Save"
 msgstr "সংরক্ষণ"
 
 msgid "Save failed"
-msgstr ""
+msgstr "সংরক্ষণ ব্যর্থ হয়েছে"
 
 msgid "Saved Successfully"
 msgstr "সফলভাবে সংরক্ষিত"
 
 msgid "Saving Custom Field"
-msgstr ""
+msgstr "কাস্টম ক্ষেত্র সংরক্ষণ করা হচ্ছে"
 
 msgid "Saving message..."
-msgstr ""
+msgstr "বার্তা সংরক্ষণ করা হচ্ছে..."
 
 msgid "Scan"
 msgstr "স্ক্যান"
@@ -2823,13 +3117,16 @@ msgid "Scan barcode..."
 msgstr "বারকোড স্ক্যান করুন..."
 
 msgid "Scan Product"
-msgstr ""
+msgstr "পণ্য স্ক্যান করুন"
+
+msgid "Scan to search"
+msgstr "অনুসন্ধান করতে স্ক্যান করুন"
 
 msgid "Search"
 msgstr "অনুসন্ধান করুন"
 
 msgid "Search Again"
-msgstr ""
+msgstr "আবার খুঁজুন"
 
 msgid "Search or add a tag"
 msgstr "অনুসন্ধান করুন বা একটি ট্যাগ যোগ করুন"
@@ -2859,22 +3156,22 @@ msgid "Search/Select Country"
 msgstr "দেশ খুঁজুন/নির্বাচন করুন"
 
 msgid "Seat Capability"
-msgstr ""
+msgstr "আসন ক্ষমতা"
 
 msgid "Seat capacity : %{seat_cap}"
-msgstr ""
+msgstr "আসন ক্ষমতা: %{seat_cap}"
 
 msgid "Seat capacity is low than person number"
-msgstr ""
+msgstr "আসন ধারণক্ষমতা ব্যক্তি সংখ্যার তুলনায় কম"
 
 msgid "Secret"
-msgstr ""
+msgstr "গোপন"
 
 msgid "Secret Key"
 msgstr "গোপন চাবি"
 
 msgid "See/edit table and person info"
-msgstr ""
+msgstr "টেবিল এবং ব্যক্তির তথ্য দেখুন/সম্পাদনা করুন"
 
 msgid "Select"
 msgstr "নির্বাচন করুন"
@@ -2886,7 +3183,7 @@ msgid "Select a Role to Reset"
 msgstr "রিসেট করার জন্য একটি রোল নির্বাচন করুন"
 
 msgid "Select Addons"
-msgstr ""
+msgstr "Addons নির্বাচন করুন"
 
 msgid "Select Category"
 msgstr "বিভাগ নির্বাচন করুন"
@@ -2898,7 +3195,7 @@ msgid "Select Country"
 msgstr "দেশ নির্বাচন করুন"
 
 msgid "Select Module"
-msgstr ""
+msgstr "মডিউল নির্বাচন করুন"
 
 msgid "Select Options"
 msgstr "অপশন নির্বাচন করুন"
@@ -2906,11 +3203,14 @@ msgstr "অপশন নির্বাচন করুন"
 msgid "Select Outlet"
 msgstr "আউটলেট নির্বাচন করুন"
 
+msgid "Select Panel"
+msgstr "প্যানেল নির্বাচন করুন"
+
 msgid "Select Role"
 msgstr "রোল নির্বাচন করুন"
 
 msgid "Select State"
-msgstr ""
+msgstr "রাজ্য নির্বাচন কর"
 
 msgid "Select Sub-category"
 msgstr "উপ-বিভাগ নির্বাচন করুন"
@@ -2919,7 +3219,7 @@ msgid "Select Supplier"
 msgstr "সরবরাহকারী নির্বাচন করুন"
 
 msgid "Select Type"
-msgstr ""
+msgstr "প্রকার নির্বাচন করুন"
 
 msgid "Select variation"
 msgstr "ভেরিয়েশন নির্বাচন করুন"
@@ -2931,10 +3231,10 @@ msgid "Select Vendor"
 msgstr "বিক্রেতা নির্বাচন করুন"
 
 msgid "Select Waiters"
-msgstr ""
+msgstr "ওয়েটার নির্বাচন করুন"
 
 msgid "Select/Search Country"
-msgstr ""
+msgstr "দেশ নির্বাচন/অনুসন্ধান করুন"
 
 msgid "Select/Search Product"
 msgstr "পণ্য নির্বাচন/অনুসন্ধান করুন"
@@ -2949,10 +3249,13 @@ msgid "Select/Search role copy to"
 msgstr "িলেক্ট/সার্চ রোলে কপি টু"
 
 msgid "Select/Search State or Dist"
-msgstr ""
+msgstr "রাজ্য বা জেলা নির্বাচন/অনুসন্ধান করুন"
 
 msgid "Select/Search Timezone"
-msgstr ""
+msgstr "টাইমজোন নির্বাচন/অনুসন্ধান করুন"
+
+msgid "Select/Search user to add"
+msgstr "যোগ করার জন্য ব্যবহারকারী নির্বাচন/অনুসন্ধান করুন"
 
 msgid "Selected Product"
 msgstr "নির্বাচিত পণ্য"
@@ -2960,14 +3263,20 @@ msgstr "নির্বাচিত পণ্য"
 msgid "Seller"
 msgstr "বিক্রেতা"
 
+msgid "Send Email To Cashier"
+msgstr "ক্যাশিয়ারকে ইমেল পাঠান"
+
 msgid "Send Email To Customer"
-msgstr ""
+msgstr "গ্রাহককে ইমেল পাঠান"
+
+msgid "Serve this item"
+msgstr "এই আইটেমটি পরিবেশন করুন"
 
 msgid "Served"
-msgstr ""
+msgstr "পরিবেশিত"
 
 msgid "Served By"
-msgstr ""
+msgstr "দ্বারা পরিসেবিত"
 
 msgid "Set Password"
 msgstr "পাসওয়ার্ড সেট করুন"
@@ -3003,16 +3312,22 @@ msgid "Shortcut"
 msgstr "শর্টকাট"
 
 msgid "Shortcut Message"
-msgstr ""
+msgstr "শর্টকাট বার্তা"
 
 msgid "Shortcut Message Settings"
-msgstr ""
+msgstr "শর্টকাট মেসেজ সেটিংস"
 
 msgid "Shortcut Messages"
-msgstr ""
+msgstr "শর্টকাট বার্তা"
 
 msgid "Shortcuts"
-msgstr ""
+msgstr "শর্টকাট"
+
+msgid "Show"
+msgstr "দেখান"
+
+msgid "Show cash drawer log"
+msgstr "নগদ ড্রয়ার লগ দেখান"
 
 msgid "Show Counter info"
 msgstr "কাউন্টারের তথ্য দেখান"
@@ -3045,16 +3360,16 @@ msgid "Show Logo"
 msgstr "লোগো দেখান"
 
 msgid "Show Order Barcode"
-msgstr ""
+msgstr "অর্ডার বারকোড দেখান"
 
 msgid "Show order no"
 msgstr "অর্ডার নং দেখান"
 
 msgid "Show Order Status"
-msgstr ""
+msgstr "অর্ডার স্ট্যাটাস দেখান"
 
 msgid "Show Order Type"
-msgstr ""
+msgstr "অর্ডার টাইপ দেখান"
 
 msgid "Show outlet info"
 msgstr "আউটলেট তথ্য দেখান"
@@ -3069,7 +3384,7 @@ msgid "Show price on barcode label"
 msgstr "বারকোড লেবেলে দাম দেখান"
 
 msgid "Show Table Info"
-msgstr ""
+msgstr "টেবিলের তথ্য দেখান"
 
 msgid "Show Tax Row"
 msgstr "ট্যাক্স সারি দেখান"
@@ -3081,7 +3396,7 @@ msgid "Show Vat Reg no"
 msgstr "ভ্যাট রেজি নং দেখান"
 
 msgid "Show Waiter Info"
-msgstr ""
+msgstr "ওয়েটার তথ্য দেখান"
 
 msgid "Sidebar"
 msgstr "সাইডবার"
@@ -3096,7 +3411,7 @@ msgid "Site Key"
 msgstr "সাইট কী"
 
 msgid "Skiped same item multiple line"
-msgstr ""
+msgstr "একই আইটেম একাধিক লাইন এড়িয়ে গেছে"
 
 msgid "SKU"
 msgstr "SKU"
@@ -3117,6 +3432,8 @@ msgid ""
 "Soon, we will be adding more options such as Stripe Terminal and Authorize."
 "net to our platform.Thank you for your understand."
 msgstr ""
+"শীঘ্রই, আমরা আমাদের প্ল্যাটফর্মে স্ট্রাইপ টার্মিনাল এবং Authorize.net এর মতো "
+"আরও বিকল্প যোগ করব। আপনার বোঝার জন্য আপনাকে ধন্যবাদ।"
 
 msgid "Split payment support in pro version"
 msgstr "স্প্লিট পেমেন্ট প্রো সংস্করণে সমর্থন করে"
@@ -3125,7 +3442,10 @@ msgid "Standard"
 msgstr "স্ট্যান্ডার্ড"
 
 msgid "Start Preparing"
-msgstr ""
+msgstr "প্রস্তুতি শুরু করুন"
+
+msgid "Start preparing item"
+msgstr "আইটেম প্রস্তুত করা শুরু করুন"
 
 msgid "State"
 msgstr "রাষ্ট্র"
@@ -3137,19 +3457,19 @@ msgid "Status"
 msgstr "স্ট্যাটাস"
 
 msgid "Status change failed,please try again"
-msgstr ""
+msgstr "স্থিতি পরিবর্তন ব্যর্থ হয়েছে, আবার চেষ্টা করুন"
 
 msgid "Status changed successfully"
-msgstr ""
+msgstr "স্থিতি সফলভাবে পরিবর্তিত হয়েছে"
 
 msgid "Status:"
-msgstr ""
+msgstr "অবস্থা:"
 
 msgid "Stock"
 msgstr "স্টক"
 
 msgid "Stock add is not possible"
-msgstr ""
+msgstr "স্টক যোগ সম্ভব নয়"
 
 msgid "Stock Alert"
 msgstr "স্টক সতর্কতা"
@@ -3158,13 +3478,13 @@ msgid "Stock Alert!"
 msgstr "স্টক সতর্কতা!"
 
 msgid "Stock Counter"
-msgstr ""
+msgstr "স্টক কাউন্টার"
 
 msgid "Stock Details"
-msgstr ""
+msgstr "স্টক বিবরণ"
 
 msgid "Stock increased"
-msgstr ""
+msgstr "মজুদ বেড়েছে"
 
 msgid "Stock is running low Please purchase item to increase stock"
 msgstr "স্টক কম চলছে দয়া করে স্টক বাড়াতে আইটেম কিনুন"
@@ -3173,7 +3493,7 @@ msgid "Stock List Loading ..."
 msgstr "স্টক তালিকা লোড হচ্ছে..."
 
 msgid "Stock Log"
-msgstr ""
+msgstr "স্টক লগ"
 
 msgid "Stock not updated"
 msgstr "স্টক আপডেট করা হয়নি"
@@ -3182,22 +3502,22 @@ msgid "Stock Quantity"
 msgstr "স্টক পরিমাণ"
 
 msgid "Stock reduced"
-msgstr ""
+msgstr "স্টক কমেছে"
 
 msgid "Stock Settings"
-msgstr ""
+msgstr "স্টক সেটিংস"
 
 msgid "Stock Transfer"
-msgstr ""
+msgstr "স্টক স্থানান্তর"
 
 msgid "Stock Type"
-msgstr ""
+msgstr "স্টক প্রকার"
 
 msgid "Stock update is not possible"
-msgstr ""
+msgstr "স্টক আপডেট সম্ভব নয়"
 
 msgid "Stock update process does not finished properly"
-msgstr ""
+msgstr "স্টক আপডেট প্রক্রিয়া সঠিকভাবে শেষ হয় না"
 
 msgid "Street"
 msgstr "রাস্তা"
@@ -3206,22 +3526,22 @@ msgid "Street Address"
 msgstr "রাস্তার ঠিকানা"
 
 msgid "Stripe"
-msgstr ""
+msgstr "ডোরা"
 
 msgid "stripe"
-msgstr ""
+msgstr "ডোরা"
 
 msgid "Stripe configuration error in server"
-msgstr ""
+msgstr "সার্ভারে স্ট্রাইপ কনফিগারেশন ত্রুটি৷"
 
 msgid "Stripe Settings"
-msgstr ""
+msgstr "স্ট্রাইপ সেটিংস"
 
 msgid "Sub Total"
 msgstr "সাব টোটাল"
 
 msgid "Sub-total :"
-msgstr ""
+msgstr "উপ-মোট:"
 
 msgid "Submit"
 msgstr "জমা দিন"
@@ -3242,11 +3562,11 @@ msgid "Successfully refreshed"
 msgstr "সফলভাবে রিফ্রেশ করা হয়েছে"
 
 msgid "successfully saved"
-msgstr ""
+msgstr "সফলভাবে সংরক্ষিত"
 
 #, php-format
 msgid "Successfully Transferred,Product %s Stocks %s"
-msgstr ""
+msgstr "সফলভাবে স্থানান্তর করা হয়েছে, পণ্য %s স্টক %s৷"
 
 msgid "Successfully Updated"
 msgstr "সফলভাবে আপডেট করা হয়েছে"
@@ -3266,56 +3586,68 @@ msgstr "সরবরাহকারী:"
 msgid "Support Expired on"
 msgstr "সমর্থনের মেয়াদ শেষ হয়েছে"
 
+msgid "Swipe"
+msgstr "সোয়াইপ"
+
 msgid "swipe"
-msgstr ""
+msgstr "সোয়াইপ"
 
 msgid "Swipe Machine"
 msgstr "সোয়াইপ মেশিন"
+
+msgid "Swipe Settings"
+msgstr "সোয়াইপ সেটিংস"
 
 msgid "Sync from database"
 msgstr "ডাটাবেস থেকে সিঙ্ক করুন"
 
 msgid "Sync Orders"
-msgstr ""
+msgstr "সিঙ্ক অর্ডার"
 
 msgid "Sync restaurant order list"
-msgstr ""
+msgstr "রেস্তোরাঁর অর্ডার তালিকা সিঙ্ক করুন"
 
 msgid "Syncing offline orders"
 msgstr "অফলাইন অর্ডার সিঙ্ক হচ্ছে"
 
 msgid "TABLE"
-msgstr ""
+msgstr "টেবিল"
 
 msgid "Table"
-msgstr ""
+msgstr "টেবিল"
 
 msgid "Table "
-msgstr ""
+msgstr "টেবিল"
+
+msgid "TABLE :"
+msgstr "টেবিল:"
 
 msgid "Table delete failed"
-msgstr ""
+msgstr "টেবিল মুছে ফেলতে ব্যর্থ হয়েছে"
 
 msgid "Table deleted successfully"
-msgstr ""
+msgstr "সারণী সফলভাবে মুছে ফেলা হয়েছে"
 
 msgid "Table Description"
-msgstr ""
+msgstr "টেবিল বর্ণনা"
 
 msgid "Table Image"
-msgstr ""
+msgstr "টেবিল ইমেজ"
 
 msgid "Table is"
-msgstr ""
+msgstr "টেবিল হল"
 
 msgid "Table Panel"
-msgstr ""
+msgstr "টেবিল প্যানেল"
 
 msgid "Table Title"
-msgstr ""
+msgstr "টেবিল শিরোনাম"
+
+msgid "Table-wise"
+msgstr "টেবিল অনুযায়ী"
 
 msgid "Tables"
-msgstr ""
+msgstr "টেবিল"
 
 msgid "Tax"
 msgstr "ট্যাক্স"
@@ -3324,9 +3656,11 @@ msgid ""
 "Tax calculation is based on the subtotal of the purchase. Discounts and fees "
 "will be added after the tax calculation."
 msgstr ""
+"ট্যাক্স গণনা ক্রয়ের সাবটোটালের উপর ভিত্তি করে। কর গণনার পরে ছাড় এবং ফি যোগ "
+"করা হবে।"
 
 msgid "Tax Calculation Method"
-msgstr ""
+msgstr "ট্যাক্স গণনা পদ্ধতি"
 
 msgid "Tax Class"
 msgstr "ট্যাক্স ক্লাস"
@@ -3335,22 +3669,22 @@ msgid "Tax Status"
 msgstr "ট্যাক্স স্ট্যাটাস"
 
 msgid "Tax-total"
-msgstr ""
+msgstr "ট্যাক্স-মোট"
 
 msgid "Taxable"
 msgstr "টাক্সাবল"
 
 msgid "Textbox"
-msgstr ""
+msgstr "টেক্সটবক্স"
 
 msgid "Textbox (Multiline)"
-msgstr ""
+msgstr "টেক্সটবক্স (মাল্টিলাইন)"
 
 msgid "Thank You"
-msgstr ""
+msgstr "ধন্যবাদ"
 
 msgid "Thank You For Purchasing"
-msgstr "কেনার জন্য আপনাকে ধন্যবাদ"
+msgstr "ক্রয় করার জন্য আপনাকে ধন্যবাদ"
 
 msgid ""
 "The admin can add some settings in the admin panel, such as: Outlet Create, "
@@ -3379,20 +3713,27 @@ msgid ""
 "The stock of this selected outlet product will serve as the inventory for "
 "your online orders"
 msgstr ""
+"এই নির্বাচিত আউটলেট পণ্যের স্টক আপনার অনলাইন অর্ডারগুলির জন্য তালিকা হিসাবে "
+"কাজ করবে"
 
 msgid ""
 "The stock of this selected outlet product will serve as the inventory for "
 "your online orders."
 msgstr ""
+"এই নির্বাচিত আউটলেট পণ্যের স্টক আপনার অনলাইন অর্ডারগুলির জন্য তালিকা হিসাবে "
+"কাজ করবে।"
 
 msgid "Then select the menu App Keys"
-msgstr ""
+msgstr "তারপর মেনু অ্যাপ কী নির্বাচন করুন"
+
+msgid "This drawer will close on create new drawer."
+msgstr "নতুন ড্রয়ার তৈরি করলে এই ড্রয়ারটি বন্ধ হয়ে যাবে।"
 
 msgid "This email already exist"
 msgstr "এই ইমেইলটি ইতিমধ্যেই বিদ্যমান"
 
 msgid "This mobile number is already exist"
-msgstr ""
+msgstr "এই মোবাইল নম্বরটি আগে থেকেই আছে"
 
 msgid "This module is not support in offline"
 msgstr "এই মডিউল অফলাইনে সমর্থন করে না"
@@ -3408,6 +3749,13 @@ msgstr "এই রোল ব্যবহারকারী তাদের প�
 
 msgid "This username already exist"
 msgstr "এই ব্যবহারকারীর নাম ইতিমধ্যেই বিদ্যমান"
+
+msgid ""
+"This will close all drawers previously opened except the last drawer opened "
+"in any counter."
+msgstr ""
+"এটি যেকোনো কাউন্টারে খোলা শেষ ড্রয়ার ছাড়া পূর্বে খোলা সমস্ত ড্রয়ার বন্ধ "
+"করে দেবে।"
 
 msgid ""
 "This would be a temporary password.The user have to change their password on "
@@ -3426,10 +3774,10 @@ msgid "Title"
 msgstr "শিরোনাম"
 
 msgid "Title is required"
-msgstr ""
+msgstr "শিরোনাম প্রয়োজন"
 
 msgid "Title/Label"
-msgstr ""
+msgstr "শিরোনাম/লেবেল"
 
 msgid "To change color you need pro version"
 msgstr "রঙ পরিবর্তন করতে আপনার প্রো সংস্করণ প্রয়োজন"
@@ -3447,16 +3795,16 @@ msgstr ""
 "ধারণা পেতে"
 
 msgid "To get pusher server key follow this instruction"
-msgstr ""
+msgstr "পুশার সার্ভার কী পেতে এই নির্দেশনা অনুসরণ করুন"
 
 msgid "To Kitchen"
-msgstr ""
+msgstr "রান্নাঘরে"
 
 msgid "To Outlet"
-msgstr ""
+msgstr "আউটলেটে"
 
 msgid "To Outlet:"
-msgstr ""
+msgstr "আউটলেটে:"
 
 msgid "To POS"
 msgstr "POS"
@@ -3472,10 +3820,10 @@ msgid "To watch our all video tutorial click on the button"
 msgstr "আমাদের সমস্ত ভিডিও টিউটোরিয়াল দেখতে এই বাটনে ক্লিক করুন"
 
 msgid "Top"
-msgstr ""
+msgstr "শীর্ষ"
 
 msgid "Top,Bottom"
-msgstr ""
+msgstr "উপর নিচ"
 
 msgid "Total"
 msgstr "মোট"
@@ -3490,7 +3838,7 @@ msgid "Total cost"
 msgstr "মোট খরচ"
 
 msgid "Total Discount :"
-msgstr ""
+msgstr "মোট ছাড়:"
 
 msgid "Total Income"
 msgstr "মোট আয়"
@@ -3508,52 +3856,52 @@ msgid "Total Quantity"
 msgstr "মোট কোয়ান্টিটি"
 
 msgid "Traditional"
-msgstr ""
+msgstr "প্রথাগত"
 
 msgid "Transfer"
-msgstr ""
+msgstr "স্থানান্তর"
 
 msgid "Transfer by"
-msgstr ""
+msgstr "দ্বারা স্থানান্তর"
 
 msgid "Transfer By:"
-msgstr ""
+msgstr "দ্বারা স্থানান্তর:"
 
 msgid "Transfer current online stocks to"
-msgstr ""
+msgstr "বর্তমান অনলাইন স্টক স্থানান্তর করুন"
 
 msgid "Transfer Date"
-msgstr ""
+msgstr "স্থানান্তরের তারিখ"
 
 msgid "Transfer date:"
-msgstr ""
+msgstr "স্থানান্তরের তারিখ:"
 
 msgid "Transfer Details"
-msgstr ""
+msgstr "স্থানান্তর বিবরণ"
 
 msgid "Transfer Item*"
-msgstr ""
+msgstr "স্থানান্তর আইটেম*"
 
 msgid "Transfer List Loading ..."
-msgstr ""
+msgstr "স্থানান্তর তালিকা লোড হচ্ছে..."
 
 msgid "Transfer Note"
-msgstr ""
+msgstr "ট্রান্সফার নোট"
 
 msgid "Transfer Quantity"
-msgstr ""
+msgstr "স্থানান্তর পরিমাণ"
 
 msgid "Transfer Status:"
-msgstr ""
+msgstr "স্থানান্তর স্থিতি:"
 
 msgid "Transfer Stock"
-msgstr ""
+msgstr "স্টক স্থানান্তর"
 
 msgid "Transfer to %{outletname}"
-msgstr ""
+msgstr "%{outletname} এ স্থানান্তর করুন"
 
 msgid "Transferred Items"
-msgstr ""
+msgstr "স্থানান্তরিত আইটেম"
 
 msgid "Type"
 msgstr "টাইপ"
@@ -3562,7 +3910,7 @@ msgid "Type to search"
 msgstr "অনুসন্ধান করতে টাইপ করুন"
 
 msgid "Types"
-msgstr ""
+msgstr "প্রকারভেদ"
 
 msgid "Unknown"
 msgstr "অজানা"
@@ -3591,23 +3939,35 @@ msgstr "আপডেট ব্যর্থ হয়েছে"
 msgid "Update failed try again"
 msgstr "আপডেট ব্যর্থ হয়েছে আবার চেষ্টা করুন"
 
+msgid "Update failed unknown error"
+msgstr "আপডেট ব্যর্থ হয়েছে অজানা ত্রুটি"
+
+msgid "Update failed,please try again"
+msgstr "আপডেট ব্যর্থ হয়েছে, আবার চেষ্টা করুন"
+
 msgid "Update Note"
 msgstr "আপডেট নোট"
 
+msgid "Update order"
+msgstr "অর্ডার আপডেট করুন"
+
 msgid "Update Prices"
-msgstr ""
+msgstr "হালনাগাদ মূল্য"
 
 msgid "Update Product Price"
-msgstr ""
+msgstr "পণ্যের দাম আপডেট করুন"
 
 msgid "Update Status?"
 msgstr "স্টেটাস আপডেট করুন?"
 
+msgid "Updated successfully"
+msgstr "সফলভাবে আপডেট করা হয়েছে৷"
+
 msgid "Updating Custom Fields"
-msgstr ""
+msgstr "কাস্টম ক্ষেত্র আপডেট করা হচ্ছে"
 
 msgid "Updating message..."
-msgstr ""
+msgstr "বার্তা আপডেট করা হচ্ছে..."
 
 msgid "Updating Role Details"
 msgstr "রোলর বিবরণ আপডেট করা হচ্ছে"
@@ -3622,7 +3982,10 @@ msgid "Upload More Images For This Product"
 msgstr "এই পণ্যের জন্য আরো ছবি আপলোড করুন"
 
 msgid "Upload Table Image"
-msgstr ""
+msgstr "আপলোড টেবিল ইমেজ"
+
+msgid "Use camera on barcode scanning"
+msgstr "বারকোড স্ক্যানিং এ ক্যামেরা ব্যবহার করুন"
 
 msgid "Use For Variation"
 msgstr "ভেরিয়েশনের জন্য ব্যবহার করুন"
@@ -3708,12 +4071,6 @@ msgstr "ভিডিও"
 msgid "View All Outlet"
 msgstr "সমস্ত আউটলেট দেখুন"
 
-msgid "View All Purchase"
-msgstr "সমস্ত ক্রয় দেখুন"
-
-msgid "View All Purchase Item"
-msgstr "সমস্ত ক্রয় আইটেম দেখুন"
-
 msgid "View all Role List"
 msgstr "সমস্ত রোল তালিকা দেখুন"
 
@@ -3741,27 +4098,29 @@ msgid "Vitepos Login"
 msgstr "Vitepos লগইন"
 
 msgid "Vitepos Only"
-msgstr ""
+msgstr "শুধুমাত্র Vitepos"
 
 msgid ""
 "Vitepos will use the WooCommerce stock, ensuring that a single stock is used "
 "both on the website and in the POS system."
 msgstr ""
+"Vitepos WooCommerce স্টক ব্যবহার করবে, নিশ্চিত করে যে একটি একক স্টক "
+"ওয়েবসাইট এবং POS সিস্টেম উভয় ক্ষেত্রেই ব্যবহার করা হয়েছে।"
 
 msgid "Waiter"
-msgstr ""
+msgstr "ওয়েটার"
 
 msgid "Waiter Panel"
-msgstr ""
+msgstr "ওয়েটার প্যানেল"
 
 msgid "Waiter POS"
-msgstr ""
+msgstr "ওয়েটার POS"
 
 msgid "Waiter requested to cancel"
-msgstr ""
+msgstr "ওয়েটার বাতিল করতে অনুরোধ করা হয়েছে"
 
 msgid "Waiting"
-msgstr ""
+msgstr "অপেক্ষা করছে"
 
 msgid "Want to close cash drawer?"
 msgstr "ক্যাশ ড্রয়ার বন্ধ করতে চান?"
@@ -3808,16 +4167,37 @@ msgid "Welcome to"
 msgstr "স্বাগতম"
 
 msgid "Where will show"
-msgstr ""
+msgstr "কোথায় দেখাবে"
 
 msgid "Why are denying this order?"
-msgstr ""
+msgstr "এই আদেশ কেন অস্বীকার করছেন?"
+
+msgid "Why are you denying this item?"
+msgstr "কেন আপনি এই আইটেম অস্বীকার করছেন?"
 
 msgid "Width"
 msgstr "প্রস্থ"
 
+msgid "Withdraw"
+msgstr "প্রত্যাহার করুন"
+
+msgid "Withdraw amount"
+msgstr "পরিমাণ প্রত্যাহার"
+
+msgid "Withdraw and close"
+msgstr "প্রত্যাহার এবং বন্ধ"
+
+msgid "Withdraw from cash drawer"
+msgstr "নগদ ড্রয়ার থেকে প্রত্যাহার"
+
+msgid "Withdraw is not possible, no cash drawer found"
+msgstr "উত্তোলন সম্ভব নয়, নগদ ড্রয়ার পাওয়া যায়নি"
+
+msgid "Withdrawn"
+msgstr "প্রত্যাহার করা হয়েছে"
+
 msgid "Woocommerce stock (Single stock)"
-msgstr ""
+msgstr "Woocommerce স্টক (একক স্টক)"
 
 msgid "WordPress Login"
 msgstr "WordPress লগইন"
@@ -3826,7 +4206,7 @@ msgid "WordPress Login URL"
 msgstr "WordPress লগইন URL"
 
 msgid "Write your message"
-msgstr ""
+msgstr "আপনার বার্তা লিখুন"
 
 msgid "Yes"
 msgstr "হ্যাঁ"
@@ -3841,13 +4221,16 @@ msgid "You can not add this much of discount"
 msgstr "আপনি এত ডিসকাউন্ট যোগ করতে পারবেন না"
 
 msgid "You can not checkout this in current status"
-msgstr ""
+msgstr "আপনি বর্তমান স্থিতিতে এটি চেকআউট করতে পারবেন না"
+
+msgid "You can not close current cash drawer"
+msgstr "আপনি বর্তমান নগদ ড্রয়ার বন্ধ করতে পারবেন না"
 
 msgid "You can not give this much discount"
-msgstr ""
+msgstr "আপনি এত ডিসকাউন্ট দিতে পারেন না"
 
 msgid "You can not order less than 0 amount"
-msgstr ""
+msgstr "আপনি 0 পরিমাণের কম অর্ডার করতে পারবেন না"
 
 msgid ""
 "You can select the default customer for order processing. If not selected "
@@ -3873,10 +4256,10 @@ msgid "You do not have permission to do this"
 msgstr "আপনার এই কাজ করার অনুমতি নেই"
 
 msgid "You do not have permission to give discount"
-msgstr ""
+msgstr "আপনি ছাড় দিতে অনুমতি নেই"
 
 msgid "You do not have permission to have fees"
-msgstr ""
+msgstr "আপনি ফি আছে অনুমতি নেই"
 
 msgid "You don't have permission to access this link"
 msgstr "আপনার এই লিঙ্কটি অ্যাক্সেস করার অনুমতি নেই৷"
@@ -3888,7 +4271,7 @@ msgid "You don't have permission to view user of this outlet"
 msgstr "আপনার কাছে এই আউটলেটের ব্যবহারকারী দেখার অনুমতি নেই৷"
 
 msgid "You don't have permission to view waiter of this outlet"
-msgstr ""
+msgstr "আপনার কাছে এই আউটলেটের ওয়েটার দেখার অনুমতি নেই৷"
 
 msgid "You Need To Check Your Connection"
 msgstr "আপনি আপনার ইন্টারনেটের সংযোগ চেক করুন"
@@ -3898,6 +4281,9 @@ msgid ""
 "will be available in the vitepos.You need to purchase or add stock product "
 "for each outlet"
 msgstr ""
+"আপনি প্রতিটি আউটলেটের জন্য আলাদা স্টক পাবেন, স্টক ট্রান্সফার, রিসিভ ফিচার "
+"ভিটেপোসে পাওয়া যাবে। আপনাকে প্রতিটি আউটলেটের জন্য স্টক পণ্য কিনতে বা যোগ "
+"করতে হবে।"
 
 msgid "Your License Key"
 msgstr "আপনার লাইসেন্স কী"

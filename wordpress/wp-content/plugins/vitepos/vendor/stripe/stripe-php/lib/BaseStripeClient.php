@@ -253,7 +253,8 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
      */
     private function validateConfig($config)
     {
-                if (null !== $config['api_key'] && !\is_string($config['api_key'])) {
+        
+        if (null !== $config['api_key'] && !\is_string($config['api_key'])) {
             throw new \Stripe\Exception\InvalidArgumentException('api_key must be null or a string');
         }
 
@@ -269,33 +270,41 @@ class BaseStripeClient implements StripeClientInterface, StripeStreamingClientIn
             throw new \Stripe\Exception\InvalidArgumentException($msg);
         }
 
-                if (null !== $config['client_id'] && !\is_string($config['client_id'])) {
+        
+        if (null !== $config['client_id'] && !\is_string($config['client_id'])) {
             throw new \Stripe\Exception\InvalidArgumentException('client_id must be null or a string');
         }
 
-                if (null !== $config['stripe_account'] && !\is_string($config['stripe_account'])) {
+        
+        if (null !== $config['stripe_account'] && !\is_string($config['stripe_account'])) {
             throw new \Stripe\Exception\InvalidArgumentException('stripe_account must be null or a string');
         }
 
-                if (null !== $config['stripe_version'] && !\is_string($config['stripe_version'])) {
+        
+        if (null !== $config['stripe_version'] && !\is_string($config['stripe_version'])) {
             throw new \Stripe\Exception\InvalidArgumentException('stripe_version must be null or a string');
         }
 
-                if (!\is_string($config['api_base'])) {
+        
+        if (!\is_string($config['api_base'])) {
             throw new \Stripe\Exception\InvalidArgumentException('api_base must be a string');
         }
 
-                if (!\is_string($config['connect_base'])) {
+        
+        if (!\is_string($config['connect_base'])) {
             throw new \Stripe\Exception\InvalidArgumentException('connect_base must be a string');
         }
 
-                if (!\is_string($config['files_base'])) {
+        
+        if (!\is_string($config['files_base'])) {
             throw new \Stripe\Exception\InvalidArgumentException('files_base must be a string');
         }
 
-                $extraConfigKeys = \array_diff(\array_keys($config), \array_keys($this->getDefaultConfig()));
+        
+        $extraConfigKeys = \array_diff(\array_keys($config), \array_keys($this->getDefaultConfig()));
         if (!empty($extraConfigKeys)) {
-                        $invalidKeys = "'" . \implode("', '", $extraConfigKeys) . "'";
+            
+            $invalidKeys = "'" . \implode("', '", $extraConfigKeys) . "'";
 
             throw new \Stripe\Exception\InvalidArgumentException('Found unknown key(s) in configuration array: ' . $invalidKeys);
         }

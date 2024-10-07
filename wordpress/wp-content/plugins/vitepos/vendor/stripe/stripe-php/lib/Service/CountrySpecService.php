@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class CountrySpecService extends \Stripe\Service\AbstractService

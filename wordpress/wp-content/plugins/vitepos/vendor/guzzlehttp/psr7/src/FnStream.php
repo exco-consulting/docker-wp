@@ -12,6 +12,7 @@ use Psr\Http\Message\StreamInterface;
  * Allows for easy testing and extension of a provided stream without needing
  * to create a concrete class for a simple extension point.
  */
+#[\AllowDynamicProperties]
 final class FnStream implements StreamInterface
 {
     private const SLOTS = [
@@ -30,7 +31,8 @@ final class FnStream implements StreamInterface
     {
         $this->methods = $methods;
 
-                foreach ($methods as $name => $fn) {
+        
+        foreach ($methods as $name => $fn) {
             $this->{'_fn_' . $name} = $fn;
         }
     }
@@ -77,7 +79,9 @@ final class FnStream implements StreamInterface
      */
     public static function decorate(StreamInterface $stream, array $methods)
     {
-                        foreach (array_diff(self::SLOTS, array_keys($methods)) as $diff) {
+        
+        
+        foreach (array_diff(self::SLOTS, array_keys($methods)) as $diff) {
             /** @var callable $callable */
             $callable = [$stream, $diff];
             $methods[$diff] = $callable;

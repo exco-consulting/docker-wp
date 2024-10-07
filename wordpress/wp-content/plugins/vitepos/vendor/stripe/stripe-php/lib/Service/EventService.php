@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class EventService extends \Stripe\Service\AbstractService

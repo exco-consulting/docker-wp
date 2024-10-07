@@ -165,7 +165,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 		 *
 		 * @var int
 		 */
-		protected $cache_time = 300; 		/**
+		protected $cache_time = 300; 
+		/**
 		 * Its property kernel_object
 		 *
 		 * @var null
@@ -724,7 +725,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				return false;
 			}
 
-						$primary_key = $this->primary_key;
+			
+			$primary_key = $this->primary_key;
 			if ( ! empty( $primary_key ) && isset( $this->set_properties[ $primary_key ] ) ) {
 				$type = isset( $this->set_option_type[ $primary_key ] ) ? $this->set_option_type[ $primary_key ] : 'AND';
 				if ( ! empty( $this->set_option [ $primary_key ] ) ) {
@@ -736,7 +738,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				$this->is_where_set = true;
 			}
 			$general_keys = array();
-						if ( count( $this->unique_key ) > 0 ) {
+			
+			if ( count( $this->unique_key ) > 0 ) {
 				if ( is_array( $this->unique_key[0] ) ) {
 					$selected_key = '';
 					foreach ( $this->unique_key as $pos => $uk ) {
@@ -767,7 +770,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 						}
 					}
 				} else {
-										foreach ( $this->unique_key as $uk ) {
+					
+					foreach ( $this->unique_key as $uk ) {
 						if ( ! in_array( $uk, $alreadyadded ) && isset( $this->set_properties[ $uk ] ) ) {
 							$type = isset( $this->set_option_type[ $uk ] ) ? $this->set_option_type[ $uk ] : 'AND';
 							if ( ! empty( $this->set_option [ $uk ] ) ) {
@@ -782,7 +786,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				}
 			}
 
-						if ( count( $this->multi_key ) > 0 ) {
+			
+			if ( count( $this->multi_key ) > 0 ) {
 				if ( is_array( $this->multi_key[0] ) ) {
 					$selected_key = '';
 					foreach ( $this->multi_key as $pos => $uk ) {
@@ -813,7 +818,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 						}
 					}
 				} else {
-										foreach ( $this->multi_key as $uk ) {
+					
+					foreach ( $this->multi_key as $uk ) {
 						if ( ! in_array( $uk, $alreadyadded ) && isset( $this->set_properties[ $uk ] ) ) {
 							$type = isset( $this->set_option_type[ $uk ] ) ? $this->set_option_type[ $uk ] : 'AND';
 							if ( ! empty( $this->set_option [ $uk ] ) ) {
@@ -828,7 +834,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				}
 			}
 
-						foreach ( $general_keys as $uk ) {
+			
+			foreach ( $general_keys as $uk ) {
 				if ( ! in_array( $uk, $alreadyadded ) ) {
 					if ( isset( $this->set_properties[ $uk ] ) ) {
 						$type = isset( $this->set_option_type[ $uk ] ) ? $this->set_option_type[ $uk ] : 'AND';
@@ -866,7 +873,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 					}
 				}
 			}
-						if ( count( $this->likes_fields ) > 0 ) {
+			
+			if ( count( $this->likes_fields ) > 0 ) {
 				foreach ( $this->likes_fields as $like_fld ) {
 					$db->like( $like_fld->field, $like_fld->value, $like_fld->likeside, $like_fld->escape, $like_fld->condition_type, $like_fld->is_not_like );
 				}
@@ -899,7 +907,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				return false;
 			}
 
-						$primary_key = $this->primary_key;
+			
+			$primary_key = $this->primary_key;
 			if ( ! empty( $primary_key ) && isset( $this->set_properties[ $primary_key ] ) ) {
 				if ( ! empty( $this->set_option [ $primary_key ] ) ) {
 					$db->where( $tbname . $primary_key . $this->$primary_key, '', false );
@@ -910,7 +919,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				$this->is_where_set = true;
 			}
 
-						foreach ( $this->unique_key as $fk ) {
+			
+			foreach ( $this->unique_key as $fk ) {
 				foreach ( $fk as $uk ) {
 					if ( isset( $this->set_properties[ $uk ] ) ) {
 						if ( ! empty( $this->set_option [ $uk ] ) ) {
@@ -923,7 +933,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 					}
 				}
 			}
-						foreach ( $this->multi_key as $uk ) {
+			
+			foreach ( $this->multi_key as $uk ) {
 				if ( isset( $this->set_properties[ $uk ] ) ) {
 					if ( ! empty( $this->set_option [ $uk ] ) ) {
 						$db->where( $tbname . $uk . $this->set_properties[ $uk ], '', false );
@@ -993,7 +1004,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 		protected function set_join_properties( $clear_properties = true ) {
 			if ( count( $this->join_objects ) > 0 ) {
 				foreach ( $this->join_objects as $jn ) {
-										$thistblstrproperty = $this->get_table_name_for_join_property( $jn->main_obj_property );
+					
+					$thistblstrproperty = $this->get_table_name_for_join_property( $jn->main_obj_property );
 					if ( property_exists( $jn->join_obj, $jn->join_obj_property ) && ! empty( $thistblstrproperty ) ) {
 						$tablestr = $jn->join_obj->get_table_name( false );
 						$shorttbl = $jn->join_obj->get_table_name();
@@ -1014,7 +1026,9 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 		protected function set_join_where_conditions( $clear_properties = true, $is_select_db = true ) {
 			if ( count( $this->join_objects ) > 0 ) {
 				foreach ( $this->join_objects as $jn ) {
-															$jn->join_obj->set_db_join_where_condition( $this->get_select_db(), $clear_properties, $is_select_db );
+					
+					
+					$jn->join_obj->set_db_join_where_condition( $this->get_select_db(), $clear_properties, $is_select_db );
 				}
 			}
 		}
@@ -1064,7 +1078,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				return false;
 			}
 			$alreadyadded = array();
-						$primary_key = $this->primary_key;
+			
+			$primary_key = $this->primary_key;
 			if ( ! empty( $primary_key ) && isset( $this->update_where_extra_field[ $primary_key ] ) ) {
 				if ( in_array( $primary_key, $this->update_where_extra_field_option ) ) {
 					$this->get_update_db()->where( '(' . $primary_key . $this->update_where_extra_field[ $primary_key ] . ')', '', false );
@@ -1075,7 +1090,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 			}
 
 			$general_keys = array();
-						if ( count( $this->unique_key ) > 0 ) {
+			
+			if ( count( $this->unique_key ) > 0 ) {
 				if ( is_array( $this->unique_key[0] ) ) {
 					$selected_key = '';
 					foreach ( $this->unique_key as $pos => $uk ) {
@@ -1104,7 +1120,9 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 						}
 					}
 				} else {
-															foreach ( $this->unique_key as $uk ) {
+					
+					
+					foreach ( $this->unique_key as $uk ) {
 						if ( isset( $this->update_where_extra_field[ $uk ] ) && ! in_array( $uk, $alreadyadded ) ) {
 							if ( in_array( $uk, $this->update_where_extra_field_option ) ) {
 								$this->get_update_db()->where( '(' . $uk . $this->update_where_extra_field[ $uk ] . ')', '', false );
@@ -1117,7 +1135,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				}
 			}
 
-						if ( count( $this->multi_key ) > 0 ) {
+			
+			if ( count( $this->multi_key ) > 0 ) {
 				if ( is_array( $this->multi_key[0] ) ) {
 					$selected_key = '';
 					foreach ( $this->multi_key as $pos => $uk ) {
@@ -1146,7 +1165,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 						}
 					}
 				} else {
-										foreach ( $this->multi_key as $uk ) {
+					
+					foreach ( $this->multi_key as $uk ) {
 						if ( isset( $this->update_where_extra_field[ $uk ] ) && ! in_array( $uk, $alreadyadded ) ) {
 							if ( in_array( $uk, $this->update_where_extra_field_option ) ) {
 								$this->get_update_db()->where( '(' . $uk . $this->update_where_extra_field[ $uk ] . ')', '', false );
@@ -1287,7 +1307,8 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				} else {
 					if ( count( $this->join_objects ) > 0 ) {
 						foreach ( $this->join_objects as $jn ) {
-														$thistblstrproperty = $this->get_table_name_for_join_property( $like_fld );
+							
+							$thistblstrproperty = $this->get_table_name_for_join_property( $like_fld );
 							if ( property_exists( $jn->join_obj, $like_fld ) && ! empty( $thistblstrproperty ) ) {
 								$like_fld = $thistblstrproperty;
 								$db->like( $like_fld, $like_value, $like_side );
@@ -1608,6 +1629,7 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				return true;
 			} else {
 				
+
 				self::$quries[] = $this->db->last_query;
 				/**
 				 * Its for check query db
@@ -1697,7 +1719,7 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 		 * @param bool   $is_escap Its is_escap param.
 		 * @param false  $is_data_only Its is_data_only param.
 		 *
-		 * @return array|false
+		 * @return static [] |false
 		 */
 		public function select_all( $select = '', $order_by = '', $order = '', $limit = '', $limit_start = '', $like_fld = '', $like_value = '', $extra_param = array(), $like_side = 'after', $is_escap = true, $is_data_only = false ) {
 			if ( ! $this->check_basic_check() ) {
@@ -1899,7 +1921,7 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 		 * @param false  $is_cache Its is_cache param.
 		 * @param int    $cache_time Its cache_time param.
 		 *
-		 * @return array|false
+		 * @return static []|false
 		 */
 		public static function find_all_by( $property, $value, $extra_param = array(), $order_by = '', $order = 'ASC', $limit = '', $limit_start = '', $is_cache = false, $cache_time = 0 ) {
 			$n = new static();
@@ -2496,7 +2518,7 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 		 *
 		 * @param string $property Its property param.
 		 * @param mixed  $value Its value param.
-		 * @param bool $is_not_xss_clean Its is_not_xss_clean param.
+		 * @param bool   $is_not_xss_clean Its is_not_xss_clean param.
 		 */
 		public function set_where_update( $property, $value, $is_not_xss_clean = false ) {
 			$this->update_where_extra_field [ $property ] = $value;
@@ -2580,11 +2602,13 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				if ( ! $this->is_valid_form( false ) ) {
 					return false;
 				}
-								if ( ! $this->set_db_property_for_insert_or_update( true ) ) {
+				
+				if ( ! $this->set_db_property_for_insert_or_update( true ) ) {
 					return false;
 				}
 
-								if ( ! $this->set_db_update_where_properties( array(), $dont_process_id_where_not_set ) ) {
+				
+				if ( ! $this->set_db_update_where_properties( array(), $dont_process_id_where_not_set ) ) {
 					return false;
 				}
 				$query          = $this->get_update_db()->get_update_query( $this->db->prefix . $this->table_name, $not_limit );
@@ -2613,6 +2637,7 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 			}
 
 			
+
 			return false;
 		}
 
@@ -2631,11 +2656,13 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 				if ( ! $this->is_valid_form( false ) ) {
 					return false;
 				}
-								if ( ! $this->set_db_property_for_insert_or_update( true ) ) {
+				
+				if ( ! $this->set_db_property_for_insert_or_update( true ) ) {
 					return false;
 				}
 
-								if ( ! $this->set_db_update_where_properties( array(), $dont_process_id_where_not_set ) ) {
+				
+				if ( ! $this->set_db_update_where_properties( array(), $dont_process_id_where_not_set ) ) {
 					return false;
 				}
 				$query          = $this->get_update_db()->get_delete_query( $this->db->prefix . $this->table_name, $not_limit );
@@ -2760,7 +2787,9 @@ if ( ! class_exists( __NAMESPACE__ . '\BaseModel' ) ) {
 			$return_field = array();
 			foreach ( $fields as $fld ) {
 				if ( property_exists( $fld, 'Field' ) ) {
+					// phpcs:disable
 					$return_field[ $fld->Field ] = $fld;
+					// phpcs:enable
 				} else {
 					$return_field[ $fld->field ] = $fld;
 				}

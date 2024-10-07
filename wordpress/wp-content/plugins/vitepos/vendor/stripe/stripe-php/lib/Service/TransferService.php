@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class TransferService extends \Stripe\Service\AbstractService

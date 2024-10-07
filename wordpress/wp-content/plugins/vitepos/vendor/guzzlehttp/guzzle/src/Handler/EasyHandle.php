@@ -87,7 +87,8 @@ final class EasyHandle
             }
         }
 
-                $this->response = new Response(
+        
+        $this->response = new Response(
             $status,
             $headers,
             $this->sink,

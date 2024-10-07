@@ -187,7 +187,10 @@ class ErrorObject extends StripeObject
      */
     public function refreshFrom($values, $opts, $partial = false)
     {
-                                $values = \array_merge([
+        
+        
+        
+        $values = \array_merge([
             'charge' => null,
             'code' => null,
             'decline_code' => null,

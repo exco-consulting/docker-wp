@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\TestHelpers\Terminal;
 
 /**

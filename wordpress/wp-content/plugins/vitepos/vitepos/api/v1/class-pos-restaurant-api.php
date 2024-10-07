@@ -15,6 +15,7 @@ use PHPMailer\PHPMailer\Exception;
 use VitePos\Libs\API_Base;
 use VitePos\Libs\POS_Order;
 use VitePos\Libs\POS_Payment;
+use VitePos\Libs\POS_Restro_Payment;
 use Vitepos\Models\Database\Mapbd_Pos_Cash_Drawer;
 use Vitepos\Models\Database\Mapbd_Pos_Cash_Drawer_Types;
 use Vitepos\Models\Database\Mapbd_Pos_Message;
@@ -48,6 +49,14 @@ class Pos_Restaurant_Api extends API_Base {
 		$this->register_rest_route( 'POST', 'start-preparing', array( $this, 'start_preparing' ) );
 		$this->register_rest_route( 'POST', 'make-served', array( $this, 'make_served' ) );
 		$this->register_rest_route( 'POST', 'deny-order', array( $this, 'deny_order' ) );
+		$this->register_rest_route( 'POST', 'deny-item', array( $this, 'deny_item' ) );
+		$this->register_rest_route( 'POST', 'update-order', array( $this, 'update_order' ) );
+		$this->register_rest_route( 'POST', 'remove-item', array( $this, 'remove_item' ) );
+		$this->register_rest_route( 'POST', 'cancel-item-request', array( $this, 'cancel_item_request' ) );
+		$this->register_rest_route( 'POST', 'item-cancel-req-ans', array( $this, 'item_cancel_req_ans' ) );
+		$this->register_rest_route( 'POST', 'start-item', array( $this, 'start_item' ) );
+		$this->register_rest_route( 'POST', 'complete-item', array( $this, 'complete_item' ) );
+		$this->register_rest_route( 'POST', 'serve-item', array( $this, 'serve_item' ) );
 		$this->register_rest_route( 'POST', 'cancel-order', array( $this, 'cancel_order' ) );
 		$this->register_rest_route( 'POST', 'cancel-order-request', array( $this, 'cancel_request' ) );
 		$this->register_rest_route( 'POST', 'cancel-request-ans', array( $this, 'cancel_request_ans' ) );
@@ -61,6 +70,7 @@ class Pos_Restaurant_Api extends API_Base {
 		$this->register_rest_route( 'POST', 'served-list', array( $this, 'served_list' ) );
 		$this->register_rest_route( 'POST', 'canned-message', array( $this, 'canned_messages' ) );
 		$this->register_rest_route( 'POST', 'sync-order-list', array( $this, 'sync_order_list' ) );
+		$this->register_rest_route( 'POST', 'sync-order', array( $this, 'sync_order' ) );
 		$this->register_rest_route( 'POST', 'change-status', array( $this, 'change_status' ) );
 		$this->register_rest_route( 'POST', 'change-table', array( $this, 'change_order_table' ) );
 		$this->register_rest_route( 'GET', 'details/(?P<id>\d+)', array( $this, 'order_details' ) );
@@ -78,8 +88,8 @@ class Pos_Restaurant_Api extends API_Base {
 		switch ( $route ) {
 			case ( 'restaurant-payment' ):
 				return current_user_can( 'pos-menu' ) || current_user_can( 'cashier-menu' );
-		case ( 'canned-message' ):
-				return current_user_can( 'pos-menu' ) || current_user_can( 'cashier-menu' )|| current_user_can( 'waiter-menu' )|| current_user_can( 'kitchen-menu' );
+			case ( 'canned-message' ):
+				return current_user_can( 'pos-menu' ) || current_user_can( 'cashier-menu' ) || current_user_can( 'waiter-menu' ) || current_user_can( 'kitchen-menu' );
 			case ( 'send-to-kitchen' ):
 				return current_user_can( 'waiter-to-kitchen' ) || current_user_can( 'pos-menu' ) || current_user_can( 'cashier-menu' );
 			case ( 'start-preparing' ):
@@ -87,7 +97,7 @@ class Pos_Restaurant_Api extends API_Base {
 			case ( 'deny-order' ):
 				return current_user_can( 'deny-order' );
 			case ( 'cancel-order' ):
-				return current_user_can( 'cancel-order' )|| current_user_can('cancel-waiter-order');
+				return current_user_can( 'cancel-order' ) || current_user_can( 'cancel-waiter-order' );
 			case ( 'cancel-request-ans' ):
 				return current_user_can( 'accept-cancel' ) || current_user_can( 'deny-cancel' );
 			case ( 'complete-preparing' ):
@@ -185,7 +195,8 @@ class Pos_Restaurant_Api extends API_Base {
 
 		
 		if ( ! empty( $order_id ) ) {
-			$order = new \WC_Order( $order_id );			$stat  = $order->get_status();
+			$order = new \WC_Order( $order_id );
+			$stat  = $order->get_status();
 			if ( ! empty( $order ) && 'vt_served' == $stat ) {
 				$billing_address = array(
 					'first_name' => $outlet_obj->name,
@@ -211,16 +222,19 @@ class Pos_Restaurant_Api extends API_Base {
 					 * @since 1.0
 					 */
 					$billing_address = apply_filters( 'vitepos/filter/billing-address', $billing_address, $order, $customer_id );
-										$order->set_address( $billing_address, 'billing' );
+					
+					$order->set_address( $billing_address, 'billing' );
 				}
 
 				
+
 				$total_amount = 0.0;
 				$total_tax    = 0.0;
 
 				$order->calculate_totals( true );
 				$total_amount = $order->get_subtotal();
-								$fee_total = 0.0;
+				
+				$fee_total = 0.0;
 				if ( ! empty( $this->payload['fees'] ) && is_array( $this->payload['fees'] ) ) {
 					foreach ( $this->payload['fees'] as $item ) {
 						if ( ! empty( $item['type'] ) && ! empty( $item['val'] ) ) {
@@ -404,7 +418,9 @@ class Pos_Restaurant_Api extends API_Base {
 	 * @return \Appsbd\V1\libs\API_Response
 	 */
 	public function start_preparing() {
-						$order_id = $this->get_payload( 'order_id' );
+		
+		
+		$order_id = $this->get_payload( 'order_id' );
 		if ( ! empty( $order_id ) ) {
 			$order = new \WC_Order( $order_id );
 			if ( $order->get_status() == 'vt_in_kitchen' ) {
@@ -417,7 +433,7 @@ class Pos_Restaurant_Api extends API_Base {
 					 *
 					 * @since 2.0
 					 */
-					do_action('vitepos/action/send-order-push',$updated_order);
+					do_action( 'vitepos/action/send-order-push', $updated_order );
 					$this->response->set_response( true, 'Order stated cooking', $updated_order );
 					return $this->response->get_response();
 				}
@@ -433,20 +449,30 @@ class Pos_Restaurant_Api extends API_Base {
 	 * @return \Appsbd\V1\libs\API_Response
 	 */
 	public function make_served() {
-						$order_id = $this->get_payload( 'order_id' );
+		
+		
+		$order_id = $this->get_payload( 'order_id' );
 		if ( ! empty( $order_id ) ) {
 			$order = new \WC_Order( $order_id );
 			if ( $order->get_status() == 'vt_ready_to_srv' ) {
 				if ( $order->update_status( 'vt_served', 'Order has been served', true ) ) {
 					$this->add_time_by_status( $order, 'vt_served' );
-					$msg           = POS_Order::add_resto_order_msg( $order_id, 'Order has been served' );
+					$msg = POS_Order::add_resto_order_msg( $order_id, 'Order has been served' );
+					if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+						foreach ( $order->get_items() as $item ) {
+							if ( $item->get_meta( '_vtp_item_status' ) == 'vt_it_ready' ) {
+								$item->update_meta_data( '_vtp_item_status', 'vt_it_served' );
+							}
+							$order->save();
+						}
+					}
 					$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
 					/**
 					 * Its for check is there any change before process
 					 *
 					 * @since 2.0
 					 */
-					do_action('vitepos/action/send-order-push',$updated_order);
+					do_action( 'vitepos/action/send-order-push', $updated_order );
 					$this->response->set_response( true, 'Order has been served', $updated_order );
 					return $this->response->get_response();
 				}
@@ -467,7 +493,8 @@ class Pos_Restaurant_Api extends API_Base {
 		if ( ! empty( $order_id ) ) {
 			$order = new \WC_Order( $order_id );
 			if ( $order->get_status() == 'vt_preparing' ) {
-				if ( $order->update_status( 'vt_ready_to_srv', 'Order is ready to serve', true ) ) {					$this->add_time_by_status( $order, 'vt_ready_to_srv' );
+				if ( $order->update_status( 'vt_ready_to_srv', 'Order is ready to serve', true ) ) {
+					$this->add_time_by_status( $order, 'vt_ready_to_srv' );
 					$msg           = POS_Order::add_resto_order_msg( $order_id, 'Order is ready to serve' );
 					$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
 					/**
@@ -475,7 +502,7 @@ class Pos_Restaurant_Api extends API_Base {
 					 *
 					 * @since 2.0
 					 */
-					do_action('vitepos/action/send-order-push',$updated_order);
+					do_action( 'vitepos/action/send-order-push', $updated_order );
 					$this->response->set_response( true, 'Order is ready to serve', $updated_order );
 					return $this->response->get_response();
 				}
@@ -497,7 +524,8 @@ class Pos_Restaurant_Api extends API_Base {
 		if ( ! empty( $order_id ) ) {
 			$order = new \WC_Order( $order_id );
 			if ( $order->get_status() == 'vt_preparing' ) {
-				if ( $order->update_status( 'vt_cancel_request', 'Cancel requested', true ) ) {					$this->add_time_by_status( $order, 'vt_cancel_request' );
+				if ( $order->update_status( 'vt_cancel_request', 'Cancel requested', true ) ) {
+					$this->add_time_by_status( $order, 'vt_cancel_request' );
 					$msg           = POS_Order::add_resto_order_msg( $order_id, 'Please cancel this order' );
 					$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
 					/**
@@ -505,7 +533,7 @@ class Pos_Restaurant_Api extends API_Base {
 					 *
 					 * @since 2.0
 					 */
-					do_action('vitepos/action/send-order-push',$updated_order);
+					do_action( 'vitepos/action/send-order-push', $updated_order );
 					$this->response->set_response( true, 'Cancel request sent success', $updated_order );
 					return $this->response->get_response();
 				}
@@ -529,7 +557,8 @@ class Pos_Restaurant_Api extends API_Base {
 			$order = new \WC_Order( $order_id );
 			if ( $order->get_status() == 'vt_cancel_request' ) {
 				if ( 'Y' == $answer ) {
-					if ( $order->update_status( 'cancelled', 'Cancel requested accepted', true ) ) {						$this->add_time_by_status( $order, 'cancelled' );
+					if ( $order->update_status( 'cancelled', 'Cancel requested accepted', true ) ) {
+						$this->add_time_by_status( $order, 'cancelled' );
 						$msg           = POS_Order::add_resto_order_msg( $order_id, 'Cancel requested accepted' );
 						$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
 						/**
@@ -537,12 +566,13 @@ class Pos_Restaurant_Api extends API_Base {
 						 *
 						 * @since 2.0
 						 */
-						do_action('vitepos/action/send-order-push',$updated_order);
+						do_action( 'vitepos/action/send-order-push', $updated_order );
 						$this->response->set_response( true, 'Cancel request sent success', $updated_order );
 						return $this->response->get_response();
 					}
 				} else {
-					if ( $order->update_status( 'vt_preparing', 'Cancel request denied', true ) ) {						update_post_meta( $order_id, '_vt_can_cancel', 'N' );
+					if ( $order->update_status( 'vt_preparing', 'Cancel request denied', true ) ) {
+						vitepos_wc_order_update_meta( $order, '_vt_can_cancel', 'N' );
 						$this->add_time_by_status( $order, 'vt_preparing' );
 						$msg           = POS_Order::add_resto_order_msg( $order_id, 'Cancel is not possible' );
 						$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
@@ -551,7 +581,7 @@ class Pos_Restaurant_Api extends API_Base {
 						 *
 						 * @since 2.0
 						 */
-						do_action('vitepos/action/send-order-push',$updated_order,'N');
+						do_action( 'vitepos/action/send-order-push', $updated_order, 'N' );
 						$this->response->set_response( true, 'Cancel request denied', $updated_order );
 						return $this->response->get_response();
 					}
@@ -571,12 +601,16 @@ class Pos_Restaurant_Api extends API_Base {
 	 * @return \Appsbd\V1\libs\API_Response
 	 */
 	public function cancel_order() {
-						$order_id = $this->get_payload( 'order_id' );
+		
+		
+		$order_id = $this->get_payload( 'order_id' );
 		if ( ! empty( $order_id ) ) {
 			$order  = new \WC_Order( $order_id );
 			$status = $order->get_status();
 			if ( in_array( $status, array( 'vt_kitchen_deny', 'vt_in_kitchen' ) ) ) {
-								if ( $order->update_status( 'cancelled', 'Order Cancel', true ) ) {					$this->add_time_by_status( $order, 'vt_kitchen_deny' );
+				
+				if ( $order->update_status( 'cancelled', 'Order Cancel', true ) ) {
+					$this->add_time_by_status( $order, 'vt_kitchen_deny' );
 					$msg           = POS_Order::add_resto_order_msg( $order_id, 'Order canceled' );
 					$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
 					/**
@@ -584,7 +618,7 @@ class Pos_Restaurant_Api extends API_Base {
 					 *
 					 * @since 2.0
 					 */
-					do_action('vitepos/action/send-order-push',$updated_order);
+					do_action( 'vitepos/action/send-order-push', $updated_order );
 					$this->response->set_response( true, 'Order canceled successfully', $updated_order );
 					return $this->response->get_response();
 				}
@@ -602,8 +636,7 @@ class Pos_Restaurant_Api extends API_Base {
 	public function deny_order() {
 		$order_id  = $this->get_payload( 'order_id' );
 		$reason_id = $this->get_payload( 'reason_id' );
-		if (empty($reason_id))
-		{
+		if ( empty( $reason_id ) ) {
 			$this->response->set_response( false, 'Deny reason is required', null );
 			return $this->response->get_response();
 		}
@@ -622,7 +655,7 @@ class Pos_Restaurant_Api extends API_Base {
 				 *
 				 * @since 2.0
 				 */
-				do_action('vitepos/action/send-order-push',$updated_order);
+				do_action( 'vitepos/action/send-order-push', $updated_order );
 				$this->response->set_response( true, 'Order denied success', $updated_order );
 				return $this->response->get_response();
 			}
@@ -635,8 +668,416 @@ class Pos_Restaurant_Api extends API_Base {
 	 *
 	 * @return \Appsbd\V1\libs\API_Response
 	 */
+	public function deny_item() {
+		$order_id  = $this->get_payload( 'order_id' );
+		$reason_id = $this->get_payload( 'reason_id' );
+		$item_id   = $this->get_payload( 'item_id' );
+		if ( empty( $reason_id ) ) {
+			$this->response->set_response( false, 'Deny reason is required', null );
+			return $this->response->get_response();
+		}
+		if ( ! empty( $order_id ) ) {
+			$new_order = new POS_Restro_Payment( $this->payload, $this->get_outlet_id(), $this->get_counter_id() );
+			$order     = new \WC_Order( $order_id );
+			if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+				$this->response->set_response( false, 'Order is not item wise', null );
+				return $this->response->get_response();
+			}
+			if ( $new_order->deny_item( $order_id, $item_id, $reason_id ) ) {
+				$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+				if ( $this->get_is_same_status( $updated_order->items, 'vt_it_denied' ) ) {
+					$msg_obj = new Mapbd_Pos_Message();
+					$msg_obj->id( $reason_id );
+					if ( $msg_obj->select( 'msg' ) ) {
+						$updated_order = $this->update_order_status_by_item( $order, 'vt_kitchen_deny', 'Deny from kitchen', $msg_obj->msg );
+					}
+				}
+				/**
+				 * Its for check is there any change before process
+				 *
+				 * @since 2.0
+				 */
+				do_action( 'vitepos/action/send-order-push', $updated_order, 'Y', '', $item_id );
+				$this->response->set_response( true, 'Order denied success', $updated_order );
+				return $this->response->get_response();
+			} else {
+				return $this->response->get_response();
+			}
+		}
+		$this->response->set_response( false, 'Item deny failed', null );
+		return $this->response->get_response();
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
+	public function update_order() {
+		$order_id = $this->get_payload( 'order_id' );
+		$items    = $this->get_payload( 'items' );
+		if ( ! empty( $order_id ) ) {
+			$new_order     = new POS_Restro_Payment( $this->payload, $this->get_outlet_id(), $this->get_counter_id() );
+			$is_item_added = false;
+			$order         = new \WC_Order( $order_id );
+			if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+				$this->response->set_response( false, 'Order is not item wise', null );
+				return $this->response->get_response();
+			}
+			if ( $new_order->add_item( $order_id, $items, $is_item_added ) ) {
+				$order         = new \WC_Order( $order_id );
+				$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+				if ( $is_item_added ) {
+					$status = 'vt_in_kitchen';
+					if ( $this->get_is_same_status( $updated_order->items, 'vt_it_kitchen' ) ) {
+						$order->update_status( $status, 'New item has been sent to kitchen' );
+					} else {
+						$status = 'vt_preparing';
+						$order->update_status( $status, 'New item has been sent to kitchen' );
+					}
+					if ( $order->save() ) {
+						$this->add_time_by_status( $order, $status );
+						POS_Order::add_resto_order_msg( $order_id, 'New items added' );
+					}
+				} else {
+					POS_Order::add_resto_order_msg( $order_id, 'Order has been updated' );
+				}
+
+				$updated_order_last = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+				/**
+				 * Its for check is there any change before process
+				 *
+				 * @since 3.0
+				 */
+				do_action( 'vitepos/action/send-order-push', $updated_order_last, 'Y', 'O' );
+				$this->response->set_response( true, 'Order update success', $updated_order_last );
+				return $this->response->get_response();
+			} else {
+				$this->response->set_response( false, 'Order update failed' );
+				return $this->response->get_response();
+			}
+		}
+		$this->response->set_response( false, 'Item deny failed', null );
+		return $this->response->get_response();
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
+	public function remove_item() {
+		$order_id = $this->get_payload( 'order_id' );
+		$item_id  = $this->get_payload( 'item_id' );
+		if ( ! empty( $order_id ) ) {
+			$new_order = new POS_Restro_Payment( $this->payload, $this->get_outlet_id(), $this->get_counter_id() );
+			$order     = new \WC_Order( $order_id );
+			if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+				$this->response->set_response( false, 'Order is not item wise', null );
+				return $this->response->get_response();
+			}
+			if ( count( $order->get_items() ) > 1 ) {
+				if ( $new_order->remove_item( $order_id, $item_id ) ) {
+					$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+					if ( $this->get_is_same_status( $updated_order->items, 'vt_it_kitchen' ) ) {
+						$updated_order = $this->update_order_status_by_item( $order, 'vt_in_kitchen', 'Item removed and status changed', 'Item removed and status changed' );
+					} else {
+						$next_status = $new_order->next_status_to_update( $order_id, array( 'vt_it_preparing', 'vt_it_ready', 'vt_it_served', 'vt_it_denied' ) );
+						if ( ! empty( $next_status ) && $order->get_status() != $next_status ) {
+							$updated_order = $this->update_order_status_by_item( $order, $next_status, 'Order status changed after removed item', 'Order status changed due to remove item' );
+						}
+					}
+					/**
+					 * Its for check is there any change before process
+					 *
+					 * @since 2.0
+					 */
+					do_action( 'vitepos/action/send-order-push', $updated_order, 'Y', '', $item_id, 'R' );
+					$this->response->set_response( true, 'Item removed success', $updated_order );
+					return $this->response->get_response();
+				} else {
+					$this->response->set_response( true, 'Item remove failed' );
+					return $this->response->get_response();
+				}
+			} else {
+				$updated_order = $this->update_order_status_by_item( $order, 'cancelled', 'Order cancelled', 'Order cancelled' );
+				$this->response->set_response( true, 'Order cancelled successfully', $updated_order );
+				return $this->response->get_response();
+			}
+		}
+		$this->response->set_response( false, 'Order deny failed', null );
+		return $this->response->get_response();
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
+	public function cancel_item_request() {
+		$order_id = $this->get_payload( 'order_id' );
+		$item_id  = $this->get_payload( 'item_id' );
+		if ( ! empty( $order_id ) ) {
+			$order = new \WC_Order( $order_id );
+			if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+				$this->response->set_response( false, 'Order is not item wise', null );
+				return $this->response->get_response();
+			}
+			$new_order = new POS_Restro_Payment( $this->payload, $this->get_outlet_id(), $this->get_counter_id() );
+			if ( $new_order->cancel_item_request( $order_id, $item_id ) ) {
+					$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+				if ( $this->get_is_same_status( $updated_order->items, 'vt_it_cancel_req' ) ) {
+					$updated_order = $this->update_order_status_by_item( $order, 'vt_cancel_request', 'Cancel requested', 'Cancel requested' );
+				}
+					/**
+					* Its for check is there any change before process
+					*
+					* @since 2.0
+					*/
+					do_action( 'vitepos/action/send-order-push', $updated_order, 'Y', '', $item_id );
+					$this->response->set_response( true, 'Item cancel request success', $updated_order );
+					return $this->response->get_response();
+			} else {
+				$this->response->set_response( false, 'Item cancel request faild' );
+				return $this->response->get_response();
+			}
+		}
+		$this->response->set_response( false, 'Item cancel request failed', null );
+		return $this->response->get_response();
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
+	public function item_cancel_req_ans() {
+		$order_id = $this->get_payload( 'order_id' );
+		$item_id  = $this->get_payload( 'item_id' );
+		$ans      = $this->get_payload( 'ans' );
+		if ( ! empty( $order_id ) && ! empty( $ans ) ) {
+			$order = new \WC_Order( $order_id );
+			if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+				$this->response->set_response( false, 'Order is not item wise', null );
+				return $this->response->get_response();
+			}
+			$new_order = new POS_Restro_Payment( $this->payload, $this->get_outlet_id(), $this->get_counter_id() );
+			if ( 'Y' == $ans ) {
+				if ( $new_order->accept_cancel_item( $order_id, $item_id ) ) {
+					$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+					if ( $this->get_is_same_status( $updated_order->items, 'vt_it_accept_req' ) ) {
+						$updated_order = $this->update_order_status_by_item( $order, 'vt_cancel_request', 'Cancel request accepted', 'Cancel request accepted' );
+					}
+					/**
+					 * Its for check is there any change before process
+					 *
+					 * @since 2.0
+					 */
+					do_action( 'vitepos/action/send-order-push', $updated_order, 'Y', '', $item_id );
+
+					$this->response->set_response( true, 'Item cancel request accepted', $updated_order );
+					return $this->response->get_response();
+				} else {
+					return $this->response->get_response();
+				}
+			} else {
+				if ( $new_order->deny_cancel_item( $order_id, $item_id ) ) {
+					$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+					if ( $this->get_is_same_status( $updated_order->items, 'vt_it_preparing' ) ) {
+						$updated_order = $this->update_order_status_by_item( $order, 'vt_preparing', 'Cancel request denied', 'Cancel request denied' );
+					}
+					/**
+					* Its for check is there any change before process
+					*
+					* @since 2.0
+					*/
+					do_action( 'vitepos/action/send-order-push', $updated_order, 'Y', '', $item_id, 'N' );
+					$this->response->set_response( true, 'Item cancel request denied', $updated_order );
+					return $this->response->get_response();
+				} else {
+					return $this->response->get_response();
+				}
+			}
+		}
+		$this->response->set_response( false, 'Item cancel request failed', null );
+		return $this->response->get_response();
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
+	public function start_item() {
+		$order_id = $this->get_payload( 'order_id' );
+		$item_id  = $this->get_payload( 'item_id' );
+		if ( ! empty( $order_id ) ) {
+			$order = new \WC_Order( $order_id );
+			if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+				$this->response->set_response( false, 'Order is not item wise', null );
+				return $this->response->get_response();
+			}
+			$items         = $order->get_items();
+			$updated_order = null;
+			if ( array_key_exists( $item_id, $items ) ) {
+				$items[ $item_id ]->update_meta_data( '_vtp_item_status', 'vt_it_preparing' );
+				if ( $items[ $item_id ]->save() ) {
+					$updated_order = $this->update_order_status_by_item( $order, 'vt_preparing', 'Order preparing in kitchen', 'Order preparing in kitchen' );
+				}
+			}
+			/**
+			 * Its for check is there any change before process
+			 *
+			 * @since 2.0
+			 */
+			do_action( 'vitepos/action/send-order-push', $updated_order, 'Y', '', $item_id );
+			$this->response->set_response( true, 'Item started successfully', $updated_order );
+			return $this->response->get_response();
+		}
+		$this->response->set_response( false, 'Item start failed', null );
+		return $this->response->get_response();
+	}
+
+	/**
+	 * The get is same status is generated by appsbd
+	 *
+	 * @param mixed $items Its items param.
+	 * @param mixed $current_status Its current_status param.
+	 *
+	 * @return bool
+	 */
+	public function get_is_same_status( $items, $current_status ) {
+		$ok = true;
+		foreach ( $items as $item ) {
+			if ( $item->status != $current_status ) {
+				$ok = false;
+				break;
+			}
+		}
+		return $ok;
+	}
+
+	/**
+	 * The can go next status is generated by appsbd
+	 *
+	 * @param mixed $items Its items param.
+	 * @param mixed $check_array Its check_array param.
+	 *
+	 * @return bool
+	 */
+	public function can_go_next_status( $items, $check_array ) {
+		$ok = true;
+		foreach ( $items as $item ) {
+			if ( ! in_array( $item->status, $check_array ) ) {
+				$ok = false;
+				break;
+			}
+		}
+		return $ok;
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @param \WC_Order $order Its subtotal param.
+	 * @param string    $current_status Its subtotal param.
+	 * @param string    $note Its subtotal param.
+	 * @param string    $msg Its subtotal param.
+	 * @return POS_Order
+	 */
+	public function update_order_status_by_item( $order, $current_status, $note, $msg ) {
+		if ( $order->update_status( $current_status, $note, true ) ) {
+			$this->add_time_by_status( $order, $current_status );
+			$msg           = POS_Order::add_resto_order_msg( $order->get_id(), $msg );
+			$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order->get_id(), false, true );
+			return $updated_order;
+		}
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
+	public function complete_item() {
+		$order_id = $this->get_payload( 'order_id' );
+		$item_id  = $this->get_payload( 'item_id' );
+		if ( ! empty( $order_id ) ) {
+			$order = new \WC_Order( $order_id );
+			if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+				$this->response->set_response( false, 'Order is not item wise', null );
+				return $this->response->get_response();
+			}
+			if ( $order->get_status() == 'vt_preparing' ) {
+				$items = $order->get_items();
+				if ( array_key_exists( $item_id, $items ) ) {
+					$items[ $item_id ]->update_meta_data( '_vtp_item_status', 'vt_it_ready' );
+					$items[ $item_id ]->save();
+				}
+				$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+				
+				if ( $this->get_is_same_status( $updated_order->items, 'vt_it_ready' ) || $this->can_go_next_status( $updated_order->items, array( 'vt_it_ready', 'vt_it_served' ) ) ) {
+					$updated_order = $this->update_order_status_by_item( $order, 'vt_ready_to_srv', 'Order is ready to serve', 'Order is ready to serve' );
+				}
+				/**
+				 * Its for check is there any change before process
+				 *
+				 * @since 2.0
+				 */
+				do_action( 'vitepos/action/send-order-push', $updated_order, 'Y', '', $item_id );
+				$this->response->set_response( true, 'Item is ready to serve', $updated_order );
+				return $this->response->get_response();
+			} else {
+				$this->response->set_response( false, 'Making ready is failed', null );
+				return $this->response->get_response();
+			}
+		}
+		$this->response->set_response( false, 'Completing item is failed', null );
+		return $this->response->get_response();
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
+	public function serve_item() {
+		$order_id = $this->get_payload( 'order_id' );
+		$item_id  = $this->get_payload( 'item_id' );
+		if ( ! empty( $order_id ) ) {
+			$order = new \WC_Order( $order_id );
+			if ( $order->get_meta( '_vtp_is_item_wise' ) != 'Y' ) {
+				$this->response->set_response( false, 'Order is not item wise', null );
+				return $this->response->get_response();
+			}
+			if ( $order->get_status() == 'vt_ready_to_srv' || $order->get_status() == 'vt_preparing' ) {
+				$items = $order->get_items();
+				if ( array_key_exists( $item_id, $items ) ) {
+					$items[ $item_id ]->update_meta_data( '_vtp_item_status', 'vt_it_served' );
+					$items[ $item_id ]->save();
+				}
+				$updated_order = POS_Order::get_from_woo_order_restro_by_id( $order_id, false, true );
+				
+				if ( $this->get_is_same_status( $updated_order->items, 'vt_it_served' ) ) {
+					$updated_order = $this->update_order_status_by_item( $order, 'vt_served', 'Order has been served', 'Order has been served' );
+				}
+				/**
+				 * Its for check is there any change before process
+				 *
+				 * @since 2.0
+				 */
+				do_action( 'vitepos/action/send-order-push', $updated_order, 'Y', '', $item_id );
+				$this->response->set_response( true, 'Item has been served', $updated_order );
+				return $this->response->get_response();
+			} else {
+				$this->response->set_response( false, 'Item serve failed', null );
+				return $this->response->get_response();
+			}
+		}
+		$this->response->set_response( false, 'Item serve failed', null );
+		return $this->response->get_response();
+	}
+	/**
+	 * The deny order is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
 	public function add_kitchen_msg() {
-						$order_id = $this->get_payload( 'order_id', '' );
+		
+		
+		$order_id = $this->get_payload( 'order_id', '' );
 		$msg      = $this->get_payload( 'msg', '' );
 		if ( ! empty( $order_id ) && ! empty( $msg ) ) {
 			$msgs = POS_Order::add_resto_order_msg( $order_id, $msg );
@@ -647,7 +1088,7 @@ class Pos_Restaurant_Api extends API_Base {
 				 *
 				 * @since 2.0
 				 */
-				do_action('vitepos/action/send-order-push',$updated_order);
+				do_action( 'vitepos/action/send-order-push', $updated_order );
 				$this->response->set_response( true, 'Successfully message added', $updated_order );
 				return $this->response->get_response();
 			}
@@ -714,7 +1155,8 @@ class Pos_Restaurant_Api extends API_Base {
 		$order_by      = $this->get_current_user_id();
 		$args          = array(
 			'status'        => array( 'vt_in_kitchen', 'vt_preparing', 'vt_served', 'vt_kitchen_deny', 'vt_ready_to_srv', 'vt_cancel_request' ),
-						'page'          => $this->get_payload( 'page', 1 ),
+			
+			'page'          => $this->get_payload( 'page', 1 ),
 			'orderby'       => 'date',
 			'order'         => 'DESC',
 			'paginate'      => true,
@@ -938,7 +1380,8 @@ class Pos_Restaurant_Api extends API_Base {
 			foreach ( $orders->orders as $order ) {
 				$order_data = POS_Order::get_from_woo_order( $order );
 				if ( true || $this->get_payload( 'with_items', 'N' ) == 'Y' ) {
-										$order_data->items = array();
+					
+					$order_data->items = array();
 					POS_Order::set_items_to_order( $order_data, $order );
 
 				}
@@ -966,8 +1409,10 @@ class Pos_Restaurant_Api extends API_Base {
 		$type          = $this->payload['type'];
 		$mainobj       = new Mapbd_Pos_Message();
 		
+
 		$mainobj->msg_panel( "in ('A','{$type}')", true );
-				$mainobj->status( 'A' );
+		
+		$mainobj->status( 'A' );
 		$response_data->rowdata = $mainobj->select_all_grid_data( '', 'created_at', 'DESC' );
 		$this->response->set_response( true, 'Order found', $response_data->rowdata );
 		return $this->response;
@@ -979,12 +1424,12 @@ class Pos_Restaurant_Api extends API_Base {
 	 */
 	public function sync_order_list() {
 		$response_data = new API_Data_Response();
-		if(!POS_Settings::is_restaurant_mode()){
-			$this->response->set_response( true, 'Order found', [] );
+		if ( ! POS_Settings::is_restaurant_mode() ) {
+			$this->response->set_response( false, 'Order not found', array() );
 			return $this->response->get_response();
 		}
-		$args          = array(
-			'status'        => array( 'vt_in_kitchen', 'vt_preparing', 'cancelled', 'vt_served', 'completed', 'vt_kitchen_deny', 'vt_ready_to_srv', 'vt_cancel_request','pending' ),
+		$args = array(
+			'status'        => array( 'vt_in_kitchen', 'vt_preparing', 'cancelled', 'vt_served', 'completed', 'vt_kitchen_deny', 'vt_ready_to_srv', 'vt_cancel_request', 'pending' ),
 			'limit'         => $this->get_payload( 'limit', 1000 ),
 			'page'          => $this->get_payload( 'page', 1 ),
 			'orderby'       => 'date',
@@ -1031,6 +1476,30 @@ class Pos_Restaurant_Api extends API_Base {
 
 		$this->response->set_response( true, 'Order found', $response_data );
 		return $this->response->get_response();
+	}
+	/**
+	 * The order list is generated by appsbd
+	 *
+	 * @return \Appsbd\V1\libs\API_Response
+	 */
+	public function sync_order() {
+		if ( ! POS_Settings::is_restaurant_mode() ) {
+			$this->response->set_response( false, 'Order not found', array() );
+			return $this->response->get_response();
+		}
+		$order_id = $this->get_payload( 'order_id' );
+
+		if ( ! empty( $order_id ) ) {
+			$order      = wc_get_order( $order_id );
+			$order_data = POS_Order::get_from_woo_order( $order, false, true );
+
+			$this->response->set_response( true, 'Order found', $order_data );
+			return $this->response->get_response();
+		} else {
+			$this->response->set_response( false, 'Order not found', null );
+			return $this->response->get_response();
+		}
+
 	}
 
 	/**
@@ -1108,7 +1577,7 @@ class Pos_Restaurant_Api extends API_Base {
 				 *
 				 * @since 2.0
 				 */
-				do_action('vitepos/action/send-order-push',$order_data);
+				do_action( 'vitepos/action/send-order-push', $order_data );
 				$this->response->set_response( true, 'Updated Successfully', $data );
 				return $this->response;
 			} else {
@@ -1129,12 +1598,12 @@ class Pos_Restaurant_Api extends API_Base {
 		$id    = intval( $this->get_payload( 'order_id' ) );
 		$order = new \WC_Order( $id );
 		if ( $order ) {
-			$tables=$this->get_payload('table_id',null);
-			$person = $this->get_payload('persons',0);
-			if(!empty($tables)) {
-				if ( update_post_meta($id,'_vtp_tables', $tables) && update_post_meta($id,'_vtp_persons', $person) ) {
-					$msg           = POS_Order::add_resto_order_msg( $id, 'Table and person updated' );
-					$order = new \WC_Order( $id );
+			$tables = $this->get_payload( 'table_id', null );
+			$person = $this->get_payload( 'persons', 0 );
+			if ( ! empty( $tables ) ) {
+				if ( vitepos_wc_update_meta( $id, '_vtp_tables', $tables ) && vitepos_wc_update_meta( $id, '_vtp_persons', $person ) ) {
+					$msg        = POS_Order::add_resto_order_msg( $id, 'Table and person updated' );
+					$order      = new \WC_Order( $id );
 					$order_data = POS_Order::get_from_woo_order_details( $order );
 					/**
 					 * Its for check is there any change before process
@@ -1150,7 +1619,7 @@ class Pos_Restaurant_Api extends API_Base {
 
 					return $this->response;
 				}
-			}else{
+			} else {
 				$this->response->set_response( false, 'Table is empty', null );
 				return $this->response;
 			}
@@ -1178,7 +1647,7 @@ class Pos_Restaurant_Api extends API_Base {
 			$time_obj->status = $status;
 			$time_obj->time   = gmdate( 'Y-m-d H:i:s' );
 			$time_logs[]      = $time_obj;
-		if ( update_post_meta( $order->get_id(), $time_meta_key, $time_logs ) ) {
+		if ( vitepos_wc_order_update_meta( $order, $time_meta_key, $time_logs ) ) {
 			return true;
 		}
 		return false;

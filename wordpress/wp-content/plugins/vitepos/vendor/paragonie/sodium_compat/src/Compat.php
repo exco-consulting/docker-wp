@@ -50,7 +50,8 @@ class ParagonIE_Sodium_Compat
     const LIBRARY_VERSION_MINOR = 1;
     const VERSION_STRING = 'polyfill-1.0.8';
 
-        const BASE64_VARIANT_ORIGINAL = 1;
+    
+    const BASE64_VARIANT_ORIGINAL = 1;
     const BASE64_VARIANT_ORIGINAL_NO_PADDING = 3;
     const BASE64_VARIANT_URLSAFE = 5;
     const BASE64_VARIANT_URLSAFE_NO_PADDING = 7;
@@ -191,7 +192,8 @@ class ParagonIE_Sodium_Compat
             return '';
         }
 
-                if (!empty($ignore)) {
+        
+        if (!empty($ignore)) {
             $encoded = str_replace($ignore, '', $encoded);
         }
 
@@ -314,10 +316,12 @@ class ParagonIE_Sodium_Compat
             return call_user_func('\\Sodium\\crypto_aead_aes256gcm_is_available');
         }
         if (PHP_VERSION_ID < 70100) {
-                        return false;
+            
+            return false;
         }
         if (!is_callable('openssl_encrypt') || !is_callable('openssl_decrypt')) {
-                        return false;
+            
+            return false;
         }
         return (bool) in_array('aes-256-gcm', openssl_get_cipher_methods());
     }
@@ -1934,7 +1938,8 @@ class ParagonIE_Sodium_Compat
         if (self::use_fallback('crypto_pwhash')) {
             return (string) call_user_func('\\Sodium\\crypto_pwhash', $outlen, $passwd, $salt, $opslimit, $memlimit);
         }
-                throw new SodiumException(
+        
+        throw new SodiumException(
             'This is not implemented, as it is not possible to implement Argon2i with acceptable performance in pure-PHP'
         );
     }
@@ -1979,7 +1984,8 @@ class ParagonIE_Sodium_Compat
         if (self::use_fallback('crypto_pwhash_str')) {
             return (string) call_user_func('\\Sodium\\crypto_pwhash_str', $passwd, $opslimit, $memlimit);
         }
-                throw new SodiumException(
+        
+        throw new SodiumException(
             'This is not implemented, as it is not possible to implement Argon2i with acceptable performance in pure-PHP'
         );
     }
@@ -1999,16 +2005,19 @@ class ParagonIE_Sodium_Compat
         ParagonIE_Sodium_Core_Util::declareScalarType($opslimit, 'int', 2);
         ParagonIE_Sodium_Core_Util::declareScalarType($memlimit, 'int', 3);
 
-                $pieces = explode('$', (string) $hash);
+        
+        $pieces = explode('$', (string) $hash);
         $prefix = implode('$', array_slice($pieces, 0, 4));
 
-                /** @var int $ops */
+        
+        /** @var int $ops */
         $ops = (int) $opslimit;
         /** @var int $mem */
         $mem = (int) $memlimit >> 10;
         $encoded = self::CRYPTO_PWHASH_STRPREFIX . 'v=19$m=' . $mem . ',t=' . $ops . ',p=1';
 
-                return !ParagonIE_Sodium_Core_Util::hashEquals($encoded, $prefix);
+        
+        return !ParagonIE_Sodium_Core_Util::hashEquals($encoded, $prefix);
     }
 
     /**
@@ -2030,7 +2039,8 @@ class ParagonIE_Sodium_Compat
         if (self::use_fallback('crypto_pwhash_str_verify')) {
             return (bool) call_user_func('\\Sodium\\crypto_pwhash_str_verify', $passwd, $hash);
         }
-                throw new SodiumException(
+        
+        throw new SodiumException(
             'This is not implemented, as it is not possible to implement Argon2i with acceptable performance in pure-PHP'
         );
     }
@@ -2072,7 +2082,8 @@ class ParagonIE_Sodium_Compat
                 (int) $memlimit
             );
         }
-                throw new SodiumException(
+        
+        throw new SodiumException(
             'This is not implemented, as it is not possible to implement Scrypt with acceptable performance in pure-PHP'
         );
     }
@@ -2125,7 +2136,8 @@ class ParagonIE_Sodium_Compat
                 (int) $memlimit
             );
         }
-                throw new SodiumException(
+        
+        throw new SodiumException(
             'This is not implemented, as it is not possible to implement Scrypt with acceptable performance in pure-PHP'
         );
     }
@@ -2155,7 +2167,8 @@ class ParagonIE_Sodium_Compat
                 (string) $hash
             );
         }
-                throw new SodiumException(
+        
+        throw new SodiumException(
             'This is not implemented, as it is not possible to implement Scrypt with acceptable performance in pure-PHP'
         );
     }
@@ -3371,7 +3384,8 @@ class ParagonIE_Sodium_Compat
                 return;
             }
         }
-                throw new SodiumException(
+        
+        throw new SodiumException(
             'This is not implemented in sodium_compat, as it is not possible to securely wipe memory from PHP. ' .
             'To fix this error, make sure libsodium is installed and the PHP extension is enabled.'
         );
@@ -3448,13 +3462,17 @@ class ParagonIE_Sodium_Compat
         $mask = 0;
         $tail = $xpadded_len;
         for ($i = 0; $i < $blockSize; ++$i) {
-                                    $barrier_mask = (($i ^ $xpadlen) -1) >> ((PHP_INT_SIZE << 3) - 1);
-                        $padded[$tail - $i] = ParagonIE_Sodium_Core_Util::intToChr(
+            
+            
+            $barrier_mask = (($i ^ $xpadlen) -1) >> ((PHP_INT_SIZE << 3) - 1);
+            
+            $padded[$tail - $i] = ParagonIE_Sodium_Core_Util::intToChr(
                 (ParagonIE_Sodium_Core_Util::chrToInt($padded[$tail - $i]) & $mask)
                     |
                 (0x80 & $barrier_mask)
             );
-                        $mask |= $barrier_mask;
+            
+            $mask |= $barrier_mask;
         }
         return $padded;
     }
@@ -3486,7 +3504,8 @@ class ParagonIE_Sodium_Compat
             throw new SodiumException('invalid padding');
         }
 
-                $tail = $padded_len - 1;
+        
+        $tail = $padded_len - 1;
 
         $acc = 0;
         $valid = 0;
@@ -3494,9 +3513,12 @@ class ParagonIE_Sodium_Compat
 
         $found = 0;
         for ($i = 0; $i < $blockSize; ++$i) {
-                        $c = ParagonIE_Sodium_Core_Util::chrToInt($padded[$tail - $i]);
+            
+            $c = ParagonIE_Sodium_Core_Util::chrToInt($padded[$tail - $i]);
 
-                                    $is_barrier = (
+            
+            
+            $is_barrier = (
                 (
                     ($acc - 1) & ($pad_len - 1) & (($c ^ 80) - 1)
                 ) >> 7
@@ -3504,13 +3526,17 @@ class ParagonIE_Sodium_Compat
             $is_barrier &= ~$found;
             $found |= $is_barrier;
 
-                        $acc |= $c;
+            
+            $acc |= $c;
 
-                        $pad_len |= $i & (1 + ~$is_barrier);
+            
+            $pad_len |= $i & (1 + ~$is_barrier);
 
-                        $valid |= ($is_barrier & 0xff);
+            
+            $valid |= ($is_barrier & 0xff);
         }
-                $unpadded_len = $padded_len - 1 - $pad_len;
+        
+        $unpadded_len = $padded_len - 1 - $pad_len;
         if ($valid !== 1) {
             throw new SodiumException('invalid padding');
         }
@@ -3937,10 +3963,12 @@ class ParagonIE_Sodium_Compat
             $res = extension_loaded('libsodium') && PHP_VERSION_ID >= 50300;
         }
         if ($res === false) {
-                        return false;
+            
+            return false;
         }
         if (self::$disableFallbackForUnitTests) {
-                        return false;
+            
+            return false;
         }
         if (!empty($sodium_func_name)) {
             return is_callable('\\Sodium\\' . $sodium_func_name);
@@ -3962,7 +3990,8 @@ class ParagonIE_Sodium_Compat
             $res = PHP_VERSION_ID >= 70000 && extension_loaded('sodium');
         }
         if (self::$disableFallbackForUnitTests) {
-                        return false;
+            
+            return false;
         }
         return (bool) $res;
     }

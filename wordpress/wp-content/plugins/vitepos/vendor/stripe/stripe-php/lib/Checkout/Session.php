@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Checkout;
 
 /**

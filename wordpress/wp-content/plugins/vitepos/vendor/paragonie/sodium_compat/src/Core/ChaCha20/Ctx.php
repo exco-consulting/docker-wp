@@ -69,7 +69,8 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
      * @return void
      * @psalm-suppress MixedArrayOffset
      */
-        public function offsetSet($offset, $value)
+    #[ReturnTypeWillChange]
+    public function offsetSet($offset, $value)
     {
         if (!is_int($offset)) {
             throw new InvalidArgumentException('Expected an integer');
@@ -86,7 +87,8 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
      * @param int $offset
      * @return bool
      */
-        public function offsetExists($offset)
+    #[ReturnTypeWillChange]
+    public function offsetExists($offset)
     {
         return isset($this->container[$offset]);
     }
@@ -98,7 +100,8 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
      * @return void
      * @psalm-suppress MixedArrayOffset
      */
-        public function offsetUnset($offset)
+    #[ReturnTypeWillChange]
+    public function offsetUnset($offset)
     {
         unset($this->container[$offset]);
     }
@@ -110,7 +113,8 @@ class ParagonIE_Sodium_Core_ChaCha20_Ctx extends ParagonIE_Sodium_Core_Util impl
      * @return mixed|null
      * @psalm-suppress MixedArrayOffset
      */
-        public function offsetGet($offset)
+    #[ReturnTypeWillChange]
+    public function offsetGet($offset)
     {
         return isset($this->container[$offset])
             ? $this->container[$offset]

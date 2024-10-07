@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Terminal;
 
 class ReaderService extends \Stripe\Service\AbstractService

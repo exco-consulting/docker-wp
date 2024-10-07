@@ -11,6 +11,7 @@ use Appsbd\V1\Core\BaseModule;
 use Appsbd\V1\libs\Ajax_Data_Response;
 use Appsbd\V1\libs\Ajax_Response;
 use Automattic\WooCommerce\Utilities\NumberUtil;
+use VitePos\Core\Vitepos_Module;
 use VitePos\Libs\Pos_Product_Addon;
 use Vitepos\Models\Database\Mapbd_Pos_Addon;
 use Vitepos\Models\Database\Mapbd_pos_counter;
@@ -18,7 +19,7 @@ use Vitepos\Models\Database\Mapbd_pos_counter;
 /**
  * Class POS_Counter
  */
-class Pos_Restaurant extends BaseModule {
+class Pos_Restaurant extends Vitepos_Module {
 
 
 	/**
@@ -46,15 +47,18 @@ class Pos_Restaurant extends BaseModule {
 	 * @return mixed
 	 */
 	public function register_custom_order_status( $order_statuses ) {
-				$order_statuses['wc-vt_in_kitchen']     = array(
+		
+		$order_statuses['wc-vt_in_kitchen']     = array(
 			'label'                     => 'In Kitchen',
-			'public'                    => false, 			'exclude_from_search'       => false,
+			'public'                    => false, 
+			'exclude_from_search'       => false,
 			'show_in_admin_status_list' => true,
 			'show_in_admin_all_list'    => true,
+			
 			'label_count'               => _n_noop(
 				'In Kitchen <span class="count">(%s)</span>',
 				'In Kitchen <span class="count">(%s)</span>',
-				'woocommerce'
+				'vitepos'
 			),
 		);
 		$order_statuses['wc-vt_preparing']      = array(
@@ -63,10 +67,11 @@ class Pos_Restaurant extends BaseModule {
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
+			
 			'label_count'               => _n_noop(
 				'Denied <span class="count">(%s)</span>',
 				'Denied <span class="count">(%s)</span>',
-				'woocommerce'
+				'vitepos'
 			),
 		);
 		$order_statuses['wc-vt_kitchen_deny']   = array(
@@ -75,10 +80,11 @@ class Pos_Restaurant extends BaseModule {
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
+			
 			'label_count'               => _n_noop(
 				'Preparing <span class="count">(%s)</span>',
 				'Preparing <span class="count">(%s)</span>',
-				'woocommerce'
+				'vitepos'
 			),
 		);
 		$order_statuses['wc-vt_ready_to_srv']   = array(
@@ -87,10 +93,11 @@ class Pos_Restaurant extends BaseModule {
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
+			
 			'label_count'               => _n_noop(
 				'Ready to serve <span class="count">(%s)</span>',
 				'Ready to serve <span class="count">(%s)</span>',
-				'woocommerce'
+				'vitepos'
 			),
 		);
 		$order_statuses['wc-vt_cancel_request'] = array(
@@ -99,10 +106,11 @@ class Pos_Restaurant extends BaseModule {
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
+			
 			'label_count'               => _n_noop(
 				'Cancel requested <span class="count">(%s)</span>',
 				'Cancel requested <span class="count">(%s)</span>',
-				'woocommerce'
+				'vitepos'
 			),
 		);
 		$order_statuses['wc-vt_served']         = array(
@@ -111,10 +119,11 @@ class Pos_Restaurant extends BaseModule {
 			'exclude_from_search'       => false,
 			'show_in_admin_all_list'    => true,
 			'show_in_admin_status_list' => true,
+			
 			'label_count'               => _n_noop(
 				'Served <span class="count">(%s)</span>',
 				'Served <span class="count">(%s)</span>',
-				'woocommerce'
+				'vitepos'
 			),
 		);
 
@@ -154,9 +163,10 @@ class Pos_Restaurant extends BaseModule {
 		if ( ! empty( $addons ) && is_array( $addons ) ) {
 			$item_price = $item->get_meta( '_vtp_items_price', true );
 			if ( ! empty( $item_price ) ) {
-				echo '<div> Item Price : ' . wc_price( $item_price ) . '</div>';
+				echo wp_kses_post( '<div> Item Price : ' . wc_price( $item_price ) . '</div>' );
 			}
-						foreach ( $addons as $addon ) {
+			
+			foreach ( $addons as $addon ) {
 				$this->get_addon_title( $addon );
 			}
 		}
@@ -173,11 +183,12 @@ class Pos_Restaurant extends BaseModule {
 		?>
 		<div>
 		<?php
-		echo '+ ' . $addon['fld_title'];
+		echo '+ ' . esc_html( $addon['fld_title'] );
 		if ( ! empty( $addon['fld_val'] ) ) {
 			if ( is_string( $addon['fld_val'] ) ) {
 				echo wp_kses_post( ' ' . $addon['fld_val'] );
-			} elseif ( ! empty( $addon['fld_val']['opt_id'] ) ) { 				$price = ! empty( $addon['fld_val']['opt_price'] ) ? ' : <b>' . wc_price( $addon['fld_val']['opt_price'] ) . '</b>' : '';
+			} elseif ( ! empty( $addon['fld_val']['opt_id'] ) ) { 
+				$price = ! empty( $addon['fld_val']['opt_price'] ) ? ' : <b>' . wc_price( $addon['fld_val']['opt_price'] ) . '</b>' : '';
 				echo wp_kses_post( ' (' . $addon['fld_val']['opt_label'] . $price . ')' );
 			} elseif ( ! empty( $addon['fld_val'][0] ) ) {
 				foreach ( $addon['fld_val'] as $addon_opt ) {
@@ -186,7 +197,8 @@ class Pos_Restaurant extends BaseModule {
 				}
 			}
 		}
-					?>
+			
+		?>
 		</div>
 		<?php
 	}

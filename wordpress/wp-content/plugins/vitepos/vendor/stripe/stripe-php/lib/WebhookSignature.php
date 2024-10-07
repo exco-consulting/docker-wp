@@ -24,7 +24,8 @@ abstract class WebhookSignature
      */
     public static function verifyHeader($payload, $header, $secret, $tolerance = null)
     {
-                $timestamp = self::getTimestamp($header);
+        
+        $timestamp = self::getTimestamp($header);
         $signatures = self::getSignatures($header, self::EXPECTED_SCHEME);
         if (-1 === $timestamp) {
             throw Exception\SignatureVerificationException::factory(
@@ -41,7 +42,9 @@ abstract class WebhookSignature
             );
         }
 
-                        $signedPayload = "{$timestamp}.{$payload}";
+        
+        
+        $signedPayload = "{$timestamp}.{$payload}";
         $expectedSignature = self::computeSignature($signedPayload, $secret);
         $signatureFound = false;
         foreach ($signatures as $signature) {
@@ -59,7 +62,8 @@ abstract class WebhookSignature
             );
         }
 
-                if (($tolerance > 0) && (\abs(\time() - $timestamp) > $tolerance)) {
+        
+        if (($tolerance > 0) && (\abs(\time() - $timestamp) > $tolerance)) {
             throw Exception\SignatureVerificationException::factory(
                 'Timestamp outside the tolerance zone',
                 $payload,

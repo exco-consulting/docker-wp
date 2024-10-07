@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class PromotionCodeService extends \Stripe\Service\AbstractService

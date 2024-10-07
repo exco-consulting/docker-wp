@@ -160,76 +160,116 @@ abstract class ParagonIE_Sodium_Core_X25519 extends ParagonIE_Sodium_Core_Curve2
      */
     public static function crypto_scalarmult_curve25519_ref10($n, $p)
     {
-                $e = '' . $n;
-                $e[0] = self::intToChr(
+        
+        $e = '' . $n;
+        
+        $e[0] = self::intToChr(
             self::chrToInt($e[0]) & 248
         );
-                        $e[31] = self::intToChr(
+        
+        
+        $e[31] = self::intToChr(
             (self::chrToInt($e[31]) & 127) | 64
         );
-                $x1 = self::fe_frombytes($p);
-                $x2 = self::fe_1();
-                $z2 = self::fe_0();
-                $x3 = self::fe_copy($x1);
-                $z3 = self::fe_1();
+        
+        $x1 = self::fe_frombytes($p);
+        
+        $x2 = self::fe_1();
+        
+        $z2 = self::fe_0();
+        
+        $x3 = self::fe_copy($x1);
+        
+        $z3 = self::fe_1();
 
-                /** @var int $swap */
+        
+        /** @var int $swap */
         $swap = 0;
 
-                for ($pos = 254; $pos >= 0; --$pos) {
-                        /** @var int $b */
+        
+        for ($pos = 254; $pos >= 0; --$pos) {
+            
+            /** @var int $b */
             $b = self::chrToInt(
                     $e[(int) floor($pos / 8)]
                 ) >> ($pos & 7);
-                        $b &= 1;
-                        $swap ^= $b;
-                        self::fe_cswap($x2, $x3, $swap);
-                        self::fe_cswap($z2, $z3, $swap);
-                        $swap = $b;
-                        $tmp0 = self::fe_sub($x3, $z3);
-                        $tmp1 = self::fe_sub($x2, $z2);
+            
+            $b &= 1;
+            
+            $swap ^= $b;
+            
+            self::fe_cswap($x2, $x3, $swap);
+            
+            self::fe_cswap($z2, $z3, $swap);
+            
+            $swap = $b;
+            
+            $tmp0 = self::fe_sub($x3, $z3);
+            
+            $tmp1 = self::fe_sub($x2, $z2);
 
-                        $x2 = self::fe_add($x2, $z2);
+            
+            $x2 = self::fe_add($x2, $z2);
 
-                        $z2 = self::fe_add($x3, $z3);
+            
+            $z2 = self::fe_add($x3, $z3);
 
-                        $z3 = self::fe_mul($tmp0, $x2);
+            
+            $z3 = self::fe_mul($tmp0, $x2);
 
-                        $z2 = self::fe_mul($z2, $tmp1);
+            
+            $z2 = self::fe_mul($z2, $tmp1);
 
-                        $tmp0 = self::fe_sq($tmp1);
+            
+            $tmp0 = self::fe_sq($tmp1);
 
-                        $tmp1 = self::fe_sq($x2);
+            
+            $tmp1 = self::fe_sq($x2);
 
-                        $x3 = self::fe_add($z3, $z2);
+            
+            $x3 = self::fe_add($z3, $z2);
 
-                        $z2 = self::fe_sub($z3, $z2);
+            
+            $z2 = self::fe_sub($z3, $z2);
 
-                        $x2 = self::fe_mul($tmp1, $tmp0);
+            
+            $x2 = self::fe_mul($tmp1, $tmp0);
 
-                        $tmp1 = self::fe_sub($tmp1, $tmp0);
+            
+            $tmp1 = self::fe_sub($tmp1, $tmp0);
 
-                        $z2 = self::fe_sq($z2);
+            
+            $z2 = self::fe_sq($z2);
 
-                        $z3 = self::fe_mul121666($tmp1);
+            
+            $z3 = self::fe_mul121666($tmp1);
 
-                        $x3 = self::fe_sq($x3);
+            
+            $x3 = self::fe_sq($x3);
 
-                        $tmp0 = self::fe_add($tmp0, $z3);
+            
+            $tmp0 = self::fe_add($tmp0, $z3);
 
-                        $z3 = self::fe_mul($x1, $z2);
+            
+            $z3 = self::fe_mul($x1, $z2);
 
-                        $z2 = self::fe_mul($tmp1, $tmp0);
+            
+            $z2 = self::fe_mul($tmp1, $tmp0);
         }
 
-                self::fe_cswap($x2, $x3, $swap);
+        
+        self::fe_cswap($x2, $x3, $swap);
 
-                self::fe_cswap($z2, $z3, $swap);
+        
+        self::fe_cswap($z2, $z3, $swap);
 
-                $z2 = self::fe_invert($z2);
+        
+        $z2 = self::fe_invert($z2);
 
-                $x2 = self::fe_mul($x2, $z2);
-                return self::fe_tobytes($x2);
+        
+        $x2 = self::fe_mul($x2, $z2);
+        
+        return self::fe_tobytes($x2);
     }
 
     /**
@@ -259,13 +299,17 @@ abstract class ParagonIE_Sodium_Core_X25519 extends ParagonIE_Sodium_Core_Curve2
      */
     public static function crypto_scalarmult_curve25519_ref10_base($n)
     {
-                $e = '' . $n;
+        
+        $e = '' . $n;
 
-                $e[0] = self::intToChr(
+        
+        $e[0] = self::intToChr(
             self::chrToInt($e[0]) & 248
         );
 
-                        $e[31] = self::intToChr(
+        
+        
+        $e[31] = self::intToChr(
             (self::chrToInt($e[31]) & 127) | 64
         );
 

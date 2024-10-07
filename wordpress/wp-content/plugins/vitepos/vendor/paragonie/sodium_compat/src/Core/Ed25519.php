@@ -123,19 +123,26 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
             throw new SodiumException('Unexpected zero result');
         }
 
-                                $one_minux_y = self::fe_invert(
+        
+        
+        
+        $one_minux_y = self::fe_invert(
             self::fe_sub(
                 self::fe_1(),
                 $A->Y
             )
         );
 
-                                $x = self::fe_mul(
+        
+        
+        
+        $x = self::fe_mul(
             self::fe_add(self::fe_1(), $A->Y),
             $one_minux_y
         );
 
-                return self::fe_tobytes($x);
+        
+        return self::fe_tobytes($x);
     }
 
     /**
@@ -205,30 +212,48 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
      */
     public static function sign_detached($message, $sk)
     {
-                $az =  hash('sha512', self::substr($sk, 0, 32), true);
+        
+        $az =  hash('sha512', self::substr($sk, 0, 32), true);
 
-                                $az[0] = self::intToChr(self::chrToInt($az[0]) & 248);
+        
+        
+        
+        $az[0] = self::intToChr(self::chrToInt($az[0]) & 248);
         $az[31] = self::intToChr((self::chrToInt($az[31]) & 63) | 64);
 
-                                        $hs = hash_init('sha512');
+        
+        
+        
+        
+        $hs = hash_init('sha512');
         hash_update($hs, self::substr($az, 32, 32));
         hash_update($hs, $message);
         $nonceHash = hash_final($hs, true);
 
-                $pk = self::substr($sk, 32, 32);
+        
+        $pk = self::substr($sk, 32, 32);
 
-                                $nonce = self::sc_reduce($nonceHash) . self::substr($nonceHash, 32);
+        
+        
+        
+        $nonce = self::sc_reduce($nonceHash) . self::substr($nonceHash, 32);
         $sig = self::ge_p3_tobytes(
             self::ge_scalarmult_base($nonce)
         );
 
-                                        $hs = hash_init('sha512');
+        
+        
+        
+        
+        $hs = hash_init('sha512');
         hash_update($hs, self::substr($sig, 0, 32));
         hash_update($hs, self::substr($pk, 0, 32));
         hash_update($hs, $message);
         $hramHash = hash_final($hs, true);
 
-                        $hram = self::sc_reduce($hramHash);
+        
+        
+        $hram = self::sc_reduce($hramHash);
         $sigAfter = self::sc_muladd($hram, $az, $nonce);
         $sig = self::substr($sig, 0, 32) . self::substr($sigAfter, 0, 32);
 
@@ -275,7 +300,8 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
         /** @var bool The original value of ParagonIE_Sodium_Compat::$fastMult */
         $orig = ParagonIE_Sodium_Compat::$fastMult;
 
-                ParagonIE_Sodium_Compat::$fastMult = true;
+        
+        ParagonIE_Sodium_Compat::$fastMult = true;
 
         /** @var ParagonIE_Sodium_Core_Curve25519_Ge_P3 $A */
         $A = self::ge_frombytes_negate_vartime($pk);
@@ -302,7 +328,8 @@ abstract class ParagonIE_Sodium_Core_Ed25519 extends ParagonIE_Sodium_Core_Curve
         /** @var string $rcheck */
         $rcheck = self::ge_tobytes($R);
 
-                ParagonIE_Sodium_Compat::$fastMult = $orig;
+        
+        ParagonIE_Sodium_Compat::$fastMult = $orig;
 
         return self::verify_32($rcheck, self::substr($sig, 0, 32));
     }

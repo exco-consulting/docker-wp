@@ -6,7 +6,8 @@ class PusherCrypto
 {
     private $encryption_master_key;
 
-        public const ENCRYPTED_PREFIX = 'private-encrypted-';
+    
+    public const ENCRYPTED_PREFIX = 'private-encrypted-';
 
     /**
      * Checks if a given channel is an encrypted channel.

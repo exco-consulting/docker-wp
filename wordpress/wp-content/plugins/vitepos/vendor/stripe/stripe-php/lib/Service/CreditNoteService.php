@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class CreditNoteService extends \Stripe\Service\AbstractService

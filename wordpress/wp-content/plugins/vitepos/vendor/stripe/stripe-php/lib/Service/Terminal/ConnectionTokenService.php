@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Terminal;
 
 class ConnectionTokenService extends \Stripe\Service\AbstractService

@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Util;
 
 class ApiVersion

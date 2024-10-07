@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class QuoteService extends \Stripe\Service\AbstractService

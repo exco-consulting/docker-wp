@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Treasury;
 
 class DebitReversalService extends \Stripe\Service\AbstractService

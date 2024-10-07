@@ -80,7 +80,9 @@ abstract class ApiResource extends StripeObject
      */
     public static function classUrl()
     {
-                
+        
+        
+
         /** @phpstan-ignore-next-line */
         $base = \str_replace('.', '/', static::OBJECT_NAME);
 

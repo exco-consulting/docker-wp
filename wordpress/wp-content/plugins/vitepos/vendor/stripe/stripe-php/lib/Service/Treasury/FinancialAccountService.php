@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Treasury;
 
 class FinancialAccountService extends \Stripe\Service\AbstractService

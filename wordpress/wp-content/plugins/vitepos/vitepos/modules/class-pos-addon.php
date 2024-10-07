@@ -11,6 +11,7 @@ use Appsbd\V1\Core\BaseModule;
 use Appsbd\V1\libs\Ajax_Data_Response;
 use Appsbd\V1\libs\Ajax_Response;
 use Automattic\WooCommerce\Utilities\NumberUtil;
+use VitePos\Core\Vitepos_Module;
 use VitePos\Libs\Pos_Product_Addon;
 use Vitepos\Models\Database\Mapbd_Pos_Addon;
 use Vitepos\Models\Database\Mapbd_pos_counter;
@@ -18,7 +19,7 @@ use Vitepos\Models\Database\Mapbd_pos_counter;
 /**
  * Class POS_Counter
  */
-class Pos_Addon extends BaseModule {
+class Pos_Addon extends Vitepos_Module {
 	/**
 	 * Its property active_addons_list
 	 *
@@ -76,7 +77,8 @@ class Pos_Addon extends BaseModule {
 			foreach ( $addons as $addon ) {
 				if ( ! in_array( $addon->id, $added_addons ) ) {
 					$added_addons[] = $addon->id;
-										Pos_Product_Addon::set_product_addon_by( $addon, $product_addons, $wc_product );
+					
+					Pos_Product_Addon::set_product_addon_by( $addon, $product_addons, $wc_product );
 				}
 			}
 		}
@@ -113,7 +115,7 @@ class Pos_Addon extends BaseModule {
 	 */
 	public static function load_addon_list() {
 		if ( ! self::$is_loaded ) {
-			self::$active_addons_list = Mapbd_Pos_Addon::get_all_addons('A');
+			self::$active_addons_list = Mapbd_Pos_Addon::get_all_addons( 'A' );
 
 			self::$is_loaded = true;
 		}
@@ -154,7 +156,8 @@ class Pos_Addon extends BaseModule {
 					}
 				}
 				if ( $active ) {
-										$is_matched_group = true;
+					
+					$is_matched_group = true;
 					break;
 				}
 			}

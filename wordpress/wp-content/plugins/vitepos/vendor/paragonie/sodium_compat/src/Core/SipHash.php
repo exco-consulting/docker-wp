@@ -20,49 +20,63 @@ class ParagonIE_Sodium_Core_SipHash extends ParagonIE_Sodium_Core_Util
      */
     public static function sipRound(array $v)
     {
-                list($v[0], $v[1]) = self::add(
+        
+        list($v[0], $v[1]) = self::add(
             array($v[0], $v[1]),
             array($v[2], $v[3])
         );
 
-                list($v[2], $v[3]) = self::rotl_64((int) $v[2], (int) $v[3], 13);
+        
+        list($v[2], $v[3]) = self::rotl_64((int) $v[2], (int) $v[3], 13);
 
-                $v[2] = (int) $v[2] ^ (int) $v[0];
+        
+        $v[2] = (int) $v[2] ^ (int) $v[0];
         $v[3] = (int) $v[3] ^ (int) $v[1];
 
-                list($v[0], $v[1]) = self::rotl_64((int) $v[0], (int) $v[1], 32);
+        
+        list($v[0], $v[1]) = self::rotl_64((int) $v[0], (int) $v[1], 32);
 
-                list($v[4], $v[5]) = self::add(
+        
+        list($v[4], $v[5]) = self::add(
             array((int) $v[4], (int) $v[5]),
             array((int) $v[6], (int) $v[7])
         );
 
-                list($v[6], $v[7]) = self::rotl_64((int) $v[6], (int) $v[7], 16);
+        
+        list($v[6], $v[7]) = self::rotl_64((int) $v[6], (int) $v[7], 16);
 
-                $v[6] = (int) $v[6] ^ (int) $v[4];
+        
+        $v[6] = (int) $v[6] ^ (int) $v[4];
         $v[7] = (int) $v[7] ^ (int) $v[5];
 
-                list($v[0], $v[1]) = self::add(
+        
+        list($v[0], $v[1]) = self::add(
             array((int) $v[0], (int) $v[1]),
             array((int) $v[6], (int) $v[7])
         );
 
-                list($v[6], $v[7]) = self::rotl_64((int) $v[6], (int) $v[7], 21);
+        
+        list($v[6], $v[7]) = self::rotl_64((int) $v[6], (int) $v[7], 21);
 
-                $v[6] = (int) $v[6] ^ (int) $v[0];
+        
+        $v[6] = (int) $v[6] ^ (int) $v[0];
         $v[7] = (int) $v[7] ^ (int) $v[1];
 
-                list($v[4], $v[5]) = self::add(
+        
+        list($v[4], $v[5]) = self::add(
             array((int) $v[4], (int) $v[5]),
             array((int) $v[2], (int) $v[3])
         );
 
-                list($v[2], $v[3]) = self::rotl_64((int) $v[2], (int) $v[3], 17);
+        
+        list($v[2], $v[3]) = self::rotl_64((int) $v[2], (int) $v[3], 17);
 
-                $v[2] = (int) $v[2] ^ (int) $v[4];
+        
+        $v[2] = (int) $v[2] ^ (int) $v[4];
         $v[3] = (int) $v[3] ^ (int) $v[5];
 
-                list($v[4], $v[5]) = self::rotl_64((int) $v[4], (int) $v[5], 32);
+        
+        list($v[4], $v[5]) = self::rotl_64((int) $v[4], (int) $v[5], 32);
 
         return $v;
     }
@@ -81,7 +95,8 @@ class ParagonIE_Sodium_Core_SipHash extends ParagonIE_Sodium_Core_Util
         /** @var int $x1 */
         $x1 = $a[1] + $b[1];
         /** @var int $c */
-        $c = $x1 >> 32;         /** @var int $x0 */
+        $c = $x1 >> 32; 
+        /** @var int $x0 */
         $x0 = $a[0] + $b[0] + $c;
         return array(
             $x0 & 0xffffffff,
@@ -149,51 +164,95 @@ class ParagonIE_Sodium_Core_SipHash extends ParagonIE_Sodium_Core_Util
     {
         $inlen = self::strlen($in);
 
-                                                $v = array(
-            0x736f6d65,             0x70736575,             0x646f7261,             0x6e646f6d,             0x6c796765,             0x6e657261,             0x74656462,             0x79746573          );
-                                
-                        $k = array(
+        
+        
+        
+        
+        
+        $v = array(
+            0x736f6d65, 
+            0x70736575, 
+            0x646f7261, 
+            0x6e646f6d, 
+            0x6c796765, 
+            0x6e657261, 
+            0x74656462, 
+            0x79746573  
+        );
+        
+        
+        
+        
+
+        
+        
+        $k = array(
             self::load_4(self::substr($key, 4, 4)),
             self::load_4(self::substr($key, 0, 4)),
             self::load_4(self::substr($key, 12, 4)),
             self::load_4(self::substr($key, 8, 4))
         );
-                
-                $b = array(
+        
+        
+
+        
+        $b = array(
             $inlen << 24,
             0
         );
         
-                $v[6] ^= $k[2];
+
+        
+        $v[6] ^= $k[2];
         $v[7] ^= $k[3];
-                $v[4] ^= $k[0];
+        
+        $v[4] ^= $k[0];
         $v[5] ^= $k[1];
-                $v[2] ^= $k[2];
+        
+        $v[2] ^= $k[2];
         $v[3] ^= $k[3];
-                $v[0] ^= $k[0];
+        
+        $v[0] ^= $k[0];
         $v[1] ^= $k[1];
 
         $left = $inlen;
-                while ($left >= 8) {
-                        $m = array(
+        
+        while ($left >= 8) {
+            
+            $m = array(
                 self::load_4(self::substr($in, 4, 4)),
                 self::load_4(self::substr($in, 0, 4))
             );
 
-                        $v[6] ^= $m[0];
+            
+            $v[6] ^= $m[0];
             $v[7] ^= $m[1];
 
-                                    $v = self::sipRound($v);
+            
+            
+            $v = self::sipRound($v);
             $v = self::sipRound($v);
 
-                        $v[0] ^= $m[0];
+            
+            $v[0] ^= $m[0];
             $v[1] ^= $m[1];
 
             $in = self::substr($in, 8);
             $left -= 8;
         }
 
-                                                                                                switch ($left) {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        switch ($left) {
             case 7:
                 $b[0] |= self::chrToInt($in[6]) << 16;
             case 6:
@@ -212,23 +271,36 @@ class ParagonIE_Sodium_Core_SipHash extends ParagonIE_Sodium_Core_Util
                 break;
         }
         
-                $v[6] ^= $b[0];
+
+        
+        $v[6] ^= $b[0];
         $v[7] ^= $b[1];
 
-                        $v = self::sipRound($v);
+        
+        
+        $v = self::sipRound($v);
         $v = self::sipRound($v);
 
-                $v[0] ^= $b[0];
+        
+        $v[0] ^= $b[0];
         $v[1] ^= $b[1];
 
-                        $v[5] ^= 0xff;
+        
+        
+        $v[5] ^= 0xff;
 
-                                        $v = self::sipRound($v);
+        
+        
+        
+        
+        $v = self::sipRound($v);
         $v = self::sipRound($v);
         $v = self::sipRound($v);
         $v = self::sipRound($v);
 
-                        return  self::store32_le($v[1] ^ $v[3] ^ $v[5] ^ $v[7]) .
+        
+        
+        return  self::store32_le($v[1] ^ $v[3] ^ $v[5] ^ $v[7]) .
             self::store32_le($v[0] ^ $v[2] ^ $v[4] ^ $v[6]);
     }
 }

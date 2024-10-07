@@ -34,20 +34,25 @@ class SetCookie
      */
     public static function fromString(string $cookie): self
     {
-                $data = self::$defaults;
-                $pieces = \array_filter(\array_map('trim', \explode(';', $cookie)));
-                if (!isset($pieces[0]) || \strpos($pieces[0], '=') === false) {
+        
+        $data = self::$defaults;
+        
+        $pieces = \array_filter(\array_map('trim', \explode(';', $cookie)));
+        
+        if (!isset($pieces[0]) || \strpos($pieces[0], '=') === false) {
             return new self($data);
         }
 
-                foreach ($pieces as $part) {
+        
+        foreach ($pieces as $part) {
             $cookieParts = \explode('=', $part, 2);
             $key = \trim($cookieParts[0]);
             $value = isset($cookieParts[1])
                 ? \trim($cookieParts[1], " \n\r\t\0\x0B")
                 : true;
 
-                        if (!isset($data['Name'])) {
+            
+            if (!isset($data['Name'])) {
                 $data['Name'] = $key;
                 $data['Value'] = $value;
             } else {
@@ -76,8 +81,10 @@ class SetCookie
         }
 
         $this->data = $replaced;
-                if (!$this->getExpires() && $this->getMaxAge()) {
-                        $this->setExpires(\time() + $this->getMaxAge());
+        
+        if (!$this->getExpires() && $this->getMaxAge()) {
+            
+            $this->setExpires(\time() + $this->getMaxAge());
         } elseif (null !== ($expires = $this->getExpires()) && !\is_numeric($expires)) {
             $this->setExpires($expires);
         }
@@ -339,19 +346,23 @@ class SetCookie
     {
         $cookiePath = $this->getPath();
 
-                if ($cookiePath === '/' || $cookiePath == $requestPath) {
+        
+        if ($cookiePath === '/' || $cookiePath == $requestPath) {
             return true;
         }
 
-                if (0 !== \strpos($requestPath, $cookiePath)) {
+        
+        if (0 !== \strpos($requestPath, $cookiePath)) {
             return false;
         }
 
-                if (\substr($cookiePath, -1, 1) === '/') {
+        
+        if (\substr($cookiePath, -1, 1) === '/') {
             return true;
         }
 
-                return \substr($requestPath, \strlen($cookiePath), 1) === '/';
+        
+        return \substr($requestPath, \strlen($cookiePath), 1) === '/';
     }
 
     /**
@@ -366,15 +377,20 @@ class SetCookie
             return true;
         }
 
-                        $cookieDomain = \ltrim(\strtolower($cookieDomain), '.');
+        
+        
+        $cookieDomain = \ltrim(\strtolower($cookieDomain), '.');
 
         $domain = \strtolower($domain);
 
-                if ('' === $cookieDomain || $domain === $cookieDomain) {
+        
+        if ('' === $cookieDomain || $domain === $cookieDomain) {
             return true;
         }
 
-                        if (\filter_var($domain, \FILTER_VALIDATE_IP)) {
+        
+        
+        if (\filter_var($domain, \FILTER_VALIDATE_IP)) {
             return false;
         }
 
@@ -401,7 +417,8 @@ class SetCookie
             return 'The cookie name must not be empty';
         }
 
-                if (\preg_match(
+        
+        if (\preg_match(
             '/[\x00-\x20\x22\x28-\x29\x2c\x2f\x3a-\x40\x5c\x7b\x7d\x7f]/',
             $name
         )) {
@@ -410,12 +427,16 @@ class SetCookie
                 . 'following characters: ()<>@,;:\"/?={}';
         }
 
-                        $value = $this->getValue();
+        
+        
+        $value = $this->getValue();
         if ($value === null) {
             return 'The cookie value must not be empty';
         }
 
-                        $domain = $this->getDomain();
+        
+        
+        $domain = $this->getDomain();
         if ($domain === null || $domain === '') {
             return 'The cookie domain must not be empty';
         }

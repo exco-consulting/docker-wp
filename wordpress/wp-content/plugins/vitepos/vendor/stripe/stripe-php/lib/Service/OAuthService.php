@@ -126,7 +126,10 @@ class OAuthService extends \Stripe\Service\AbstractService
     {
         if (\is_array($opts)) {
             if (\array_key_exists('connect_base', $opts)) {
-                                                                throw new \Stripe\Exception\InvalidArgumentException('Use `api_base`, not `connect_base`');
+                
+                
+                
+                throw new \Stripe\Exception\InvalidArgumentException('Use `api_base`, not `connect_base`');
             }
         }
 

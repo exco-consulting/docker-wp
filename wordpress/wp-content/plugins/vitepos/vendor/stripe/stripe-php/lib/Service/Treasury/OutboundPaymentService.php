@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Treasury;
 
 class OutboundPaymentService extends \Stripe\Service\AbstractService

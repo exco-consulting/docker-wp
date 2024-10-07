@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class ReviewService extends \Stripe\Service\AbstractService

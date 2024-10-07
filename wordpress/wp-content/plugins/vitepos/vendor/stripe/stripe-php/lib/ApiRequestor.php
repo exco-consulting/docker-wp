@@ -199,14 +199,17 @@ class ApiRequestor
 
         switch ($rcode) {
             case 400:
-                                                if ('rate_limit' === $code) {
+                
+                
+                if ('rate_limit' === $code) {
                     return Exception\RateLimitException::factory($msg, $rcode, $rbody, $resp, $rheaders, $code, $param);
                 }
                 if ('idempotency_error' === $type) {
                     return Exception\IdempotencyException::factory($msg, $rcode, $rbody, $resp, $rheaders, $code);
                 }
 
-                            case 404:
+                
+            case 404:
                 return Exception\InvalidRequestException::factory($msg, $rcode, $rbody, $resp, $rheaders, $code, $param);
 
             case 401:
@@ -364,7 +367,10 @@ class ApiRequestor
             throw new Exception\AuthenticationException($msg);
         }
 
-                                $clientUAInfo = null;
+        
+        
+        
+        $clientUAInfo = null;
         if (\method_exists($this->httpClient(), 'getUserAgentInfo')) {
             $clientUAInfo = $this->httpClient()->getUserAgentInfo();
         }
@@ -523,7 +529,8 @@ class ApiRequestor
             );
         }
 
-                return new \CURLFile($metaData['uri']);
+        
+        return new \CURLFile($metaData['uri']);
     }
 
     /**

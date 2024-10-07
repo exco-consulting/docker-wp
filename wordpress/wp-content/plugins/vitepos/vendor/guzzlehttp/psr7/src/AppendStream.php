@@ -63,7 +63,8 @@ final class AppendStream implements StreamInterface
             throw new \InvalidArgumentException('Each stream must be readable');
         }
 
-                if (!$stream->isSeekable()) {
+        
+        if (!$stream->isSeekable()) {
             $this->seekable = false;
         }
 
@@ -160,7 +161,8 @@ final class AppendStream implements StreamInterface
 
         $this->pos = $this->current = 0;
 
-                foreach ($this->streams as $i => $stream) {
+        
+        foreach ($this->streams as $i => $stream) {
             try {
                 $stream->rewind();
             } catch (\Exception $e) {
@@ -169,7 +171,8 @@ final class AppendStream implements StreamInterface
             }
         }
 
-                while ($this->pos < $offset && !$this->eof()) {
+        
+        while ($this->pos < $offset && !$this->eof()) {
             $result = $this->read(min(8096, $offset - $this->pos));
             if ($result === '') {
                 break;
@@ -188,7 +191,8 @@ final class AppendStream implements StreamInterface
         $progressToNext = false;
 
         while ($remaining > 0) {
-                        if ($progressToNext || $this->streams[$this->current]->eof()) {
+            
+            if ($progressToNext || $this->streams[$this->current]->eof()) {
                 $progressToNext = false;
                 if ($this->current === $total) {
                     break;

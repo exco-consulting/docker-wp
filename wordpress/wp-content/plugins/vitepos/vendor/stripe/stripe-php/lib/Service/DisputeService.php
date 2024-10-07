@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class DisputeService extends \Stripe\Service\AbstractService

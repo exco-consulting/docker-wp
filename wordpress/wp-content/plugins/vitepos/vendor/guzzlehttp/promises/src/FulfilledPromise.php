@@ -27,7 +27,8 @@ class FulfilledPromise implements PromiseInterface
         callable $onFulfilled = null,
         callable $onRejected = null
     ) {
-                if (!$onFulfilled) {
+        
+        if (!$onFulfilled) {
             return $this;
         }
 
@@ -78,5 +79,6 @@ class FulfilledPromise implements PromiseInterface
 
     public function cancel()
     {
-            }
+        
+    }
 }

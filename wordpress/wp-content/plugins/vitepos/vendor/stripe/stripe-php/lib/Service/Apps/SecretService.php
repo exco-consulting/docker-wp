@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Apps;
 
 class SecretService extends \Stripe\Service\AbstractService

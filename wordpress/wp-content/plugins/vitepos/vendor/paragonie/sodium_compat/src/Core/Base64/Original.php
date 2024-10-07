@@ -8,7 +8,8 @@
  */
 class ParagonIE_Sodium_Core_Base64_Original
 {
-        /**
+    
+    /**
      * Encode into Base64
      *
      * Base64 character set "[A-Z][a-z][0-9]+/"
@@ -46,7 +47,8 @@ class ParagonIE_Sodium_Core_Base64_Original
     {
         $dest = '';
         $srcLen = ParagonIE_Sodium_Core_Util::strlen($src);
-                for ($i = 0; $i + 3 <= $srcLen; $i += 3) {
+        
+        for ($i = 0; $i + 3 <= $srcLen; $i += 3) {
             /** @var array<int, int> $chunk */
             $chunk = unpack('C*', ParagonIE_Sodium_Core_Util::substr($src, $i, 3));
             $b0 = $chunk[1];
@@ -59,7 +61,8 @@ class ParagonIE_Sodium_Core_Base64_Original
                 self::encode6Bits((($b1 << 2) | ($b2 >> 6)) & 63) .
                 self::encode6Bits(  $b2                     & 63);
         }
-                if ($i < $srcLen) {
+        
+        if ($i < $srcLen) {
             /** @var array<int, int> $chunk */
             $chunk = unpack('C*', ParagonIE_Sodium_Core_Util::substr($src, $i, $srcLen - $i));
             $b0 = $chunk[1];
@@ -98,7 +101,8 @@ class ParagonIE_Sodium_Core_Base64_Original
      */
     public static function decode($src, $strictPadding = false)
     {
-                $srcLen = ParagonIE_Sodium_Core_Util::strlen($src);
+        
+        $srcLen = ParagonIE_Sodium_Core_Util::strlen($src);
         if ($srcLen === 0) {
             return '';
         }
@@ -129,7 +133,8 @@ class ParagonIE_Sodium_Core_Base64_Original
 
         $err = 0;
         $dest = '';
-                for ($i = 0; $i + 4 <= $srcLen; $i += 4) {
+        
+        for ($i = 0; $i + 4 <= $srcLen; $i += 4) {
             /** @var array<int, int> $chunk */
             $chunk = unpack('C*', ParagonIE_Sodium_Core_Util::substr($src, $i, 4));
             $c0 = self::decode6Bits($chunk[1]);
@@ -145,7 +150,8 @@ class ParagonIE_Sodium_Core_Base64_Original
             );
             $err |= ($c0 | $c1 | $c2 | $c3) >> 8;
         }
-                if ($i < $srcLen) {
+        
+        if ($i < $srcLen) {
             /** @var array<int, int> $chunk */
             $chunk = unpack('C*', ParagonIE_Sodium_Core_Util::substr($src, $i, $srcLen - $i));
             $c0 = self::decode6Bits($chunk[1]);
@@ -180,6 +186,7 @@ class ParagonIE_Sodium_Core_Base64_Original
         return $dest;
     }
     
+
     /**
      * Uses bitwise operators instead of table-lookups to turn 6-bit integers
      * into 8-bit integers.
@@ -195,15 +202,20 @@ class ParagonIE_Sodium_Core_Base64_Original
     {
         $ret = -1;
 
-                $ret += (((0x40 - $src) & ($src - 0x5b)) >> 8) & ($src - 64);
+        
+        $ret += (((0x40 - $src) & ($src - 0x5b)) >> 8) & ($src - 64);
 
-                $ret += (((0x60 - $src) & ($src - 0x7b)) >> 8) & ($src - 70);
+        
+        $ret += (((0x60 - $src) & ($src - 0x7b)) >> 8) & ($src - 70);
 
-                $ret += (((0x2f - $src) & ($src - 0x3a)) >> 8) & ($src + 5);
+        
+        $ret += (((0x2f - $src) & ($src - 0x3a)) >> 8) & ($src + 5);
 
-                $ret += (((0x2a - $src) & ($src - 0x2c)) >> 8) & 63;
+        
+        $ret += (((0x2a - $src) & ($src - 0x2c)) >> 8) & 63;
 
-                $ret += (((0x2e - $src) & ($src - 0x30)) >> 8) & 64;
+        
+        $ret += (((0x2e - $src) & ($src - 0x30)) >> 8) & 64;
 
         return $ret;
     }
@@ -219,13 +231,17 @@ class ParagonIE_Sodium_Core_Base64_Original
     {
         $diff = 0x41;
 
-                $diff += ((25 - $src) >> 8) & 6;
+        
+        $diff += ((25 - $src) >> 8) & 6;
 
-                $diff -= ((51 - $src) >> 8) & 75;
+        
+        $diff -= ((51 - $src) >> 8) & 75;
 
-                $diff -= ((61 - $src) >> 8) & 15;
+        
+        $diff -= ((61 - $src) >> 8) & 15;
 
-                $diff += ((62 - $src) >> 8) & 3;
+        
+        $diff += ((62 - $src) >> 8) & 3;
 
         return pack('C', $src + $diff);
     }

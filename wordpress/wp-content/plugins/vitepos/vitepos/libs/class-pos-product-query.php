@@ -10,6 +10,8 @@
 
 namespace VitePos\Libs;
 
+use VitePos\Modules\POS_Settings;
+
 /**
  * Class POS Product
  *
@@ -117,7 +119,13 @@ class POS_Product_Query {
 	 *
 	 * @var string
 	 */
-	private $where_prefix='';
+	private $where_prefix = '';
+	/**
+	 * Its property is_not_variable
+	 *
+	 * @var bool
+	 */
+	protected $is_not_variable = false;
 
 	/**
 	 * To get group by you can call this
@@ -142,16 +150,17 @@ class POS_Product_Query {
 
 
 	/**
-	 * POS_Product_query constructor.
+	 * POS_Product_Query constructor.
 	 *
 	 * @param int      $page Its page param.
 	 * @param int      $limit Its limit param.
 	 * @param array    $src_props Its src_props param.
 	 * @param array    $sort_props Its sort_props param.
-	 * @param string[] $post_types Its post_types param.
-	 * @param string[] $post_status Its post_status param.
+	 * @param string[] $post_types Its sort_props param.
+	 * @param string[] $post_status Its sort_props param.
+	 * @param false    $is_not_variable Its is_not_variable param.
 	 */
-	public function __construct( $page = 1, $limit = 10, $src_props = array(), $sort_props = array(), $post_types = array( 'product' ), $post_status = array( 'publish' ) ) {
+	public function __construct( $page = 1, $limit = 10, $src_props = array(), $sort_props = array(), $post_types = array( 'product' ), $post_status = array( 'publish' ), $is_not_variable = false ) {
 		global $wpdb;
 		$this->db           =& $wpdb;
 		$this->wp_post      = $wpdb->prefix . 'posts';
@@ -165,12 +174,12 @@ class POS_Product_Query {
 			$limit_start     = ( $page * $limit ) - $limit;
 			$this->limit_str = "LIMIT {$limit_start},{$limit}";
 		}
-		$this->group_by   = "{$this->wp_post}.ID ";
-		$this->from       = "{$this->wp_post}";
-		$this->order_by   = '';
-		$this->src_props  = $src_props;
-		$this->sort_props = $sort_props;
-
+		$this->group_by        = "{$this->wp_post}.ID ";
+		$this->from            = "{$this->wp_post}";
+		$this->order_by        = '';
+		$this->src_props       = $src_props;
+		$this->sort_props      = $sort_props;
+		$this->is_not_variable = $is_not_variable;
 	}
 
 	/**
@@ -219,8 +228,9 @@ class POS_Product_Query {
 	protected function get_term_ids_by_term_id( $term_id ) {
 		$term_id          = intval( $term_id );
 		$wp_term_taxonomy = $this->db->prefix . 'term_taxonomy';
+		$wp_terms = $this->db->prefix . 'terms';
 		$sub_query        = "SELECT  t.term_id
-			FROM wp_terms AS t  
+			FROM {$wp_terms} AS t  
 			INNER JOIN {$wp_term_taxonomy} AS tt ON t.term_id = tt.term_id
 			WHERE tt.taxonomy IN ('product_cat') AND tt.term_id =$term_id or tt.parent=$term_id and tt.count>0";
 		$result           = $this->db->get_results( $sub_query );
@@ -245,8 +255,8 @@ class POS_Product_Query {
 	 * @return array|null
 	 */
 	protected function get_term_ids_by_slug( $slug ) {
-
-		$term_row = $this->db->get_row( "SELECT wp_terms.term_id FROM wp_terms  WHERE wp_terms.slug ='$slug'" );
+		$wp_terms = $this->db->prefix . 'terms';
+		$term_row = $this->db->get_row( "SELECT {$wp_terms}.term_id FROM {$wp_terms}  WHERE {$wp_terms}.slug ='$slug'" );
 		if ( ! empty( $term_row->term_id ) ) {
 			return $this->get_term_ids_by_term_id( $term_row->term_id );
 		}
@@ -262,7 +272,7 @@ class POS_Product_Query {
 	public function set_terms_in_query( $terms_ids ) {
 		$in_terms              = "('" . implode( "','", $terms_ids ) . "')";
 		$wp_term_relationships = $this->db->prefix . 'term_relationships';
-		$this->join           .= "LEFT JOIN {$wp_term_relationships} ON (wp_posts.ID = {$wp_term_relationships}.object_id)";
+		$this->join           .= "LEFT JOIN {$wp_term_relationships} ON ({$this->db->prefix}posts.ID = {$wp_term_relationships}.object_id)";
 		$this->where          .= "AND ({$wp_term_relationships}.term_taxonomy_id IN {$in_terms})";
 	}
 
@@ -276,10 +286,10 @@ class POS_Product_Query {
 		if ( ! empty( $this->src_props ) ) {
 			$has_star = false;
 			foreach ( $this->src_props as $src_prop ) {
-				if(is_string($src_prop['val'])) {
-					$prop_val = esc_sql( appsbd_get_alphanumeric( $src_prop['val'] ) );
-				}else{
-					$prop_val=$src_prop['val'];
+				if ( is_string( $src_prop['val'] ) ) {
+					$prop_val = sanitize_text_field( $src_prop['val'] );
+				} else {
+					$prop_val = $src_prop['val'];
 				}
 				if ( '*' == $src_prop['prop'] ) {
 					$this->set_join();
@@ -290,9 +300,31 @@ class POS_Product_Query {
 						OR ({$this->wp_post}.ID = '{$prop_val}')
 					)";
 				} elseif ( 'status' == $src_prop['prop'] ) {
-					$this->post_status=array($prop_val);
+					$this->post_status = array( $prop_val );
 					$this->reset_where();
-				}elseif ( '_vt_is_favorite' == $src_prop['prop'] ) {
+				} elseif ( 'id' == $src_prop['prop'] ) {
+					$this->where .= " AND({$this->wp_post}.ID = '{$prop_val}')";
+					$this->reset_where();
+				} elseif ( '_vt_barcode' == $src_prop['prop'] ) {
+					$barcode_type = POS_Settings::get_module_option( 'barcode_field', '' );
+					$barcode_type = strtoupper( $barcode_type );
+					if ( 'CUS' == $barcode_type ) {
+						$this->set_join_table( 'mt1', '_vt_barcode', 'LEFT' );
+						if ( ! empty( $prop_val ) ) {
+							$this->where .= "AND mt1.meta_value='{$prop_val}' ";
+						}
+						$this->reset_where();
+					} elseif ( 'SKU' == $barcode_type ) {
+						$this->set_join_table( 'mt1', '_sku', 'LEFT' );
+						if ( ! empty( $prop_val ) ) {
+							$this->where .= "AND mt1.meta_value='{$prop_val}' ";
+						}
+						$this->reset_where();
+					} else {
+						$this->where .= " AND({$this->wp_post}.ID = '{$prop_val}')";
+						$this->reset_where();
+					}
+				} elseif ( '_vt_is_favorite' == $src_prop['prop'] ) {
 					$this->set_join_table( 'mt1', '_vt_is_favorite', 'LEFT' );
 					if ( 'Y' == $prop_val ) {
 						$this->where .= "AND mt1.meta_value='Y' ";
@@ -314,7 +346,7 @@ class POS_Product_Query {
 					} else {
 						$this->where .= "AND (mt3..meta_value='no'";
 					}
-				}elseif ( 'category_id' == $src_prop['prop'] && isset( $prop_val ) && 'all_cat' != $src_prop['val'] ) {
+				} elseif ( 'category_id' == $src_prop['prop'] && isset( $prop_val ) && 'all_cat' != $src_prop['val'] ) {
 					$terms_ids = $this->get_term_ids_by_term_id( $prop_val );
 					if ( ! empty( $terms_ids ) ) {
 						$this->set_terms_in_query( $terms_ids );
@@ -332,9 +364,17 @@ class POS_Product_Query {
 					if ( ! $has_star ) {
 						$this->where .= " AND({$this->wp_post}.post_title LIKE '%{$prop_val}%')";
 					}
+				} elseif ( '_sku' == $src_prop['prop'] ) {
+					$this->set_join_table( 'mt1', '_sku', 'LEFT' );
+					if ( ! empty( $prop_val ) ) {
+						$this->where .= "AND mt1.meta_value='{$prop_val}' ";
+					}
+					$this->reset_where();
 				} elseif ( 'price' == $src_prop['prop'] ) {
-										$this->set_join_table( 'mtp', '_price', 'INNER' );
-					if ( 'bt' == $src_prop['opr'] && isset( $src_prop['val'] ) ) { 						$from         = floatval( $src_prop['val']['start'] );
+					
+					$this->set_join_table( 'mtp', '_price', 'INNER' );
+					if ( 'bt' == $src_prop['opr'] && isset( $src_prop['val'] ) ) { 
+						$from         = floatval( $src_prop['val']['start'] );
 						$to           = floatval( $src_prop['val']['end'] );
 						$this->where .= " AND ( CAST(mtp.meta_value AS SIGNED) BETWEEN $from AND $to ) ";
 
@@ -362,15 +402,25 @@ class POS_Product_Query {
 				if ( 'is_favorite' == $prop['prop'] ) {
 					$this->set_join_table( 'mt1', '_vt_is_favorite', 'LEFT' );
 					$prop['ord']    = 'asc' == strtolower( $prop['ord'] ) ? 'desc' : 'asc';
-					$this->order_by = "mt1.meta_value ".$prop['ord'];
+					$this->order_by = 'mt1.meta_value ' . $prop['ord'];
 				} elseif ( 'price' == $prop['prop'] ) {
 					$this->set_join_table( 'mtp', '_price', 'INNER' );
-					$this->order_by = "mtp.meta_value ";
+					$this->order_by = 'mtp.meta_value ';
 				} elseif ( 'name' == $prop['prop'] ) {
-					$this->order_by = "{$this->wp_post}.post_title ".$prop['ord'];
+					$this->order_by = "{$this->wp_post}.post_title " . $prop['ord'];
 				} elseif ( 'id' == $prop['prop'] ) {
-					$this->order_by = "{$this->wp_post}.ID ".$prop['ord'];
+					$this->order_by = "{$this->wp_post}.ID " . $prop['ord'];
 				}
+			}
+		}
+		if ( $this->is_not_variable ) {
+			$wp_terms = $this->db->prefix . 'terms';
+			$term_row = $this->db->get_row( "SELECT {$wp_terms}.term_id FROM {$wp_terms}  WHERE {$wp_terms}.slug ='variable'" );
+			if ( ! empty( $term_row->term_id ) ) {
+				$variable_term_id      = $term_row->term_id;
+				$wp_term_relationships = $this->db->prefix . 'term_relationships';
+				$this->join           .= " LEFT JOIN {$wp_term_relationships} ON ({$this->db->prefix }posts.ID = {$wp_term_relationships}.object_id  AND ({$wp_term_relationships}.term_taxonomy_id =$variable_term_id))";
+				$this->where          .= " AND ({$wp_term_relationships}.object_id  is null)";
 			}
 		}
 
@@ -383,7 +433,7 @@ class POS_Product_Query {
 	 * @return \stdClass
 	 */
 	public function get_product_ids() {
-		$query       = $this->get_query_sql();
+		$query = $this->get_query_sql();
 		$data        = new \stdClass();
 		$data->posts = array();
 		$products    = $this->db->get_results( $query );
@@ -401,14 +451,15 @@ class POS_Product_Query {
 	 * @param int      $page Its page param.
 	 * @param int      $limit Its limit param.
 	 * @param array    $src_props Its src_props param.
-	 * @param array    $sort_props Its sort props param.
-	 * @param string[] $post_types Its post types param.
-	 * @param string[] $post_status Its post status param.
+	 * @param array    $sort_props Its sort_props param.
+	 * @param string[] $post_types Its sort_props param.
+	 * @param string[] $post_status Its sort_props param.
+	 * @param false    $is_not_variable Its is_not_variable param.
 	 *
 	 * @return \stdClass
 	 */
-	public static function get_products( $page = 1, $limit = 10, $src_props = array(), $sort_props = array(), $post_types = array( 'product' ), $post_status = array( 'publish' ) ) {
-		$obj = new self( $page, $limit, $src_props, $sort_props, $post_types, $post_status );
+	public static function get_products( $page = 1, $limit = 10, $src_props = array(), $sort_props = array(), $post_types = array( 'product' ), $post_status = array( 'publish' ), $is_not_variable = false ) {
+		$obj = new self( $page, $limit, $src_props, $sort_props, $post_types, $post_status, $is_not_variable );
 		return $obj->get_product_ids();
 	}
 }

@@ -60,7 +60,8 @@ class RedirectMiddleware
         } elseif (!\is_array($options['allow_redirects'])) {
             throw new \InvalidArgumentException('allow_redirects must be true, false, or array');
         } else {
-                        $options['allow_redirects'] += self::$defaultSettings;
+            
+            $options['allow_redirects'] += self::$defaultSettings;
         }
 
         if (empty($options['allow_redirects']['max'])) {
@@ -87,7 +88,8 @@ class RedirectMiddleware
         $this->guardMax($request, $response, $options);
         $nextRequest = $this->modifyRequest($request, $options, $response);
 
-                if (Psr7\UriComparator::isCrossOrigin($request->getUri(), $nextRequest->getUri()) && defined('\CURLOPT_HTTPAUTH')) {
+        
+        if (Psr7\UriComparator::isCrossOrigin($request->getUri(), $nextRequest->getUri()) && defined('\CURLOPT_HTTPAUTH')) {
             unset(
                 $options['curl'][\CURLOPT_HTTPAUTH],
                 $options['curl'][\CURLOPT_USERPWD]
@@ -104,7 +106,8 @@ class RedirectMiddleware
 
         $promise = $this($nextRequest, $options);
 
-                if (!empty($options['allow_redirects']['track_redirects'])) {
+        
+        if (!empty($options['allow_redirects']['track_redirects'])) {
             return $this->withTracking(
                 $promise,
                 (string) $nextRequest->getUri(),
@@ -122,7 +125,10 @@ class RedirectMiddleware
     {
         return $promise->then(
             static function (ResponseInterface $response) use ($uri, $statusCode) {
-                                                                $historyHeader = $response->getHeader(self::HISTORY_HEADER);
+                
+                
+                
+                $historyHeader = $response->getHeader(self::HISTORY_HEADER);
                 $statusHeader = $response->getHeader(self::STATUS_HISTORY_HEADER);
                 \array_unshift($historyHeader, $uri);
                 \array_unshift($statusHeader, (string) $statusCode);
@@ -152,10 +158,14 @@ class RedirectMiddleware
 
     public function modifyRequest(RequestInterface $request, array $options, ResponseInterface $response): RequestInterface
     {
-                $modify = [];
+        
+        $modify = [];
         $protocols = $options['allow_redirects']['protocols'];
 
-                                $statusCode = $response->getStatusCode();
+        
+        
+        
+        $statusCode = $response->getStatusCode();
         if ($statusCode == 303 ||
             ($statusCode <= 302 && !$options['allow_redirects']['strict'])
         ) {
@@ -175,7 +185,9 @@ class RedirectMiddleware
         $modify['uri'] = $uri;
         Psr7\Message::rewindBody($request);
 
-                        if ($options['allow_redirects']['referer']
+        
+        
+        if ($options['allow_redirects']['referer']
             && $modify['uri']->getScheme() === $request->getUri()->getScheme()
         ) {
             $uri = $request->getUri()->withUserInfo('');
@@ -184,7 +196,8 @@ class RedirectMiddleware
             $modify['remove_headers'][] = 'Referer';
         }
 
-                if (Psr7\UriComparator::isCrossOrigin($request->getUri(), $modify['uri'])) {
+        
+        if (Psr7\UriComparator::isCrossOrigin($request->getUri(), $modify['uri'])) {
             $modify['remove_headers'][] = 'Authorization';
             $modify['remove_headers'][] = 'Cookie';
         }
@@ -205,7 +218,8 @@ class RedirectMiddleware
             new Psr7\Uri($response->getHeaderLine('Location'))
         );
 
-                if (!\in_array($location->getScheme(), $protocols)) {
+        
+        if (!\in_array($location->getScheme(), $protocols)) {
             throw new BadResponseException(\sprintf('Redirect URI, %s, does not use one of the allowed redirect protocols: %s', $location, \implode(', ', $protocols)), $request, $response);
         }
 

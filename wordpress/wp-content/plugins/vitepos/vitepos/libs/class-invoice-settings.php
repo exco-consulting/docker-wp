@@ -51,6 +51,18 @@ class Invoice_Settings {
 	 */
 	public $font_size = 12;
 	/**
+	 * Its property font_size
+	 *
+	 * @var int
+	 */
+	public $page_ps = 3;
+	/**
+	 * Its property font_size
+	 *
+	 * @var int
+	 */
+	public $page_pe = 7;
+	/**
 	 * Its property show_header
 	 *
 	 * @var bool
@@ -219,6 +231,12 @@ class Invoice_Settings {
 	 */
 	public $show_customer_address = true;
 	/**
+	 * Its property show_customer_address
+	 *
+	 * @var bool $show_customer_c_fields
+	 */
+	public $show_customer_c_fields = false;
+	/**
 	 * Its property show_order_no
 	 *
 	 * @var bool $show_order_no
@@ -272,6 +290,12 @@ class Invoice_Settings {
 	 * @var bool $show_payment_method
 	 */
 	public $show_payment_method = true;
+	/**
+	 * Its property show_payment_method
+	 *
+	 * @var bool $show_order_c_fields
+	 */
+	public $show_order_c_fields = false;
 	/**
 	 * Its property show_footer
 	 *
@@ -346,7 +370,6 @@ class Invoice_Settings {
 
 			return $obj;
 		}
-
 		$obj->header                 = "<h1 class='ql-align-center'>AppsBd Store</h1>";
 		$obj->footer                 = '<h5 class="ql-align-center"><strong>Thank You For Purchasing</strong></h5>';
 		$obj->counter_no_label       = 'Counter No';

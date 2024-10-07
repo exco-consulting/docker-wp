@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class RefundService extends \Stripe\Service\AbstractService

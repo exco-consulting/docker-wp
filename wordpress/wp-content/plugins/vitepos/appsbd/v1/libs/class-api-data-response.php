@@ -74,9 +74,9 @@ class  API_Data_Response {
 
 		$this->records = (int) $record_counter;
 		if ( $this->records > 0 ) {
-			if(!empty($this->limit)){
+			if ( ! empty( $this->limit ) ) {
 				$this->total = ceil( $this->records / $this->limit );
-			}else{
+			} else {
 				$this->total = 1;
 			}
 			return true;
@@ -90,10 +90,10 @@ class  API_Data_Response {
 	 * @return float|int|mixed|string Its type .
 	 */
 	public function limit_start() {
-		if(empty($this->limit)){
+		if ( empty( $this->limit ) ) {
 			return 0;
 		}
-		return ( intval($this->limit) * $this->page ) - $this->limit;
+		return ( intval( $this->limit ) * $this->page ) - $this->limit;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class FileLinkService extends \Stripe\Service\AbstractService

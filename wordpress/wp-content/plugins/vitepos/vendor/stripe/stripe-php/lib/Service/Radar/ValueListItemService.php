@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Radar;
 
 class ValueListItemService extends \Stripe\Service\AbstractService

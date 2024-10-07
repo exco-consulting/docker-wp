@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class InvoiceService extends \Stripe\Service\AbstractService

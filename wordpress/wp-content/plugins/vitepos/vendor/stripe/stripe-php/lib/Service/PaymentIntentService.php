@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class PaymentIntentService extends \Stripe\Service\AbstractService

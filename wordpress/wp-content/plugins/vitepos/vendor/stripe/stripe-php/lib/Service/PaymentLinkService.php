@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class PaymentLinkService extends \Stripe\Service\AbstractService

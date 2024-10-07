@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class CouponService extends \Stripe\Service\AbstractService

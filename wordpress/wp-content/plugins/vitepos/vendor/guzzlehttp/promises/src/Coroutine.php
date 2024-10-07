@@ -158,7 +158,8 @@ final class Coroutine implements PromiseInterface
         unset($this->currentPromise);
         try {
             $nextYield = $this->generator->throw(Create::exceptionFor($reason));
-                        $this->nextCoroutine($nextYield);
+            
+            $this->nextCoroutine($nextYield);
         } catch (Exception $exception) {
             $this->result->reject($exception);
         } catch (Throwable $throwable) {

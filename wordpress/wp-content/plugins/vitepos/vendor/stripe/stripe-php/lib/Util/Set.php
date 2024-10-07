@@ -40,7 +40,8 @@ class Set implements IteratorAggregate
     /**
      * @return ArrayIterator
      */
-        public function getIterator()
+    #[\ReturnTypeWillChange]
+    public function getIterator()
     {
         return new ArrayIterator($this->toArray());
     }

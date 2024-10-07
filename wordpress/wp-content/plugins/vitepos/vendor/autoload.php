@@ -1,6 +1,7 @@
 <?php
 
 
+
 if (PHP_VERSION_ID < 50600) {
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');

@@ -34,7 +34,9 @@ final class LazyOpenStream implements StreamInterface
         $this->filename = $filename;
         $this->mode = $mode;
 
-                        unset($this->stream);
+        
+        
+        unset($this->stream);
     }
 
     /**

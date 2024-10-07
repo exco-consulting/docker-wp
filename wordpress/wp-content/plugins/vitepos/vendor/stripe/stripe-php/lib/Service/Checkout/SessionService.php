@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Checkout;
 
 class SessionService extends \Stripe\Service\AbstractService

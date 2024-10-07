@@ -209,7 +209,7 @@ class Mapbd_Pos_Addon_Rule extends ViteposModel {
 		$product_id = intval( $product_id );
 		$product    = wc_get_product( $product_id );
 		$rules[]    = $product_id;
-		if ( $product->is_type( 'variable' ) && $product->has_child() ) {
+		if ( ! empty( $product ) && $product->is_type( 'variable' ) && $product->has_child() ) {
 			$rules = array_merge( $rules, $product->get_children() );
 		}
 	}

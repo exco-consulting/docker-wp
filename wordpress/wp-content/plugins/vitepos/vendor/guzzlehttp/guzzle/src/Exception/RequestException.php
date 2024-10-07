@@ -36,7 +36,8 @@ class RequestException extends TransferException implements RequestExceptionInte
         \Throwable $previous = null,
         array $handlerContext = []
     ) {
-                $code = $response ? $response->getStatusCode() : 0;
+        
+        $code = $response ? $response->getStatusCode() : 0;
         parent::__construct($message, $code, $previous);
         $this->request = $request;
         $this->response = $response;
@@ -92,7 +93,9 @@ class RequestException extends TransferException implements RequestExceptionInte
         $uri = $request->getUri();
         $uri = static::obfuscateUri($uri);
 
-                        $message = \sprintf(
+        
+        
+        $message = \sprintf(
             '%s: `%s %s` resulted in a `%s %s` response',
             $label,
             $request->getMethod(),

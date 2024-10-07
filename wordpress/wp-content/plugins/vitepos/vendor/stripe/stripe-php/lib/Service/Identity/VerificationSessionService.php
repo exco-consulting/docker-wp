@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Identity;
 
 class VerificationSessionService extends \Stripe\Service\AbstractService

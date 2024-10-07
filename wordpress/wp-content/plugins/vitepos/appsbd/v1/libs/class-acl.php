@@ -23,6 +23,6 @@ class ACL {
 	 * @param string $action_param Its action parameter.
 	 */
 	public static function has_permission( $action_param ) {
-
+		return current_user_can( $action_param );
 	}
 }

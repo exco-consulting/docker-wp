@@ -79,7 +79,7 @@ class Pos_Table_Api extends API_Base {
 		$mainobj       = new Mapbd_Pos_Table();
 		if ( ! empty( $this->payload['limit'] ) && intval( $this->payload['limit'] ) <= 0 ) {
 			$response_data->limit = 0;
-			$mainobj->status('A');
+			$mainobj->status( 'A' );
 		} else {
 			$response_data->limit = $this->get_payload( 'limit', 20 );
 		}
@@ -192,7 +192,7 @@ class Pos_Table_Api extends API_Base {
 			if ( $table_obj->set_from_array( $this->payload, false ) ) {
 				if ( is_array( $this->payload['assigned_waiters'] ) ) {
 					$table_obj->assigned_waiters( implode( '|', $this->payload['assigned_waiters'] ) );
-				}else{
+				} else {
 					$table_obj->assigned_waiters( '' );
 				}
 				$table_obj->unset_all_excepts( 'title,status,des,is_reserved,is_mergeable,type,seat_cap,outlet_id,assigned_waiters' );

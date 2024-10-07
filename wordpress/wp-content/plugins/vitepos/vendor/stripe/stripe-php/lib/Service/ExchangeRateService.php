@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class ExchangeRateService extends \Stripe\Service\AbstractService

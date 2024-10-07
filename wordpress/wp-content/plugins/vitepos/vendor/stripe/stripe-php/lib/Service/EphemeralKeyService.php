@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class EphemeralKeyService extends \Stripe\Service\AbstractService

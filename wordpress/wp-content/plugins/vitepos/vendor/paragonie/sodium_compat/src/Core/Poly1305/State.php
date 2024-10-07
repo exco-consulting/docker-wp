@@ -127,11 +127,13 @@ class ParagonIE_Sodium_Core_Poly1305_State extends ParagonIE_Sodium_Core_Util
                 $mi = self::chrToInt($message[$i]);
                 $this->buffer[$this->leftover + $i] = $mi;
             }
-                        $message = self::substr($message, $want);
+            
+            $message = self::substr($message, $want);
             $bytes = self::strlen($message);
             $this->leftover += $want;
             if ($this->leftover < ParagonIE_Sodium_Core_Poly1305::BLOCK_SIZE) {
-                                return $this;
+                
+                return $this;
             }
 
             $this->blocks(
@@ -284,7 +286,8 @@ class ParagonIE_Sodium_Core_Poly1305_State extends ParagonIE_Sodium_Core_Util
             $h0 &= 0x3ffffff;
             $h1 += $c;
 
-                        $message = self::substr(
+            
+            $message = self::substr(
                 $message,
                 ParagonIE_Sodium_Core_Poly1305::BLOCK_SIZE
             );

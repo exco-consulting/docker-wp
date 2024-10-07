@@ -191,7 +191,8 @@ final class Middleware
      */
     public static function log(LoggerInterface $logger, $formatter, string $logLevel = 'info'): callable
     {
-                if (!$formatter instanceof MessageFormatter && !$formatter instanceof MessageFormatterInterface) {
+        
+        if (!$formatter instanceof MessageFormatter && !$formatter instanceof MessageFormatterInterface) {
             throw new \LogicException(sprintf('Argument 2 to %s::log() must be of type %s', self::class, MessageFormatterInterface::class));
         }
 

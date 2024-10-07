@@ -12,7 +12,9 @@ abstract class SingletonApiResource extends ApiResource
      */
     public static function classUrl()
     {
-                
+        
+        
+
         /** @phpstan-ignore-next-line */
         $base = \str_replace('.', '/', static::OBJECT_NAME);
 

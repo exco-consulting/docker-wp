@@ -11,6 +11,7 @@
 namespace VitePos\Api\V1;
 
 use Appsbd\V1\libs\API_Data_Response;
+use Appsbd\V1\libs\API_Response;
 use VitePos\Libs\API_Base;
 use VitePos\Libs\POS_Product;
 use Vitepos\Models\Database\Mapbd_pos_purchase;
@@ -59,6 +60,7 @@ class Pos_Purchase_Api extends API_Base {
 		$this->register_rest_route( 'GET', 'updated-product-details/(?P<id>\d+)', array( $this, 'updated_product_details' ) );
 		$this->register_rest_route( 'POST', 'update-product-price', array( $this, 'update_product_price' ) );
 		$this->register_rest_route( 'POST', 'ignore-update-price', array( $this, 'ignore_update_price' ) );
+		$this->register_rest_route( 'POST', 'product-stocks', array( $this, 'product_stocks' ) );
 	}
 
 	/**
@@ -153,7 +155,8 @@ class Pos_Purchase_Api extends API_Base {
 			'role__not_in' => array( 'customer', 'subscriber' ),
 		);
 		$users = get_users( $args );
-				if ( $response_data->set_total_records( $mainobj->count_all() ) ) {
+		
+		if ( $response_data->set_total_records( $mainobj->count_all() ) ) {
 			$outlets = Mapbd_Pos_Warehouse::find_all_by_key_value( 'status', 'A', 'id', 'name' );
 			$mainobj->transfer_from( $this->get_outlet_id() );
 			$response_data->rowdata = $mainobj->select_all_grid_data( '', $order_by, $order, $response_data->limit, $response_data->limit_start() );
@@ -178,6 +181,7 @@ class Pos_Purchase_Api extends API_Base {
 		$mainobj->set_search_by_param( $src_props );
 		$mainobj->transfer_to( $this->get_outlet_id() );
 		
+
 		
 		$order_by = 'transfer_date';
 		$order    = 'DESC';
@@ -189,7 +193,8 @@ class Pos_Purchase_Api extends API_Base {
 			'role__not_in' => array( 'customer', 'subscriber' ),
 		);
 		$users = get_users( $args );
-				if ( $response_data->set_total_records( $mainobj->count_all() ) ) {
+		
+		if ( $response_data->set_total_records( $mainobj->count_all() ) ) {
 			$outlets                = Mapbd_Pos_Warehouse::find_all_by_key_value( 'status', 'A', 'id', 'name' );
 			$response_data->rowdata = $mainobj->select_all_grid_data( '', $order_by, $order, $response_data->limit, $response_data->limit_start() );
 			$transfer_status        = $mainobj->get_property_raw_options( 'transfer_status' );
@@ -296,7 +301,8 @@ class Pos_Purchase_Api extends API_Base {
 			Mapbd_Pos_Stock_Log::AddLog( 'I', 0, $product->get_id(), $pre_stock, $outlet_stock, $msg, $purchase->id, 'PU', 'W' );
 		}
 
-				if ( ! empty( $outlet_id ) && POS_Settings::is_stockable() && ! POS_Settings::is_default_stock() ) {
+		
+		if ( ! empty( $outlet_id ) && POS_Settings::is_stockable() && ! POS_Settings::is_default_stock() ) {
 			if ( ! Mapbd_Pos_Warehouse::increase_stock_for_outlet( $product, $outlet_id, $outlet_stock, 'Product purchased', $purchase->id, 'PU' ) ) {
 				$this->add_error( 'Stock update is not possible' );
 				return false;
@@ -343,7 +349,8 @@ class Pos_Purchase_Api extends API_Base {
 					$is_item_ok     = true;
 					$transfer_items = array();
 					foreach ( $this->payload['items'] as $item ) {
-												$t_items = new Mapbd_Pos_Stock_Transfer_Item();
+						
+						$t_items = new Mapbd_Pos_Stock_Transfer_Item();
 						$t_items->set_from_array( $item );
 						if ( ! $t_items->is_valid_form( true ) ) {
 							$is_item_ok = false;
@@ -379,7 +386,7 @@ class Pos_Purchase_Api extends API_Base {
 									$is_item_save_ok = false;
 								} else {
 									$product = wc_get_product( $transfer_item->product_id );
-									$final_id=0;
+									$final_id = 0;
 									Mapbd_Pos_Warehouse::reduce_stock_for_outlet( $product, $transfer_obj->transfer_from, $transfer_item->product_qty, 'Product transfer', $transfer_obj->id, 'TS' );
 									$std = new \stdClass();
 									if ( 'variation' == $product->get_type() ) {
@@ -685,7 +692,6 @@ class Pos_Purchase_Api extends API_Base {
 	 * @return \Appsbd\V1\libs\API_Response
 	 */
 	public function create_purchase() {
-
 		if ( empty( $this->payload['id'] ) ) {
 			$purchase_obj = new Mapbd_pos_purchase();
 			$purchase_obj->set_from_array( $this->payload );
@@ -758,14 +764,25 @@ class Pos_Purchase_Api extends API_Base {
 								$this->response->set_response( true, 'Successfully purchased', $data );
 								return $this->response;
 							}
+						} else {
+							$this->response->set_response( false, appsbd_get_msg_api() );
+							
+							return $this->response;
 						}
+					} else {
+						$this->response->set_response( false, 'Invalid items' );
+						return $this->response;
 					}
 				} else {
-					$this->add_error( 'Purchased failed' );
+					$this->response->set_response( false, 'Purchased failed' );
+					return $this->response;
 				}
+			} else {
+				$this->response->set_response( false, 'From is not valid' );
+				return $this->response;
 			}
 		}
-		$this->response->set_response( false, 'From is not valid' );
+		$this->response->set_response( false, 'Invalid request' );
 		return $this->response;
 	}
 
@@ -864,11 +881,12 @@ class Pos_Purchase_Api extends API_Base {
 			$id           = intval( $data['id'] );
 			$transfer_obj = new Mapbd_Pos_Stock_Transfer();
 			$transfer_obj->id( $id );
-			if ( ! POS_Settings::is_admin_user() && ! current_user_can( 'can-see-any-outlet-purchases' ) ) {
+			if ( ! POS_Settings::is_admin_user() ) {
 				$outlets = get_user_meta( $this->get_current_user_id(), 'outlet_id', true );
 				if ( is_array( $outlets ) ) {
 					$outlet_in = "'" . implode( "','", $outlets ) . "'";
-					$transfer_obj->transfer_to( "IN ($outlet_in)", true );
+					$transfer_obj->transfer_from( "IN ($outlet_in) OR (transfer_to IN ($outlet_in)) ", true );
+					
 				} else {
 					$this->add_error( "You don't have permission to view details of this outlet" );
 					$this->set_response( false );
@@ -908,12 +926,62 @@ class Pos_Purchase_Api extends API_Base {
 			$product->logs         = $log_obj->select_all( '', 'id', 'asc' );
 			foreach ( $product->logs as &$log ) {
 				$log->entry_date = appsbd_get_wp_date_with_format( $log->entry_date );
+				$log->user_name = POS_Settings::get_user_name_by_id( $log->user_id );
 			}
 			$this->set_response( true, 'Data found', $product );
 			return $this->response->get_response();
 		}
 		$this->set_response( false, 'data not found or invalid param' );
 		return $this->response->get_response();
+	}
+
+	/**
+	 * The product stocks is generated by appsbd
+	 *
+	 * @param mixed $data is data param.
+	 *
+	 * @return API_Response
+	 */
+	public function product_stocks(  ) {
+		if ( ! empty( $this->payload['barcode'] ) ) {
+			$barcode   = $this->get_payload( 'barcode', '' );
+			$product_id = vitepos_get_product_id_by_barcode( $barcode );
+			if (empty($product_id))
+			{
+				$this->add_error('Product not found with this barcode.');
+				$this->set_response( false );
+				return $this->response->get_response();
+			}
+			$product_obj = wc_get_product( $product_id );
+			$outlet_stocks = array();
+			if ( ! empty( $product_obj ) && $product_obj->meta_exists( '_vt_stocks' ) ) {
+				$outlet_stocks = (array) $product_obj->get_meta( '_vt_stocks' );
+			}
+			if ( ! is_array( $outlet_stocks ) ) {
+				$outlet_stocks = array();
+			}
+			$product = new \stdClass();
+			$product->id = $product_obj->get_id();
+			$product->name = $product_obj->get_name();
+			$product->stocks=array();
+			if ( count( $outlet_stocks ) > 0 ) {
+				foreach ( $outlet_stocks as $key => &$stock ) {
+					$obj = new \stdClass();
+					$obj->outlet_id = $key;
+					$obj->outlet_name = Mapbd_Pos_Warehouse::get_outlet_name_by_id( $key );
+					$obj->stock = $stock;
+					$product->stocks[] = $obj;
+				}
+			}else{
+				$this->add_error('The product ( %s ) does not have any stock','<span class="text-success">'.$product->name.'</span>');
+			}
+			$this->set_response( true,'',  $product );
+			return $this->response->get_response();
+		} else {
+			$this->set_response( false, 'Data not found or invalid param' );
+			return $this->response->get_response();
+		}
+
 	}
 
 	/**

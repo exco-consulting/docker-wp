@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\FinancialConnections;
 
 class AccountService extends \Stripe\Service\AbstractService

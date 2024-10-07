@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Reporting;
 
 class ReportTypeService extends \Stripe\Service\AbstractService

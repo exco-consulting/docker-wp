@@ -34,11 +34,13 @@ final class DroppingStream implements StreamInterface
     {
         $diff = $this->maxLength - $this->stream->getSize();
 
-                if ($diff <= 0) {
+        
+        if ($diff <= 0) {
             return 0;
         }
 
-                if (strlen($string) < $diff) {
+        
+        if (strlen($string) < $diff) {
             return $this->stream->write($string);
         }
 

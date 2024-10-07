@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Terminal;
 
 class LocationService extends \Stripe\Service\AbstractService

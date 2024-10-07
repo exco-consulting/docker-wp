@@ -181,7 +181,7 @@ class Pos_User_Api extends API_Base {
 			$response_data->max_discounts = Mapbd_Pos_Role::get_discount_percentage( $user );
 		}
 		$response_data->caps = Mapbd_Pos_Role::set_capabilities_by_role( $user->caps, $user );
-		if ( ! empty( $response_data->caps['cashier-menu'] ) ) {
+		if ( ! empty( $response_data->caps['cashier-menu'] ) && POS_Settings::get_pos_mode() != 'G' ) {
 			$response_data->caps['pos-menu'] = true;
 		}
 		$response_data->outlets      = Mapbd_Pos_Warehouse::get_outlet_details( $user );
@@ -422,7 +422,9 @@ class Pos_User_Api extends API_Base {
 			if ( is_array( $outlets ) ) {
 				$args['meta_query'][] = array(
 					'key'     => 'outlet_id',
-															'value'   => '"(' . implode( '|', $outlets ) . ')"',
+					
+					
+					'value'   => '"(' . implode( '|', $outlets ) . ')"',
 					'compare' => 'REGEXP',
 				);
 			} else {
@@ -438,10 +440,10 @@ class Pos_User_Api extends API_Base {
 		$total_user  = $user_search->get_total();
 		$users       = $user_search->get_results();
 		foreach ( $users as $user ) {
-			$user=POS_Customer::get_user_object( $user );
-			$user_role=appsbd_get_text_by_key($user->role,$roles);
-			if(!empty($user_role->name)){
-				$user->role=$user_role->name;
+			$user = POS_Customer::get_user_object( $user );
+			$user_role = appsbd_get_text_by_key( $user->role, $roles );
+			if ( ! empty( $user_role->name ) ) {
+				$user->role = $user_role->name;
 			}
 			$response_user[] = $user;
 		}
@@ -470,7 +472,9 @@ class Pos_User_Api extends API_Base {
 			if ( is_array( $outlets ) ) {
 				$args['meta_query'][] = array(
 					'key'     => 'outlet_id',
-															'value'   => '"(' . implode( '|', $outlets ) . ')"',
+					
+					
+					'value'   => '"(' . implode( '|', $outlets ) . ')"',
 					'compare' => 'REGEXP',
 				);
 			} else {
@@ -559,15 +563,16 @@ class Pos_User_Api extends API_Base {
 	 */
 	public function outlet_panel() {
 		$outlet_place                 = new \stdClass();
-		$outlet_place->outlet         = $this->get_payload('outlet','');
-		$outlet_place->counter        = $this->get_payload('counter','');
+		$outlet_place->outlet         = $this->get_payload( 'outlet', '' );
+		$outlet_place->counter        = $this->get_payload( 'counter', '' );
 		$outlet_place->is_new         = $this->get_payload( 'is_new', false );
+
 		$existing_drawer              = Mapbd_Pos_Cash_Drawer::get_by_counter( $outlet_place->outlet, $outlet_place->counter, $this->get_current_user_id() );
 		$outlet_place->cd_balance     = ! empty( $existing_drawer->closing_balance ) ? $existing_drawer->closing_balance : 0;
 		$outlet_place->cash_drawer_id = ! empty( $existing_drawer->id ) ? $existing_drawer->id : 0;
 		$outlet_place->is_submitted   = $this->payload['is_submitted'];
 		if ( $outlet_place->is_new ) {
-			$outlet_place->cd_balance = $this->get_payload( 'cd_balance');
+			$outlet_place->cd_balance = $this->get_payload( 'cd_balance' );
 			$cash_drawar              = Mapbd_Pos_Cash_Drawer::create_by_counter( $outlet_place->cd_balance, $outlet_place->outlet, $outlet_place->counter, $this->get_current_user_id() );
 			if ( ! empty( $cash_drawar->id ) ) {
 				$outlet_place->cash_drawer_id = ! empty( $cash_drawar->id ) ? $cash_drawar->id : 0;
@@ -575,6 +580,9 @@ class Pos_User_Api extends API_Base {
 		}
 		if ( 'Y' == $outlet_place->is_submitted ) {
 			$outlet_place->receive_stock_count = Mapbd_Pos_Stock_Transfer::get_receive_count( $outlet_place->outlet );
+		}
+		if ( POS_Settings::is_single_cash_drawer() && ! empty( $existing_drawer ) ) {
+			$outlet_place->drawer_info = Mapbd_Pos_Cash_Drawer::get_drawer_info( $existing_drawer );
 		}
 		$this->set_response( true, '', $outlet_place );
 		return $this->response->get_response();

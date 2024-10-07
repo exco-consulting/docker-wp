@@ -145,7 +145,8 @@ trait MessageTrait
     {
         $this->headerNames = $this->headers = [];
         foreach ($headers as $header => $value) {
-                        $header = (string) $header;
+            
+            $header = (string) $header;
 
             $this->assertHeader($header);
             $value = $this->normalizeHeaderValue($value);
@@ -245,7 +246,18 @@ trait MessageTrait
      */
     private function assertValue(string $value): void
     {
-                                                                                                if (! preg_match('/^[\x20\x09\x21-\x7E\x80-\xFF]*$/', $value)) {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        if (! preg_match('/^[\x20\x09\x21-\x7E\x80-\xFF]*$/', $value)) {
             throw new \InvalidArgumentException(sprintf('"%s" is not valid header value', $value));
         }
     }

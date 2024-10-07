@@ -12,15 +12,22 @@ spl_autoload_register(function ($class) {
         $class = substr($class, 1);
     }
     $namespace = 'ParagonIE\\Sodium';
-        $len = strlen($namespace);
+    
+    $len = strlen($namespace);
     if (strncmp($namespace, $class, $len) !== 0) {
-                return false;
+        
+        return false;
     }
 
-        $relative_class = substr($class, $len);
+    
+    $relative_class = substr($class, $len);
 
-                $file = dirname(dirname(__FILE__)) . '/namespaced/' . str_replace('\\', '/', $relative_class) . '.php';
-        if (file_exists($file)) {
+    
+    
+    
+    $file = dirname(dirname(__FILE__)) . '/namespaced/' . str_replace('\\', '/', $relative_class) . '.php';
+    
+    if (file_exists($file)) {
         require_once $file;
         return true;
     }

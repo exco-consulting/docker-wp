@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class PlanService extends \Stripe\Service\AbstractService

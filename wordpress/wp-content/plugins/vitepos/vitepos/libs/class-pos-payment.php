@@ -13,6 +13,7 @@ namespace VitePos\Libs;
 use Matrix\Exception;
 use Vitepos\Models\Database\Mapbd_Pos_Cash_Drawer;
 use Vitepos\Models\Database\Mapbd_Pos_Cash_Drawer_Types;
+use Vitepos\Models\Database\Mapbd_Pos_Custom_Field;
 use Vitepos\Models\Database\Mapbd_Pos_Role;
 use Vitepos\Models\Database\Mapbd_Pos_Stock_Log;
 use Vitepos\Models\Database\Mapbd_Pos_Warehouse;
@@ -65,7 +66,7 @@ class POS_Payment {
 	 *
 	 * @var \WC_Order
 	 */
-	protected $order;
+	public $order;
 	/**
 	 * Its property order_id
 	 *
@@ -150,7 +151,8 @@ class POS_Payment {
 		$this->outlet_obj   = Mapbd_Pos_Warehouse::find_by( 'id', $this->outlet_id );
 		$this->current_user = wp_get_current_user();
 		if ( POS_Settings::is_stockable() ) {
-						add_filter( 'woocommerce_payment_complete_reduce_order_stock', '__return_false' );
+			
+			add_filter( 'woocommerce_payment_complete_reduce_order_stock', '__return_false' );
 		}
 	}
 
@@ -171,7 +173,8 @@ class POS_Payment {
 	 */
 	public function __destruct() {
 		if ( POS_Settings::is_stockable() ) {
-						remove_filter( 'woocommerce_payment_complete_reduce_order_stock', '__return_false' );
+			
+			remove_filter( 'woocommerce_payment_complete_reduce_order_stock', '__return_false' );
 		}
 	}
 
@@ -198,7 +201,7 @@ class POS_Payment {
 			$this->order_details->is_stock      = false;
 			$this->order_details->current_stock = array();
 		}
-		if ( 'SE' == $obj->next && ! POS_Settings::is_enable_customer_email() ) {
+		if ( ! empty( $obj->next ) && 'SE' == $obj->next && ! ( POS_Settings::is_enable_customer_email() || POS_Settings::is_enable_cashier_email() ) ) {
 			$obj->next = '';
 		}
 		return $this->order_details;
@@ -228,9 +231,10 @@ class POS_Payment {
 			return false;
 		}
 		$grand_total = (float) $this->get_payload( 'grand_total', 0.0 );
+		file_put_contents( WP_CONTENT_DIR . '/grand_total.txt', print_r( $grand_total, true ), FILE_APPEND );
 		if ( ! empty( $this->payload['items'] ) ) {
 			$billing_address = $this->get_outlet_address();
-			$customer_id = $this->get_payload(
+			$customer_id     = $this->get_payload(
 				'customer',
 				POS_Settings::get_module_option( 'pos_customer', null )
 			);
@@ -238,7 +242,8 @@ class POS_Payment {
 			if ( ! empty( $customer_id ) ) {
 				$order_arg['customer_id'] = $customer_id;
 			}
-						$this->order = wc_create_order( $order_arg );
+			
+			$this->order = wc_create_order( $order_arg );
 
 			/**
 			 * Its for check is there any change before process
@@ -257,7 +262,6 @@ class POS_Payment {
 			);
 			$this->set_address( $billing_address, 'billing' );
 
-			file_put_contents(WP_CONTENT_DIR."/billing.txt",print_r($billing_address,true),FILE_APPEND);
 			$total_tax = 0.0;
 
 			foreach ( $this->payload['items'] as $item ) {
@@ -265,6 +269,7 @@ class POS_Payment {
 					'total_tax' => $item['tax_amount'] * $item['quantity'],
 
 				);
+
 				try {
 					$item_regular_price = 0.0;
 					$item_sale_price    = 0.0;
@@ -282,11 +287,29 @@ class POS_Payment {
 
 						$arguments ['name'] = wc_get_product( $item['product_id'] )->get_name();
 						$product            = new \WC_Product_Variation( $item['variation_id'] );
-						if ( ! empty( $item['addon_total'] ) ) {
+						if ( $item['addon_total'] > 0 && ! empty( $item['addon_total'] ) ) {
 							$item_regular_price = floatval( $product->get_regular_price( '' ) );
 							$item_sale_price    = floatval( $product->get_sale_price( '' ) );
 							$item_price         = floatval( $product->get_price( '' ) );
+							if ( 'C' == $item['price_type'] ) {
+								$msg = 'Product ' . $product->get_name() . ' Price ' . $item_price . ' set to custom price ' . $item['price'];
+								$this->order->add_order_note( $msg );
+								$item_regular_price = floatval( $item['regular_price'] );
+								$item_price         = floatval( $item['price'] );
+							}
 							$price              = $item_price + floatval( $item['addon_total'] );
+							$product->set_price( $price );
+							$product->set_regular_price( $item_regular_price );
+						} else {
+							$item_regular_price = floatval( $product->get_regular_price( '' ) );
+							$item_price         = floatval( $product->get_price( '' ) );
+							if ( 'C' == $item['price_type'] ) {
+								$msg = 'Product ' . $product->get_name() . ' Price ' . $item_price . ' set to custom price ' . $item['price'];
+								$this->order->add_order_note( $msg );
+								$item_regular_price = floatval( $item['regular_price'] );
+								$item_price         = floatval( $item['price'] );
+							}
+							$price = $item_price;
 							$product->set_price( $price );
 							$product->set_regular_price( $item_regular_price );
 						}
@@ -294,21 +317,43 @@ class POS_Payment {
 							$product,
 							$item['quantity'],
 							$arguments
-						); 					} else {
+						); 
+					} else {
 						$product = wc_get_product( $item['product_id'] );
-						if ( ! empty( $item['addon_total'] ) ) {
+						if ( $item['addon_total'] > 0 && ! empty( $item['addon_total'] ) ) {
 							$item_regular_price = floatval( $product->get_regular_price( '' ) );
 							$item_sale_price    = floatval( $product->get_sale_price( '' ) );
 							$item_price         = floatval( $product->get_price( '' ) );
+							if ( 'C' == $item['price_type'] ) {
+								$msg = 'Product ' . $product->get_name() . ' Price ' . $item_price . ' set to custom price ' . $item['price'];
+								$this->order->add_order_note( $msg );
+								$item_regular_price = floatval( $item['regular_price'] );
+								$item_price         = floatval( $item['price'] );
+							}
 							$price              = $item_price + floatval( $item['addon_total'] );
 							$product->set_price( $price );
 							$product->set_regular_price( $item_regular_price );
+						} else {
+							$item_regular_price = floatval( $product->get_regular_price( '' ) );
+							file_put_contents( WP_CONTENT_DIR . '/item_regular_price.txt', print_r( $product->get_id() . ' = ' . $item_regular_price, true ) . "\n", FILE_APPEND );
+							$item_price         = floatval( $product->get_price( '' ) );
+							if ( 'C' == $item['price_type'] ) {
+								$msg = 'Product ' . $product->get_name() . ' Price ' . $item_price . ' set to custom price ' . $item['price'];
+								$this->order->add_order_note( $msg );
+								$item_regular_price = floatval( $item['regular_price'] );
+								$item_price         = floatval( $item['price'] );
+							}
+							$price = $item_price;
+							$product->set_price( $price );
+							$product->set_regular_price( $item_regular_price );
 						}
+
 						$item_id = $this->order->add_product(
 							$product,
 							$item['quantity'],
 							$arguments
-						); 					}
+						); 
+					}
 					$total_tax += ( $item['quantity'] * ( $item['tax_amount'] + $item['addon_total'] ) );
 					$oitem      = new \WC_Order_Item_Product( $item_id );
 					if ( ! empty( $item['attributes'] ) && is_array( $item['attributes'] ) ) {
@@ -316,12 +361,10 @@ class POS_Payment {
 					}
 
 					if ( ! empty( $item_regular_price ) ) {
-						if ( ! empty( $item['addon_total'] ) ) {
-							$oitem->add_meta_data(
-								'_vtp_regular_price',
-								$item_regular_price + floatval( $item['addon_total'] )
-							);
+						if ( isset( $item['addon_total'] ) && ! empty( $item['addon_total'] ) ) {
+							$item_regular_price = $item_regular_price + floatval( $item['addon_total'] );
 						}
+						$oitem->add_meta_data( '_vtp_regular_price', $item_regular_price );
 					} else {
 						$oitem->add_meta_data( '_vtp_regular_price', '' );
 					}
@@ -336,6 +379,15 @@ class POS_Payment {
 						$oitem->add_meta_data( '_vtp_items_price', $item_price );
 						$oitem->add_meta_data( '_vtp_addons', $item['addons'] );
 					}
+					if ( POS_Settings::is_item_wise() ) {
+						$this->order->add_meta_data(
+							'_vtp_is_item_wise',
+							'Y'
+						);
+						$oitem->add_meta_data( '_vtp_item_status', 'vt_it_kitchen' );
+						$oitem->add_meta_data( '_vtp_item_can_cancel', 'Y' );
+					}
+
 					$oitem->save();
 
 				} catch ( Exception $e ) {
@@ -344,7 +396,8 @@ class POS_Payment {
 			}
 
 			$this->calculate_totals( true );
-						$this->set_order_tax( $total_tax );
+			
+			$this->set_order_tax( $total_tax );
 
 			$this->calculate_totals( false );
 			$rounding_factor = null;
@@ -362,6 +415,13 @@ class POS_Payment {
 
 			$this->order->add_meta_data( '_vt_tax_method', POS_Settings::tax_method() );
 			$this->order->add_meta_data( '_is_vitepos', 'Y' );
+			if ( $this->get_payload( 'custom_fields', '' ) != '' ) {
+				if ( ! Mapbd_Pos_Custom_Field::validate_custom_fields( $this->get_payload( 'custom_fields', array() ), 'I' ) ) {
+					return false;
+				} else {
+					$this->order->add_meta_data( '_vtp_custom_fields', $this->get_payload( 'custom_fields', '' ) );
+				}
+			}
 			$this->order->add_meta_data( '_vtp_order_note', $this->get_payload( 'note', '' ) );
 			if ( $this->is_offline ) {
 				$this->outlet_id  = $this->get_payload( 'outlet_id', $this->outlet_id );
@@ -374,7 +434,6 @@ class POS_Payment {
 				$this->order->add_meta_data( '_vtp_outlet_id', $this->outlet_id );
 				$this->order->add_meta_data( '_vtp_counter_id', $this->counter_id );
 
-			$this->order->add_meta_data( '_vtp_order_note', $this->get_payload( 'note', '' ) );
 			$this->order->add_meta_data( '_vt_is_paid', 'N' );
 			$this->order->add_meta_data( '_vt_email_sent', 'N' );
 			if ( $this->is_offline ) {
@@ -382,7 +441,6 @@ class POS_Payment {
 				if ( ! empty( $offline_id ) ) {
 					$this->order->add_meta_data( '_vtp_offline_id', $offline_id );
 				}
-
 				$processed_by_offline = $this->get_payload( 'processed_by' );
 				$user                 = get_user_by( 'login', $processed_by_offline );
 				if ( ! empty( $user->ID ) ) {
@@ -410,20 +468,33 @@ class POS_Payment {
 	 */
 	protected function set_order_tax( $total_tax = 0 ) {
 		$payload_total_tax = $this->get_payload( 'tax_total' );
-		if ( ! empty( $payload_total_tax ) ) {
-			$this->order->set_cart_tax( $payload_total_tax );
+		/**
+		 * Its for check is the tax option is inclusive or exclusive.
+		 *
+		 * @since 3.0.4
+		 */
+		$is_inclusive_enabled = apply_filters( 'woocommerce_prices_include_tax', get_option( 'woocommerce_prices_include_tax' ) === 'yes' );
+		if ( $is_inclusive_enabled ) {
+			$this->order->update_meta_data( '_vtp_is_inclusive', 'Y' );
+			$this->order->update_meta_data( '_vtp_c_tax_total', $payload_total_tax );
+			$this->order->save();
 		} else {
-			try {
-				$calculated_tax = $this->order->get_tax_totals();
-				if ( $total_tax > 0 ) {
-					if ( empty( $calculated_tax ) || $calculated_tax != $total_tax ) {
-						$this->order->set_cart_tax( $total_tax );
+
+			if ( ! empty( $payload_total_tax ) ) {
+				$this->order->set_cart_tax( $payload_total_tax );
+			} else {
+				try {
+					$calculated_tax = $this->order->get_tax_totals();
+					if ( $total_tax > 0 ) {
+						if ( empty( $calculated_tax ) || $calculated_tax != $total_tax ) {
+							$this->order->set_cart_tax( $total_tax );
+						}
 					}
+				} catch ( \WC_Data_Exception $e ) {
+					POS_Settings::get_module_instance()->add_error( $e->getMessage() );
+				} catch ( Exception $e ) {
+					POS_Settings::get_module_instance()->add_error( $e->getMessage() );
 				}
-			} catch ( \WC_Data_Exception $e ) {
-				POS_Settings::get_module_instance()->add_error( $e->getMessage() );
-			} catch ( Exception $e ) {
-				POS_Settings::get_module_instance()->add_error( $e->getMessage() );
 			}
 		}
 	}
@@ -436,11 +507,19 @@ class POS_Payment {
 		$current_billing = $this->order->get_address( 'billing' );
 		$this->set_address( $this->get_outlet_address() );
 		$this->order->calculate_totals( $and_taxes );
+		
 		$this->set_address( $current_billing, 'billing' );
 	}
-	protected function set_address($address,$type = 'billing'){
-		if(!empty($address['email']) && !is_email($address['email'])){
-			unset($address['email']);
+
+	/**
+	 * The set address is generated by appsbd
+	 *
+	 * @param mixed  $address Its address param.
+	 * @param string $type Its type param.
+	 */
+	protected function set_address( $address, $type = 'billing' ) {
+		if ( ! empty( $address['email'] ) && ! is_email( $address['email'] ) ) {
+			unset( $address['email'] );
 		}
 		$this->order->set_address( $address, 'billing' );
 	}
@@ -496,7 +575,7 @@ class POS_Payment {
 	 * @return bool
 	 */
 	public function check_checkout_discount_fee_limit() {
-		return true;
+
 		if ( ! $this->is_offline && ! POS_Settings::is_admin_user() ) {
 			if ( ! current_user_can( 'pos-discount' ) && ( ! empty( $this->payload['discounts'] ) && is_array( $this->payload['discounts'] ) ) ) {
 				POS_Settings::get_module_instance()->add_error( 'You do not have permission to give discount' );
@@ -531,23 +610,24 @@ class POS_Payment {
 	 * @return bool
 	 */
 	protected function check_items_stock() {
-				if ( ! POS_Settings::is_stockable() ) {
+		
+		if ( ! POS_Settings::is_stockable() ) {
 			return true;
 		}
 		$is_ok                = true;
 		$this->current_stocks = array();
 		$msg                  = '';
-		$is_default_stock=POS_Settings::is_default_stock();
+		$is_default_stock     = POS_Settings::is_default_stock();
 		foreach ( $this->payload['items'] as $item ) {
-			$qty        = (float) $item['quantity'];
-			$product_id = ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
-			$current_stock=0;
+			$qty           = (float) $item['quantity'];
+			$product_id    = ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+			$current_stock = 0;
 			if ( $is_default_stock ) {
 				$product = wc_get_product( $product_id );
 				if ( $product->is_in_stock() ) {
 					$current_stock = $product->get_stock_quantity() ? $product->get_stock_quantity() : 0;
 				}
-			}else {
+			} else {
 				/**
 				 * Its use for outlet stock
 				 *
@@ -559,7 +639,7 @@ class POS_Payment {
 			$current_stock_float = (float) $current_stock;
 			if ( $current_stock_float < $qty ) {
 				$is_ok                  = false;
-				$msg                    .= ( ! empty( $item['product_name'] ) ? $item['product_name'] : '' ) . ',';
+				$msg                   .= ( ! empty( $item['product_name'] ) ? $item['product_name'] : '' ) . ',';
 				$std                    = new \stdClass();
 				$std->product_id        = $product_id;
 				$std->variation_id      = $item['variation_id'];
@@ -662,10 +742,10 @@ class POS_Payment {
 		$time_obj->status = $status;
 		$time_obj->time   = gmdate( 'Y-m-d H:i:s' );
 		$time_logs[]      = $time_obj;
-		if ( update_post_meta( $this->order->get_id(), $time_meta_key, $time_logs ) ) {
+		$this->order->update_meta_data( $time_meta_key, $time_logs );
+		if ( $this->order->save() ) {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -693,8 +773,19 @@ class POS_Payment {
 
 		$this->clear_order_discount_fee();
 		$this->calculate_totals( true );
-		$this->set_tax_after_discount_or_fee();
-				$total_amount = $this->order->get_subtotal();
+		/**
+		 * Its for check is the tax option is inclusive or exclusive.
+		 *
+		 * @since 3.0.4
+		 */
+		$is_inclusive_enabled = apply_filters( 'woocommerce_prices_include_tax', get_option( 'woocommerce_prices_include_tax' ) === 'yes' );
+		if ( $is_inclusive_enabled ) {
+			$this->calculate_totals( true );
+			$total_amount = $this->order->get_total();
+		} else {
+			$this->set_tax_after_discount_or_fee();
+			$total_amount = $this->order->get_subtotal();
+		}
 
 		$fee_total = 0.0;
 		if ( ! empty( $this->payload['fees'] ) && is_array( $this->payload['fees'] ) ) {
@@ -733,6 +824,7 @@ class POS_Payment {
 			}
 		}
 		
+
 		$discount = 0.0;
 		if ( ! empty( $this->payload['discounts'] ) && is_array( $this->payload['discounts'] ) ) {
 			foreach ( $this->payload['discounts'] as $item ) {
@@ -796,12 +888,14 @@ class POS_Payment {
 			if ( $total_amount > 0 && $final_amount > 0 ) {
 				$items = array();
 				foreach ( $this->order->get_items() as $item ) {
-										$item_sub_total = $item->get_subtotal();
+					
+					$item_sub_total = $item->get_subtotal();
 					$item_dis       = ( $final_amount / $total_amount ) * $item_sub_total;
 					if ( $is_discount ) {
 						$item->set_total( $item_sub_total - $item_dis );
 					} else {
-												$items[ $item->get_id() ] = $item_sub_total;
+						
+						$items[ $item->get_id() ] = $item_sub_total;
 						$item->set_total( $item_sub_total + $item_dis );
 						$item->set_subtotal( $item_sub_total );
 					}
@@ -826,7 +920,7 @@ class POS_Payment {
 	 * @param mixed $value Its value param.
 	 */
 	protected function update_order_meta( $key, $value ) {
-		if ( empty( $this->order_id ) ) {
+		if ( ! empty( $this->order_id ) ) {
 			$this->order->update_meta_data( $key, $value );
 		} else {
 			$this->order->add_meta_data( $key, $value );
@@ -870,19 +964,19 @@ class POS_Payment {
 		$this->update_order_meta( '_vtp_payment_note', $this->get_payload( 'payment_note', '' ) );
 		$this->update_order_meta( '_vtp_payment_method', $this->get_payload( 'payment_method', '' ) );
 		$this->order->add_meta_data( '_vtp_tendered_amount', $this->get_payload( 'given_amount', 0.0 ) );
-
 		$change_amount = $this->get_payload( 'returned_amount', 0.0 );
 		$this->order->add_meta_data( '_vtp_change_amount', $change_amount );
 		$payment_list = $this->get_payload( 'payment_list', array() );
 
 		
+
 		
 		foreach ( $payment_list as &$pmt ) {
 			$pmt['is_paid'] = in_array( $pmt['type'], array( 'C', 'S', 'O' ) ) ? 'Y' : 'N';
 			$pmt['name']    = $this->get_payment_name( $pmt['type'] );
 		}
 		$this->order->add_meta_data( '_vtp_payment_list', $payment_list );
-
+		$this->order->save();
 		return true;
 	}
 
@@ -899,6 +993,7 @@ class POS_Payment {
 		if ( $this->create_order() ) {
 			$this->order->add_meta_data( '_vtp_is_resto', 'Y' );
 			$this->order->add_meta_data( '_vtp_order_by', $this->current_user->ID ); 
+
 			$this->order->add_meta_data( '_vtp_tables', $this->get_payload( 'table_id', array() ) );
 			$this->order->add_meta_data( '_vtp_persons', $this->get_payload( 'persons', 0 ) );
 			$this->order->add_meta_data( '_vtp_order_type', $this->get_payload( 'order_type', 'in_store' ) );
@@ -953,6 +1048,7 @@ class POS_Payment {
 		$stat = $this->order->get_status();
 
 		if ( ! empty( $this->order ) && ( 'vt_served' == $stat || 'vt_ready_to_srv' == $stat ) ) {
+			vitepos_wc_update_meta( $order_id, '_vtp_prev_status', $stat );
 			$billing_address = $this->get_outlet_address();
 			$customer_id     = $this->order->get_customer_id();
 			if ( empty( $customer_id ) ) {
@@ -998,13 +1094,15 @@ class POS_Payment {
 	 * @throws \WC_Data_Exception Its Exception.
 	 */
 	public function grocery_checkout( $is_offline = false ) {
-				$this->is_restaurant = false;
+		
+		$this->is_restaurant = false;
 		$this->is_checkout   = true;
 		$this->is_offline    = $is_offline;
+
 		if ( ! $this->check_checkout_pre_order() || ! $this->check_offline_pre_order() || ( ! $is_offline && ! $this->check_items_stock() ) ) {
 			return false;
 		}
-				if ( $this->create_order() ) {
+		if ( $this->create_order() ) {
 			$this->order->add_meta_data( '_vtp_processed_by', $this->current_user->ID );
 			if ( $this->is_ready_to_checkout() ) {
 				return $this->_complete_order( $is_offline, true );
@@ -1024,7 +1122,8 @@ class POS_Payment {
 	 * @throws \WC_Data_Exception Its Exception.
 	 */
 	public function restaurant_checkout_pay_first( $is_offline = false ) {
-				$this->is_restaurant = false;
+		
+		$this->is_restaurant = false;
 		$this->is_checkout   = true;
 		$this->is_offline    = $is_offline;
 
@@ -1038,6 +1137,7 @@ class POS_Payment {
 			$this->order->add_meta_data( '_vtp_tables', $this->get_payload( 'table_id', array() ) );
 			$this->order->add_meta_data( '_vtp_persons', $this->get_payload( 'persons', 0 ) );
 			$this->order->add_meta_data( '_vtp_order_type', $this->get_payload( 'order_type', 'in_store' ) );
+			$this->order->save();
 			if ( $this->is_ready_to_checkout() ) {
 				return $this->_complete_order( $is_offline, true );
 			}
@@ -1056,10 +1156,27 @@ class POS_Payment {
 		POS_Settings::get_module_instance()->add_debug( $status );
 		if ( ! empty( $this->order ) ) {
 			if ( 'pending' == $status ) {
-				if ( $this->order->update_status( 'cancelled', 'Order was cancelled programmatically.', true ) ) {
+				$next_status = 'cancelled';
+				$msg         = 'Order was cancelled programmatically.';
+				if ( $this->is_restaurant ) {
+					$prev_status = $this->order->get_meta( '_vtp_prev_status' );
+					if ( ! empty( $prev_status ) ) {
+						$next_status = $prev_status;
+						$msg         = 'Order was cancelled programmatically and replaced with previous status.';
+					}
+				}
+				if ( $this->order->update_status( $next_status, $msg, true ) ) {
+					/**
+					 * Its for order complete
+					 *
+					 * @since 3.0
+					 */
+					do_action( 'vitepos/action/payment-method/cancel-order', $this->order );
+
 					$this->reverse_items_stock_on_canceled();
-					update_post_meta( $this->order->get_id(), '_vt_is_canceled', 'Y' );
-					POS_Settings::get_module_instance()->add_info( 'Order successfully completed' );
+					vitepos_wc_update_meta( $this->order, '_vt_is_canceled', 'Y' );
+
+					POS_Settings::get_module_instance()->add_info( 'Order successful' );
 					$order_details = POS_Order::get_from_woo_order_details_by_id( $this->order->get_id() );
 					$this->set_order_details( false, $order_details, '' );
 
@@ -1073,8 +1190,8 @@ class POS_Payment {
 				return true;
 			} elseif ( 'canceled' == $status ) {
 				$this->reverse_items_stock_on_canceled();
-				update_post_meta( $this->order->get_id(), '_vt_is_canceled', 'Y' );
-				POS_Settings::get_module_instance()->add_info( 'Order successfully completed' );
+				vitepos_wc_update_meta( $this->order, '_vt_is_canceled', 'Y' );
+				POS_Settings::get_module_instance()->add_info( 'Order successful' );
 				$order_details = POS_Order::get_from_woo_order_details_by_id( $this->order->get_id() );
 				$this->set_order_details( false, $order_details, '' );
 
@@ -1094,7 +1211,8 @@ class POS_Payment {
 	 */
 	protected function load_order( $id ) {
 		$this->order_id = $id;
-		$this->order    = new \WC_Order( $id );		if ( $this->order->get_meta( '_vtp_is_resto' ) == 'Y' ) {
+		$this->order    = new \WC_Order( $id );
+		if ( $this->order->get_meta( '_vtp_is_resto' ) == 'Y' ) {
 			$this->is_restaurant = true;
 		}
 	}
@@ -1110,31 +1228,23 @@ class POS_Payment {
 		$status = $this->order->get_status();
 		if ( ! empty( $this->order ) ) {
 			if ( 'pending' == $status ) {
-				$type           = strtolower( $this->get_payload( 'type' ) );
-				$transaction_id = $this->get_payload( 'transaction_id' );
-				if ( 'stripe' == $type ) {
-					update_post_meta( $this->order->get_id(), '_vt_stp_trans_id', $transaction_id );
-					$paymentlist = $this->get_payments();
-					foreach ( $paymentlist as &$pt ) {
-						if ( 'T' == $pt['type'] ) {
-							if ( ! empty( $pt['cm'] ) && 'manual' == $pt['cm'] ) {
-								if ( $this->capture_payment_intent( $transaction_id ) ) {
-									$pt['is_paid'] = 'Y';
-								} else {
-									$order_details = POS_Order::get_from_woo_order_details_by_id( $this->order->get_id() );
-									$this->set_order_details( false, $order_details, 'RT' );
-									return false;
-								};
-							} else {
-								$pt['is_paid'] = 'Y';
-							}
-						}
-					}
-				}
+				$id                = $this->get_payload( 'id' );
+				$paymentlist       = $this->get_payments();
+				$payment_status_ok = true;
+				/**
+				 * Its for order complete
+				 *
+				 * @since 1.0
+				 */
+				do_action_ref_array( "vitepos/action/payment-method/complete-order/{$id}", array( &$this, &$paymentlist, &$payment_status_ok ) );
 				$this->order->update_meta_data( '_vtp_payment_list', $paymentlist );
-								return $this->_complete_order();
+				$this->order->save();
+				if ( ! $payment_status_ok ) {
+					return false;
+				}
+				return $this->_complete_order();
 			} elseif ( 'complete' == $status ) {
-				POS_Settings::get_module_instance()->add_info( 'Order successfully completed' );
+				POS_Settings::get_module_instance()->add_info( 'Order successful' );
 				$order_details = POS_Order::get_from_woo_order_details_by_id( $this->order->get_id() );
 				$this->set_order_details( true, $order_details, '' );
 
@@ -1146,7 +1256,6 @@ class POS_Payment {
 
 		return false;
 	}
-
 	/**
 	 * The set order details is generated by appsbd
 	 *
@@ -1155,7 +1264,7 @@ class POS_Payment {
 	 * @param string $next Its next command, SE= Send Email, RSTP=Require Stripe Payment, IFM=Iframe.
 	 * @param array  $params Its params param.
 	 */
-	protected function set_order_details( $is_complete, $order_details, $next = '', $params = array() ) {
+	public function set_order_details( $is_complete, $order_details, $next = '', $params = array() ) {
 		$obj                = new \stdClass();
 		$obj->is_complete   = $is_complete ? 'Y' : 'N';
 		$obj->next          = $next;
@@ -1185,7 +1294,7 @@ class POS_Payment {
 			return true;
 		}
 
-		$is_already_calculated = get_post_meta( $this->order->get_id(), '_vt_stock_cal', true );
+		$is_already_calculated = $this->order->get_meta( '_vt_stock_cal', true );
 		if ( 'Y' == $is_already_calculated ) {
 			return true;
 		}
@@ -1207,8 +1316,8 @@ class POS_Payment {
 					$std               = new \stdClass();
 					$std->product_id   = $product_id;
 					$std->variation_id = $variation_id;
-					if(POS_Settings::is_default_stock()){
-						$product = wc_get_product($final_id);
+					if ( POS_Settings::is_default_stock() ) {
+						$product = wc_get_product( $final_id );
 						Mapbd_Pos_Stock_Log::AddLog(
 							'O',
 							0,
@@ -1220,9 +1329,9 @@ class POS_Payment {
 							'OR',
 							'W'
 						);
-						$std->stock=($product->get_stock_quantity()-$item->get_quantity());
-						update_post_meta($product->get_id(), '_stock', $std->stock);
-					}else{
+						$std->stock = ( $product->get_stock_quantity() - $item->get_quantity() );
+						wc_update_product_stock( $product, $std->stock );
+					} else {
 						if ( ! Mapbd_Pos_Warehouse::reduce_stock_for_outlet(
 							$final_id,
 							$this->outlet_id,
@@ -1242,9 +1351,7 @@ class POS_Payment {
 						$std->stock = apply_filters( 'vitepos/filter/outlet-stock', 0, $final_id, $this->outlet_id );
 
 					}
-
 				}
-
 
 				$this->current_stocks[] = $std;
 			}
@@ -1257,8 +1364,8 @@ class POS_Payment {
 			 */
 			do_action( 'vitepos/action/stock-updated', $this->current_stocks, $this->outlet_id );
 		}
-		update_post_meta( $this->order->get_id(), '_vt_stock_cal', 'Y' );
-		update_post_meta( $this->order->get_id(), '_vt_stock_reverse', 'N' );
+		vitepos_wc_update_meta( $this->order, '_vt_stock_cal', 'Y' );
+		vitepos_wc_update_meta( $this->order, '_vt_stock_reverse', 'N' );
 
 		return $is_ok;
 
@@ -1270,7 +1377,8 @@ class POS_Payment {
 	 * @return bool
 	 */
 	protected function reverse_items_stock_on_canceled() {
-				if ( ! POS_Settings::is_stockable() ) {
+		
+		if ( ! POS_Settings::is_stockable() ) {
 			return true;
 		}
 
@@ -1324,8 +1432,8 @@ class POS_Payment {
 			}
 		}
 
-		update_post_meta( $this->order->get_id(), '_vt_stock_reverse', 'Y' );
-		update_post_meta( $this->order->get_id(), '_vt_stock_cal', 'N' );
+		vitepos_wc_update_meta( $this->order, '_vt_stock_reverse', 'Y' );
+		vitepos_wc_update_meta( $this->order, '_vt_stock_cal', 'N' );
 
 		if ( ! empty( $this->current_stocks ) ) {
 			/**
@@ -1466,55 +1574,25 @@ class POS_Payment {
 	 * @return \stdClass
 	 */
 	protected function process_payment( &$payment_item ) {
-		$resp               = new \stdClass();
-		$resp->status       = false;
-		$resp->is_delete    = false;
-		$resp->next         = '';
-		$resp->payment_data = null;
 
-		if ( 'T' == $payment_item['type'] ) { 			$resp->status    = true;
-			$stripe_settings = \VitePos\Modules\POS_Payment::get_payment_gw_settings( 'stripe' );
+		$filter_item                     = new \stdClass();
+		$filter_item->resp               = new \stdClass();
+		$filter_item->resp->status       = false;
+		$filter_item->resp->is_delete    = false;
+		$filter_item->resp->next         = '';
+		$filter_item->resp->payment_data = null;
+		$type                            = $payment_item['type'];
+		$filter_item->payment_item       = $payment_item;
+		$currency_code                   = $this->order->get_currency();
+		/**
+		 * Its for check is there any change before process
+		 *
+		 * @since 2.4
+		 */
+		$filter_item = apply_filters( "vitepos/filter/payment/process/{$type}", $filter_item, $currency_code, $this->order );
 
-			if ( ! empty( $stripe_settings ) && 'Y' == $stripe_settings->is_enable ) {
-				if ( empty( $payment_item['client_secret'] ) ) {
-					$stripe_secret_key = '' . $stripe_settings->settings->secret_key;
-					\Stripe\Stripe::setApiKey( $stripe_secret_key );
-					try {
-						$param = array(
-							'amount'         => $payment_item['amount'] * 100,
-							'currency'       => $this->order->get_currency(),
-							'capture_method' => 'manual',
-						);
-						if ( ! empty( $stripe_settings->settings->capture_method ) && 'P' == $stripe_settings->settings->capture_method ) {
-							unset( $param ['capture_method'] );
-						}
-						$payment_intent                = \Stripe\PaymentIntent::create( $param );
-						$payment_item['intend_id']     = $payment_intent->id;
-						$payment_item['cm']            = ! empty( $param['capture_method'] ) ? $param['capture_method'] : 'automatic';
-						$payment_item['client_secret'] = $payment_intent->client_secret;
-						$resp->next                    = 'SCP';
-						$resp->payment_data            = array( 'client_secret' => $payment_item['client_secret'] );
-						POS_Settings::get_module_instance()->add_info( 'Order requires payment process' );
-
-						return $resp;
-					} catch ( \Stripe\Exception\ApiErrorException $e ) {
-						POS_Settings::get_module_instance()->add_error( $e->getMessage() );
-						$resp->is_delete = true;
-					} catch ( Error $e ) {
-						POS_Settings::get_module_instance()->add_error( $e->getMessage() );
-						$resp->is_delete = true;
-					}
-				} else {
-					$resp->next         = 'SCP';
-					$resp->payment_data = array( 'client_secret' => $payment_item['client_secret'] );
-				}
-			} else {
-				$resp->is_delete = true;
-				POS_Settings::get_module_instance()->add_info( 'Stripe configuration error in server' );
-			}
-		}
-
-		return $resp;
+		$payment_item = $filter_item->payment_item;
+		return $filter_item->resp;
 	}
 
 	/**
@@ -1604,6 +1682,7 @@ class POS_Payment {
 					$is_paid     = 'N';
 					$is_complete = false;
 				}
+				
 
 				if ( $this->order->update_status( $status, 'Vitepos checkout', true ) ) {
 					if ( ! $is_restaurant && ! $this->is_restaurant ) {
@@ -1618,7 +1697,7 @@ class POS_Payment {
 						$this->update_cash_drawer();
 					}
 
-					update_post_meta( $this->order->get_id(), '_vt_is_paid', $is_paid );
+					vitepos_wc_update_meta( $this->order, '_vt_is_paid', $is_paid );
 					$order_details = POS_Order::get_from_woo_order_restro_by_id(
 						$this->order->get_id(),
 						false,
@@ -1629,13 +1708,15 @@ class POS_Payment {
 							if ( $is_pay_first && POS_Settings::is_kitchen() ) {
 								POS_Settings::get_module_instance()->add_info( 'Order successfully sent to kitchen' );
 							} else {
-								POS_Settings::get_module_instance()->add_info( 'Order successfully completed' );
+								POS_Settings::get_module_instance()->add_info( 'Order successful' );
 							}
+						} else {
+							POS_Settings::get_module_instance()->add_info( 'Order successful' );
 						}
 					}
 
 					if ( $is_complete ) {
-						if ( empty( $this->outlet_obj->email ) || $this->outlet_obj->email != $this->order->get_billing_email( '' ) ) {
+						if ( POS_Settings::is_enable_cashier_email() || ( empty( $this->outlet_obj->email ) && $this->outlet_obj->email != $this->order->get_billing_email( '' ) ) ) {
 							$payment_response->next = 'SE';
 						} else {
 							$payment_response->next = '';
@@ -1676,20 +1757,21 @@ class POS_Payment {
 					$this->update_items_stock( true );
 				}
 				$this->update_cash_drawer();
-				update_post_meta( $this->order->get_id(), '_vt_is_paid', 'Y' );
-				POS_Settings::get_module_instance()->add_info( 'Order successfully completed' );
+				vitepos_wc_update_meta( $this->order, '_vt_is_paid', 'Y' );
+				POS_Settings::get_module_instance()->add_info( 'Order successful' );
 				if ( $is_restaurant ) {
 					$order_details = POS_Order::get_from_woo_order_restro_by_id( $this->order->get_id(), false, true );
 					if ( $is_pay_first && POS_Settings::is_kitchen() ) {
 						POS_Settings::get_module_instance()->add_info( 'Order successfully sent to kitchen' );
 					} else {
-						POS_Settings::get_module_instance()->add_info( 'Order successfully completed' );
+						POS_Settings::get_module_instance()->add_info( 'Order successful' );
 					}
 				} else {
 					$order_details = POS_Order::get_from_woo_order_details_by_id( $this->order->get_id() );
 				}
 
-								if ( empty( $this->outlet_obj->email ) || $this->outlet_obj->email != $this->order->get_billing_email( '' ) ) {
+				
+				if ( empty( $this->outlet_obj->email ) || $this->outlet_obj->email != $this->order->get_billing_email( '' ) ) {
 					/**
 					 * Its for check is there any change before process
 					 *
@@ -1724,9 +1806,10 @@ class POS_Payment {
 			if ( $is_pay_first ) {
 				if ( POS_Settings::is_kitchen() ) {
 					$status = 'vt_in_kitchen';
-
 				}
 			}
+		} else {
+			$status = POS_Settings::def_oder_status();
 		}
 		return $status;
 	}

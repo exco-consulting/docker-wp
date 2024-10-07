@@ -215,5 +215,6 @@ final class UriNormalizer
 
     private function __construct()
     {
-            }
+        
+    }
 }

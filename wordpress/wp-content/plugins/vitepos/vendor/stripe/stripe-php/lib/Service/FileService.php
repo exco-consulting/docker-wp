@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class FileService extends \Stripe\Service\AbstractService
@@ -56,7 +57,9 @@ class FileService extends \Stripe\Service\AbstractService
             $opts->apiBase = $this->getClient()->getFilesBase();
         }
 
-                        $flatParams = \array_column(\Stripe\Util\Util::flattenParams($params), 1, 0);
+        
+        
+        $flatParams = \array_column(\Stripe\Util\Util::flattenParams($params), 1, 0);
 
         return $this->request('post', '/v1/files', $flatParams, $opts);
     }

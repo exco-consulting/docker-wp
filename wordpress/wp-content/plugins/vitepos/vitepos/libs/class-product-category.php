@@ -46,7 +46,8 @@ class Product_Category {
 	 *
 	 * @var int
 	 */
-	public $parent_id; 	/**
+	public $parent_id; 
+	/**
 	 * Its property term_taxonomy_id
 	 *
 	 * @var int

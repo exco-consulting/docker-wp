@@ -27,7 +27,8 @@ class RejectedPromise implements PromiseInterface
         callable $onFulfilled = null,
         callable $onRejected = null
     ) {
-                if (!$onRejected) {
+        
+        if (!$onRejected) {
             return $this;
         }
 
@@ -37,11 +38,14 @@ class RejectedPromise implements PromiseInterface
         $queue->add(static function () use ($p, $reason, $onRejected) {
             if (Is::pending($p)) {
                 try {
-                                        $p->resolve($onRejected($reason));
+                    
+                    $p->resolve($onRejected($reason));
                 } catch (\Throwable $e) {
-                                        $p->reject($e);
+                    
+                    $p->reject($e);
                 } catch (\Exception $e) {
-                                        $p->reject($e);
+                    
+                    $p->reject($e);
                 }
             }
         });
@@ -82,5 +86,6 @@ class RejectedPromise implements PromiseInterface
 
     public function cancel()
     {
-            }
+        
+    }
 }

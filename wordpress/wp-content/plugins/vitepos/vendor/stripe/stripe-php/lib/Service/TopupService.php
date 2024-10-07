@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class TopupService extends \Stripe\Service\AbstractService

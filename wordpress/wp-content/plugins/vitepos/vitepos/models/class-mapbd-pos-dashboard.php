@@ -25,14 +25,7 @@ class Mapbd_POS_Dashboard extends ViteposModel {
 
 		$db     = self::get_db_object();
 		$prefix = $db->prefix;
-		$query  = "SELECT count({$prefix}posts.ID) as total_order,	mt1.meta_value as outlet_id,	sum(mt3.meta_value) as total_amount
-			FROM	{$prefix}posts INNER JOIN {$prefix}postmeta ON ( {$prefix}posts.ID = {$prefix}postmeta.post_id and ({$prefix}postmeta.meta_key = '_is_vitepos' AND {$prefix}postmeta.meta_value = 'Y')) INNER JOIN {$prefix}postmeta AS mt1 ON ( {$prefix}posts.ID = mt1.post_id and mt1.meta_key = '_vtp_outlet_id' )
-			INNER JOIN {$prefix}postmeta AS mt2 ON ( {$prefix}posts.ID = mt2.post_id and mt2.meta_key = '_vtp_payment_list') INNER JOIN {$prefix}postmeta AS mt3 ON ( {$prefix}posts.ID = mt3.post_id and mt3.meta_key = '_order_total')
-			WHERE {$prefix}posts.post_type IN ( 'shop_order', 'shop_order_refund' ) 
-			AND (({$prefix}posts.post_status = 'wc-completed')) 
-			GROUP BY outlet_id
-			ORDER BY total_amount desc";
-
+		$query = vitepos_get_dashboard_query( $prefix );
 		$response               = new \stdClass();
 		$response->total_order  = 0;
 		$response->total_amount = 0.0;

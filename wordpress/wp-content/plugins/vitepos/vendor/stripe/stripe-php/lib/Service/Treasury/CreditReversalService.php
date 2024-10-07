@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Treasury;
 
 class CreditReversalService extends \Stripe\Service\AbstractService

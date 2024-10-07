@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class BalanceService extends \Stripe\Service\AbstractService

@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\BillingPortal;
 
 class SessionService extends \Stripe\Service\AbstractService

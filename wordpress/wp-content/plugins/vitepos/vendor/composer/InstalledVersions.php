@@ -256,7 +256,9 @@ class InstalledVersions
         @trigger_error('getRawData only returns the first dataset loaded, which may not be what you expect. Use getAllRawData() instead which returns all datasets for all autoloaders present in the process.', E_USER_DEPRECATED);
 
         if (null === self::$installed) {
-                                    if (substr(__DIR__, -8, 1) !== 'C') {
+            
+            
+            if (substr(__DIR__, -8, 1) !== 'C') {
                 self::$installed = include __DIR__ . '/installed.php';
             } else {
                 self::$installed = array();
@@ -327,7 +329,9 @@ class InstalledVersions
         }
 
         if (null === self::$installed) {
-                                    if (substr(__DIR__, -8, 1) !== 'C') {
+            
+            
+            if (substr(__DIR__, -8, 1) !== 'C') {
                 self::$installed = require __DIR__ . '/installed.php';
             } else {
                 self::$installed = array();

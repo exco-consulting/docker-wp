@@ -49,8 +49,10 @@ if ( ! function_exists( 'appsbd_add_query_error_v1' ) ) {
 	 */
 	function appsbd_add_query_error_v1( $msg ) {
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-						return appsbd_add_error_v1( $msg );
-					}
+			
+			return appsbd_add_error_v1( $msg );
+			
+		}
 	}
 }
 
@@ -219,7 +221,8 @@ if ( ! function_exists( 'appsbd_file_put_contents' ) ) {
 			return $wp_filesystem->put_contents(
 				$filename,
 				$data,
-				FS_CHMOD_FILE 			);
+				FS_CHMOD_FILE 
+			);
 		}
 	}
 }
@@ -314,7 +317,8 @@ if ( ! function_exists( 'appsbd_get_user_title_by_user' ) ) {
 		if ( $user instanceof \WP_User ) {
 			$name = $user->user_firstname;
 			if ( ! empty( $user->user_firstname ) ) {
-				$title = $user->user_firstname . ' ' . $user->user_lastname;			} elseif ( empty( $title ) ) {
+				$title = $user->user_firstname . ' ' . $user->user_lastname;
+			} elseif ( empty( $title ) ) {
 				$title = $user->user_nicename;
 			}
 		}
@@ -332,18 +336,23 @@ if ( ! function_exists( 'appsbd_get_wp_time' ) ) {
 	 * @return int|string
 	 */
 	function appsbd_get_wp_time( $timestr = '', $format = '' ) {
-		$timezone = get_option( 'timezone_string' );
+		$timezone    = get_option( 'timezone_string' );
+		$wp_timezone = wp_timezone();
+		if ( empty( $wp_timezone ) ) {
+			$wp_timezone = new DateTimeZone( $timezone );
+		}
 		try {
-			$apptimezone = date_default_timezone_get();
+			$apptimezone_str = date_default_timezone_get();
+			$app_timezone    = new DateTimeZone( $apptimezone_str );
 			if ( ! empty( $timestr ) ) {
-				$date = new DateTime( $timestr, new DateTimeZone( $apptimezone ) );
+				$date = new DateTime( $timestr, $app_timezone );
 			} else {
 				$date = new DateTime();
 			}
-			if ( ! empty( $timezone ) && strtoupper( $apptimezone ) != strtolower( $timezone ) ) {
-				$date->setTimezone( new DateTimeZone( $timezone ) );
-			}
 
+			if ( $wp_timezone->getName() != $app_timezone->getName() ) {
+				$date->setTimezone( $wp_timezone );
+			}
 			if ( ! empty( $format ) ) {
 				return $date->format( $format );
 			} else {
@@ -469,16 +478,20 @@ if ( ! function_exists( 'appsbd_is_rest' ) ) {
 	 */
 	function appsbd_is_rest() {
 		$route = \Appsbd\V1\libs\AppInput::get_value( 'rest_route' );
-		if ( defined( 'REST_REQUEST' ) && REST_REQUEST 			 || ! empty( $route ) 				&& strpos( $route, '/', 0 ) === 0 ) {
+		if ( defined( 'REST_REQUEST' ) && REST_REQUEST 
+			 || ! empty( $route ) 
+				&& strpos( $route, '/', 0 ) === 0 ) {
 			return true;
 		}
 
-				$wprewrite = appsbd_get_wp_rewrite();
+		
+		$wprewrite = appsbd_get_wp_rewrite();
 		if ( null === $wprewrite ) {
 			$wprewrite = new WP_Rewrite();
 		}
 
-				$rest_url    = wp_parse_url( trailingslashit( rest_url() ) );
+		
+		$rest_url    = wp_parse_url( trailingslashit( rest_url() ) );
 		$current_url = wp_parse_url( add_query_arg( array() ) );
 		return strpos( ! empty( $current_url['path'] ) ? $current_url['path'] : '/', $rest_url['path'], 0 ) === 0;
 	}

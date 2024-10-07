@@ -40,12 +40,15 @@ class Promise implements PromiseInterface
             return $p;
         }
 
-                if ($this->state === self::FULFILLED) {
+        
+        if ($this->state === self::FULFILLED) {
             $promise = Create::promiseFor($this->result);
             return $onFulfilled ? $promise->then($onFulfilled) : $promise;
         }
 
-                        $rejection = Create::rejectionFor($this->result);
+        
+        
+        $rejection = Create::rejectionFor($this->result);
         return $onRejected ? $rejection->then(null, $onRejected) : $rejection;
     }
 
@@ -65,7 +68,8 @@ class Promise implements PromiseInterface
             if ($this->state === self::FULFILLED) {
                 return $this->result;
             }
-                        throw Create::exceptionFor($this->result);
+            
+            throw Create::exceptionFor($this->result);
         }
     }
 
@@ -94,7 +98,8 @@ class Promise implements PromiseInterface
             }
         }
 
-                /** @psalm-suppress RedundantCondition */
+        
+        /** @psalm-suppress RedundantCondition */
         if ($this->state === self::PENDING) {
             $this->reject(new CancellationException('Promise has been cancelled'));
         }
@@ -113,7 +118,8 @@ class Promise implements PromiseInterface
     private function settle($state, $value)
     {
         if ($this->state !== self::PENDING) {
-                        if ($state === $this->state && $value === $this->result) {
+            
+            if ($state === $this->state && $value === $this->result) {
                 return;
             }
             throw $this->state === $state
@@ -125,7 +131,8 @@ class Promise implements PromiseInterface
             throw new \LogicException('Cannot fulfill or reject a promise with itself');
         }
 
-                $this->state = $state;
+        
+        $this->state = $state;
         $this->result = $value;
         $handlers = $this->handlers;
         $this->handlers = null;
@@ -136,17 +143,22 @@ class Promise implements PromiseInterface
             return;
         }
 
-                        if (!is_object($value) || !method_exists($value, 'then')) {
+        
+        
+        if (!is_object($value) || !method_exists($value, 'then')) {
             $id = $state === self::FULFILLED ? 1 : 2;
-                        Utils::queue()->add(static function () use ($id, $value, $handlers) {
+            
+            Utils::queue()->add(static function () use ($id, $value, $handlers) {
                 foreach ($handlers as $handler) {
                     self::callHandler($id, $value, $handler);
                 }
             });
         } elseif ($value instanceof Promise && Is::pending($value)) {
-                        $value->handlers = array_merge($value->handlers, $handlers);
+            
+            $value->handlers = array_merge($value->handlers, $handlers);
         } else {
-                        $value->then(
+            
+            $value->then(
                 static function ($value) use ($handlers) {
                     foreach ($handlers as $handler) {
                         self::callHandler(1, $value, $handler);
@@ -173,7 +185,9 @@ class Promise implements PromiseInterface
         /** @var PromiseInterface $promise */
         $promise = $handler[0];
 
-                        if (Is::settled($promise)) {
+        
+        
+        if (Is::settled($promise)) {
             return;
         }
 
@@ -184,9 +198,11 @@ class Promise implements PromiseInterface
                 unset($handler);
                 $promise->resolve($f($value));
             } elseif ($index === 1) {
-                                $promise->resolve($value);
+                
+                $promise->resolve($value);
             } else {
-                                $promise->reject($value);
+                
+                $promise->reject($value);
             }
         } catch (\Throwable $reason) {
             $promise->reject($reason);
@@ -204,7 +220,8 @@ class Promise implements PromiseInterface
         } elseif ($this->waitList) {
             $this->invokeWaitList();
         } else {
-                        $this->reject('Cannot wait on a promise that has '
+            
+            $this->reject('Cannot wait on a promise that has '
                 . 'no internal wait function. You must provide a wait '
                 . 'function when constructing the promise to be able to '
                 . 'wait on a promise.');
@@ -226,9 +243,13 @@ class Promise implements PromiseInterface
             $wfn(true);
         } catch (\Exception $reason) {
             if ($this->state === self::PENDING) {
-                                                $this->reject($reason);
+                
+                
+                $this->reject($reason);
             } else {
-                                                throw $reason;
+                
+                
+                throw $reason;
             }
         }
     }

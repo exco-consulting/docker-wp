@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\TestHelpers\Terminal;
 
 class ReaderService extends \Stripe\Service\AbstractService

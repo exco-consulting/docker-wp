@@ -128,7 +128,8 @@ if ( ! class_exists( __NAMESPACE__ . '\API_Base' ) ) {
 			$this->response      = new API_Response();
 			$this->namespace     = $namespace;
 			$this->logged_user   = wp_get_current_user();
-						ob_start();
+			
+			ob_start();
 			$this->api_base = $this->set_api_base();
 			if ( appsbd_is_rest() ) {
 				$this->routes();
@@ -251,7 +252,7 @@ if ( ! class_exists( __NAMESPACE__ . '\API_Base' ) ) {
 		 * @return Mapbd_Pos_Counter|null
 		 */
 		public function get_counter_obj() {
-			if ( ! empty( self::$counter_id ) && !empty( self::$counter_id ) ) {
+			if ( ! empty( self::$counter_id ) && ! empty( self::$counter_id ) ) {
 				self::$counter_obj = Mapbd_Pos_Counter::find_by( 'id', self::$counter_id );
 			}
 			return self::$counter_obj;
@@ -262,7 +263,11 @@ if ( ! class_exists( __NAMESPACE__ . '\API_Base' ) ) {
 		 */
 		public function load_payload() {
 			if ( ! self::$is_loaded_payload ) {
-				$req_type = strtolower( get_request_content_type() );
+				$req_type = get_request_content_type();
+				if ( ! empty( $req_type ) ) {
+					$req_type = strtolower( get_request_content_type() );
+				}
+
 				if ( 'application/x-www-form-urlencoded' == $req_type || 'application/json' == $req_type ) {
 					self::$payload_obj = file_get_contents( 'php://input' );
 					if ( ! empty( self::$payload_obj ) ) {

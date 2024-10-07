@@ -938,7 +938,8 @@ abstract class ParagonIE_Sodium_Core_Util
                 && defined('MB_OVERLOAD_STRING')
                 &&
             ((int) (ini_get('mbstring.func_overload')) & 2);
-                    }
+            
+        }
         /** @var bool $mbstring */
 
         return $mbstring;

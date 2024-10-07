@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class ApplePayDomainService extends \Stripe\Service\AbstractService

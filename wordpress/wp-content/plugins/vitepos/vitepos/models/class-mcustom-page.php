@@ -63,6 +63,7 @@ class Mcustom_Page {
 			$is_ok = false;
 			VitePos::add_error( 'Font size is required' );
 		}
+
 		if ( isset( $data->custom_props->pg_width ) && ! is_numeric( $data->custom_props->pg_width ) ) {
 			$is_ok = false;
 			VitePos::add_error( 'Page width must be numeric' );
@@ -103,7 +104,8 @@ class Mcustom_Page {
 		if ( $is_ok && empty( $data->id ) ) {
 			$data->id = hash( 'crc32b', serialize( $data ) );
 		}
-				return $is_ok;
+		
+		return $is_ok;
 	}
 
 
@@ -113,7 +115,8 @@ class Mcustom_Page {
 	 * @param mixed $data Its data.
 	 */
 	protected static function save_data( $data ) {
-				$data = array_values( $data );
+		
+		$data = array_values( $data );
 		if ( ! ( update_option( self::$_db_key, $data ) || add_option( self::$_db_key, $data ) ) ) {
 			VitePos::add_error( 'Save failed' );
 		} else {
@@ -202,7 +205,13 @@ class Mcustom_Page {
 	 * @return false|mixed
 	 */
 	public static function get_data() {
-		return get_option( self::$_db_key, array() );
+		$data = get_option( self::$_db_key, array() );
+		foreach ( $data as &$item ) {
+			if ( ! isset( $item->custom_props->price_fs ) ) {
+				$item->custom_props->price_fs = $item->custom_props->font_size;
+			}
+		}
+		return $data;
 	}
 
 }

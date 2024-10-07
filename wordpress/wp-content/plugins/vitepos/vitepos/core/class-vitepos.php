@@ -86,8 +86,8 @@ class VitePos extends Kernel {
 
 					}
 				);
+				add_filter( 'woocommerce_product_variation_title_include_attributes', '__return_true', 9999 );
 			}
-
 
 			add_action(
 				'rest_api_init',
@@ -117,7 +117,7 @@ class VitePos extends Kernel {
 		 *
 		 * @since 2.0
 		 */
-		do_action( 'vitepos-init' );
+		do_action( 'vitepos-init', $this );
 
 	}
 
@@ -276,7 +276,7 @@ class VitePos extends Kernel {
 
 		$this->add_script( 'vitepos-admin' );
 		$jv_object                                      = new \stdClass();
-		$jv_object->ajax_url                            = wp_nonce_url( admin_url( 'admin-ajax.php' ) );
+		$jv_object->ajax_url                            = wp_nonce_url( admin_url( 'admin-ajax.php' ), 'vitepos' );
 		$jv_object->base_slug                           = $this->plugin_base;
 		$jv_object->pos_link                            = site_url( 'vitepos' );
 		$jv_object->currency_symbol                     = get_woocommerce_currency_symbol();

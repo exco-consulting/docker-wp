@@ -164,7 +164,9 @@ class ParagonIE_Sodium_Core_Ristretto255 extends ParagonIE_Sodium_Core_Ed25519
         $v = self::fe_sub($v, $u2u2); 
         $v_u2u2 = self::fe_mul($v, $u2u2); 
 
-                        $one = self::fe_1();
+        
+        
+        $one = self::fe_1();
         $result = self::ristretto255_sqrt_ratio_m1($one, $v_u2u2);
         $inv_sqrt = $result['x'];
         $notsquare = $result['nonsquare'];
@@ -204,7 +206,9 @@ class ParagonIE_Sodium_Core_Ristretto255 extends ParagonIE_Sodium_Core_Ed25519
         $u1_u2u2 = self::fe_mul(self::fe_sq($u2), $u1); 
         $one = self::fe_1();
 
-                        $result = self::ristretto255_sqrt_ratio_m1($one, $u1_u2u2);
+        
+        
+        $result = self::ristretto255_sqrt_ratio_m1($one, $u1_u2u2);
         $inv_sqrt = $result['x'];
 
         $den1 = self::fe_mul($inv_sqrt, $u1); 
@@ -230,7 +234,11 @@ class ParagonIE_Sodium_Core_Ristretto255 extends ParagonIE_Sodium_Core_Ed25519
         $y_ = self::fe_cneg($y_, self::fe_isnegative($x_z_inv));
 
 
-                                        return self::fe_tobytes(
+        
+        
+        
+        
+        return self::fe_tobytes(
             self::fe_abs(
                 self::fe_mul(
                     $den_inv,
@@ -280,7 +288,11 @@ class ParagonIE_Sodium_Core_Ristretto255 extends ParagonIE_Sodium_Core_Ed25519
         $s = self::fe_cmov($s, $s_prime, $wasnt_square);
         $c = self::fe_cmov($c, $r, $wasnt_square);
 
-                                        $n = self::fe_sub(
+        
+        
+        
+        
+        $n = self::fe_sub(
             self::fe_mul(
                 self::fe_mul(
                     self::fe_sub($r, $one),
@@ -319,18 +331,26 @@ class ParagonIE_Sodium_Core_Ristretto255 extends ParagonIE_Sodium_Core_Ed25519
         if (self::strlen($h) !== 64) {
             throw new SodiumException('Hash must be 64 bytes');
         }
-                        $r0 = self::fe_frombytes(self::substr($h, 0, 32));
+        
+        
+        $r0 = self::fe_frombytes(self::substr($h, 0, 32));
         $r1 = self::fe_frombytes(self::substr($h, 32, 32));
 
-                        $p0 = self::ristretto255_elligator($r0);
+        
+        
+        $p0 = self::ristretto255_elligator($r0);
         $p1 = self::ristretto255_elligator($r1);
 
-                        $p_p1p1 = self::ge_add(
+        
+        
+        $p_p1p1 = self::ge_add(
             $p0,
             self::ge_p3_to_cached($p1)
         );
 
-                        return self::ristretto255_p3_tobytes(
+        
+        
+        return self::ristretto255_p3_tobytes(
             self::ge_p1p1_to_p3($p_p1p1)
         );
     }

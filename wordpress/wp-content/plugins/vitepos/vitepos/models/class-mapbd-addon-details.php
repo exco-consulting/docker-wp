@@ -193,7 +193,8 @@ class Mapbd_Addon_Details {
 		if ( ! empty( $field_old_ids[ $field_id ] ) ) {
 			foreach ( $field_old_ids[ $field_id ] as $field_old_id ) {
 				if ( ! in_array( $field_old_id, $opt_ids ) ) {
-										if ( Mapbd_Pos_Addon_Field_Option::delete_by_id( $field_old_id ) ) {
+					
+					if ( Mapbd_Pos_Addon_Field_Option::delete_by_id( $field_old_id ) ) {
 						$is_updated = true;
 					}
 				}
@@ -249,7 +250,8 @@ class Mapbd_Addon_Details {
 		if ( ! empty( $old_groups[ $rule_group_id ] ) ) {
 			foreach ( $old_groups[ $rule_group_id ] as $field_old_id ) {
 				if ( ! in_array( $field_old_id, $rule_ids ) ) {
-										if ( Mapbd_Pos_Addon_Rule::delete_by_id( $field_old_id ) ) {
+					
+					if ( Mapbd_Pos_Addon_Rule::delete_by_id( $field_old_id ) ) {
 						$is_updated = true;
 					}
 				}
@@ -284,7 +286,8 @@ class Mapbd_Addon_Details {
 					unset( $field['id'] );
 				}
 				if ( ! empty( $fld_id ) ) {
-										$all_field_ids[] = $fld_id;
+					
+					$all_field_ids[] = $fld_id;
 					if ( ! empty( $old_details->fields[ $fld_id ] ) && $old_details->fields[ $fld_id ] instanceof ViteposModel ) {
 						$field = $old_details->fields[ $fld_id ]->get_update_values( $field );
 					}
@@ -294,7 +297,8 @@ class Mapbd_Addon_Details {
 						$is_updated = true;
 					}
 				} else {
-										if ( $addon_field->set_from_array( $field ) ) {
+					
+					if ( $addon_field->set_from_array( $field ) ) {
 						$addon_field->addon_id( $addon_id );
 						if ( $addon_field->save() ) {
 							$is_updated      = true;
@@ -307,7 +311,8 @@ class Mapbd_Addon_Details {
 					$is_updated = true;
 				}
 			}
-						foreach ( $old_fields as $old_field_id => $old_field ) {
+			
+			foreach ( $old_fields as $old_field_id => $old_field ) {
 				if ( ! in_array( $old_field_id, $all_field_ids ) ) {
 					if ( Mapbd_Pos_Addon_Field::delete_by_id( $old_field_id ) ) {
 						$is_updated = true;
@@ -344,7 +349,8 @@ class Mapbd_Addon_Details {
 					unset( $rule_group['id'] );
 				}
 				if ( ! empty( $rule_group_id ) ) {
-										$all_field_ids[] = $rule_group_id;
+					
+					$all_field_ids[] = $rule_group_id;
 					if ( ! empty( $old_details->rule_group[ $rule_group_id ] ) && $old_details->rule_group[ $rule_group_id ] instanceof ViteposModel ) {
 						$rule_group = $old_details->rule_group[ $rule_group_id ]->get_update_values( $rule_group );
 					}
@@ -354,7 +360,8 @@ class Mapbd_Addon_Details {
 						$is_updated = true;
 					}
 				} else {
-										if ( $addon_rule_group->set_from_array( $rule_group ) ) {
+					
+					if ( $addon_rule_group->set_from_array( $rule_group ) ) {
 						$addon_rule_group->addon_id( $addon_id );
 						$addon_rule_group->status( 'A' );
 						if ( $addon_rule_group->save() ) {
@@ -368,7 +375,8 @@ class Mapbd_Addon_Details {
 					$is_updated = true;
 				}
 			}
-						foreach ( $old_groups as $old_group_id => $old_field ) {
+			
+			foreach ( $old_groups as $old_group_id => $old_field ) {
 				if ( ! in_array( $old_group_id, $all_field_ids ) ) {
 					if ( Mapbd_Pos_Addon_Rule_Group::delete_by_id( $old_group_id ) ) {
 						$is_updated = true;
@@ -397,7 +405,8 @@ class Mapbd_Addon_Details {
 				$is_updated  = false;
 				unset( $payload[ $id ] );
 
-								$addon = new Mapbd_Pos_Addon();
+				
+				$addon = new Mapbd_Pos_Addon();
 				if ( ! empty( $old_details ) && $old_details instanceof ViteposModel ) {
 					$payload = $old_details->get_update_values( $payload );
 				}
@@ -408,11 +417,13 @@ class Mapbd_Addon_Details {
 				if ( ! empty( $payload['fields'] ) && self::update_fields( $payload['fields'], $id, $old_details, $old_fields ) ) {
 					$is_updated = true;
 				}
-								if ( ! empty( $payload['rule_group'] ) && self::update_rule_groups( $payload['rule_group'], $id, $old_details, $old_groups ) ) {
+				
+				if ( ! empty( $payload['rule_group'] ) && self::update_rule_groups( $payload['rule_group'], $id, $old_details, $old_groups ) ) {
 					$is_updated = true;
 				}
 
-								if ( ! $is_updated ) {
+				
+				if ( ! $is_updated ) {
 					$addon->add_error( 'No change for update' );
 				} else {
 					$addon->add_info( 'Addon updated successfully' );

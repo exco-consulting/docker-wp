@@ -47,5 +47,6 @@ final class UriComparator
 
     private function __construct()
     {
-            }
+        
+    }
 }

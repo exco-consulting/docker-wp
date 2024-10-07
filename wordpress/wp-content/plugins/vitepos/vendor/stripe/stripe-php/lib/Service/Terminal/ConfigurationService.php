@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Terminal;
 
 class ConfigurationService extends \Stripe\Service\AbstractService

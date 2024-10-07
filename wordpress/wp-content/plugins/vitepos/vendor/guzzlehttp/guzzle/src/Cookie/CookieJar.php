@@ -159,12 +159,15 @@ class CookieJar implements CookieJarInterface
      */
     public function setCookie(SetCookie $cookie): bool
     {
-                        $name = $cookie->getName();
+        
+        
+        $name = $cookie->getName();
         if (!$name && $name !== '0') {
             return false;
         }
 
-                $result = $cookie->validate();
+        
+        $result = $cookie->validate();
         if ($result !== true) {
             if ($this->strictMode) {
                 throw new \RuntimeException('Invalid cookie: ' . $result);
@@ -173,30 +176,39 @@ class CookieJar implements CookieJarInterface
             return false;
         }
 
-                foreach ($this->cookies as $i => $c) {
-                                    if ($c->getPath() != $cookie->getPath() ||
+        
+        foreach ($this->cookies as $i => $c) {
+            
+            
+            if ($c->getPath() != $cookie->getPath() ||
                 $c->getDomain() != $cookie->getDomain() ||
                 $c->getName() != $cookie->getName()
             ) {
                 continue;
             }
 
-                                    if (!$cookie->getDiscard() && $c->getDiscard()) {
+            
+            
+            if (!$cookie->getDiscard() && $c->getDiscard()) {
                 unset($this->cookies[$i]);
                 continue;
             }
 
-                                    if ($cookie->getExpires() > $c->getExpires()) {
+            
+            
+            if ($cookie->getExpires() > $c->getExpires()) {
                 unset($this->cookies[$i]);
                 continue;
             }
 
-                        if ($cookie->getValue() !== $c->getValue()) {
+            
+            if ($cookie->getValue() !== $c->getValue()) {
                 unset($this->cookies[$i]);
                 continue;
             }
 
-                        return false;
+            
+            return false;
         }
 
         $this->cookies[] = $cookie;
@@ -231,7 +243,9 @@ class CookieJar implements CookieJarInterface
                 if (!$sc->matchesDomain($request->getUri()->getHost())) {
                     continue;
                 }
-                                                $this->setCookie($sc);
+                
+                
+                $this->setCookie($sc);
             }
         }
     }

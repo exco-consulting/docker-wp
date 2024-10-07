@@ -62,7 +62,8 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
             throw new InvalidArgumentException('handler must be a callable');
         }
 
-                if (isset($config['base_uri'])) {
+        
+        if (isset($config['base_uri'])) {
             $config['base_uri'] = Psr7\Utils::uriFor($config['base_uri']);
         }
 
@@ -99,7 +100,8 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
      */
     public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
-                $options = $this->prepareDefaults($options);
+        
+        $options = $this->prepareDefaults($options);
 
         return $this->transfer(
             $request->withUri($this->buildUri($request->getUri(), $options), $request->hasHeader('Host')),
@@ -150,15 +152,18 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
     public function requestAsync(string $method, $uri = '', array $options = []): PromiseInterface
     {
         $options = $this->prepareDefaults($options);
-                $headers = $options['headers'] ?? [];
+        
+        $headers = $options['headers'] ?? [];
         $body = $options['body'] ?? null;
         $version = $options['version'] ?? '1.1';
-                $uri = $this->buildUri(Psr7\Utils::uriFor($uri), $options);
+        
+        $uri = $this->buildUri(Psr7\Utils::uriFor($uri), $options);
         if (\is_array($body)) {
             throw $this->invalidBody();
         }
         $request = new Psr7\Request($method, $uri, $headers, $body, $version);
-                unset($options['headers'], $options['body'], $options['version']);
+        
+        unset($options['headers'], $options['body'], $options['version']);
 
         return $this->transfer($request, $options);
     }
@@ -231,7 +236,11 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         ];
 
         
-                                if (\PHP_SAPI === 'cli' && ($proxy = Utils::getenv('HTTP_PROXY'))) {
+
+        
+        
+        
+        if (\PHP_SAPI === 'cli' && ($proxy = Utils::getenv('HTTP_PROXY'))) {
             $defaults['proxy']['http'] = $proxy;
         }
 
@@ -250,10 +259,12 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
             $this->config['cookies'] = new CookieJar();
         }
 
-                if (!isset($this->config['headers'])) {
+        
+        if (!isset($this->config['headers'])) {
             $this->config['headers'] = ['User-Agent' => Utils::defaultUserAgent()];
         } else {
-                        foreach (\array_keys($this->config['headers']) as $name) {
+            
+            foreach (\array_keys($this->config['headers']) as $name) {
                 if (\strtolower($name) === 'user-agent') {
                     return;
                 }
@@ -272,12 +283,16 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         $defaults = $this->config;
 
         if (!empty($defaults['headers'])) {
-                        $defaults['_conditional'] = $defaults['headers'];
+            
+            $defaults['_conditional'] = $defaults['headers'];
             unset($defaults['headers']);
         }
 
-                        if (\array_key_exists('headers', $options)) {
-                        if ($options['headers'] === null) {
+        
+        
+        if (\array_key_exists('headers', $options)) {
+            
+            if ($options['headers'] === null) {
                 $defaults['_conditional'] = [];
                 unset($options['headers']);
             } elseif (!\is_array($options['headers'])) {
@@ -285,9 +300,11 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
             }
         }
 
-                $result = $options + $defaults;
+        
+        $result = $options + $defaults;
 
-                foreach ($result as $k => $v) {
+        
+        foreach ($result as $k => $v) {
             if ($v === null) {
                 unset($result[$k]);
             }
@@ -344,7 +361,8 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
             }
             $options['body'] = \http_build_query($options['form_params'], '', '&');
             unset($options['form_params']);
-                        $options['_conditional'] = Psr7\Utils::caselessRemove(['Content-Type'], $options['_conditional']);
+            
+            $options['_conditional'] = Psr7\Utils::caselessRemove(['Content-Type'], $options['_conditional']);
             $options['_conditional']['Content-Type'] = 'application/x-www-form-urlencoded';
         }
 
@@ -356,14 +374,16 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
         if (isset($options['json'])) {
             $options['body'] = Utils::jsonEncode($options['json']);
             unset($options['json']);
-                        $options['_conditional'] = Psr7\Utils::caselessRemove(['Content-Type'], $options['_conditional']);
+            
+            $options['_conditional'] = Psr7\Utils::caselessRemove(['Content-Type'], $options['_conditional']);
             $options['_conditional']['Content-Type'] = 'application/json';
         }
 
         if (!empty($options['decode_content'])
             && $options['decode_content'] !== true
         ) {
-                        $options['_conditional'] = Psr7\Utils::caselessRemove(['Accept-Encoding'], $options['_conditional']);
+            
+            $options['_conditional'] = Psr7\Utils::caselessRemove(['Accept-Encoding'], $options['_conditional']);
             $modify['set_headers']['Accept-Encoding'] = $options['decode_content'];
         }
 
@@ -380,12 +400,14 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
             $type = isset($value[2]) ? \strtolower($value[2]) : 'basic';
             switch ($type) {
                 case 'basic':
-                                        $modify['set_headers'] = Psr7\Utils::caselessRemove(['Authorization'], $modify['set_headers']);
+                    
+                    $modify['set_headers'] = Psr7\Utils::caselessRemove(['Authorization'], $modify['set_headers']);
                     $modify['set_headers']['Authorization'] = 'Basic '
                         . \base64_encode("$value[0]:$value[1]");
                     break;
                 case 'digest':
-                                        $options['curl'][\CURLOPT_HTTPAUTH] = \CURLAUTH_DIGEST;
+                    
+                    $options['curl'][\CURLOPT_HTTPAUTH] = \CURLAUTH_DIGEST;
                     $options['curl'][\CURLOPT_USERPWD] = "$value[0]:$value[1]";
                     break;
                 case 'ntlm':
@@ -407,28 +429,35 @@ class Client implements ClientInterface, \Psr\Http\Client\ClientInterface
             unset($options['query']);
         }
 
-                if (isset($options['sink'])) {
-                        if (\is_bool($options['sink'])) {
+        
+        if (isset($options['sink'])) {
+            
+            if (\is_bool($options['sink'])) {
                 throw new InvalidArgumentException('sink must not be a boolean');
             }
         }
 
         $request = Psr7\Utils::modifyRequest($request, $modify);
         if ($request->getBody() instanceof Psr7\MultipartStream) {
-                                    $options['_conditional'] = Psr7\Utils::caselessRemove(['Content-Type'], $options['_conditional']);
+            
+            
+            $options['_conditional'] = Psr7\Utils::caselessRemove(['Content-Type'], $options['_conditional']);
             $options['_conditional']['Content-Type'] = 'multipart/form-data; boundary='
                 . $request->getBody()->getBoundary();
         }
 
-                if (isset($options['_conditional'])) {
-                        $modify = [];
+        
+        if (isset($options['_conditional'])) {
+            
+            $modify = [];
             foreach ($options['_conditional'] as $k => $v) {
                 if (!$request->hasHeader($k)) {
                     $modify['set_headers'][$k] = $v;
                 }
             }
             $request = Psr7\Utils::modifyRequest($request, $modify);
-                        unset($options['_conditional']);
+            
+            unset($options['_conditional']);
         }
 
         return $request;

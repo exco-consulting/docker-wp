@@ -101,7 +101,9 @@ class EachPromise implements PromisorInterface
                 return;
             }
             reset($this->pending);
-                                    while ($promise = current($this->pending)) {
+            
+            
+            while ($promise = current($this->pending)) {
                 next($this->pending);
                 $promise->wait();
                 if (Is::settled($this->aggregate)) {
@@ -110,7 +112,8 @@ class EachPromise implements PromisorInterface
             }
         });
 
-                $clearFn = function () {
+        
+        $clearFn = function () {
             $this->iterable = $this->concurrency = $this->pending = null;
             $this->onFulfilled = $this->onRejected = null;
             $this->nextPendingIndex = 0;
@@ -122,19 +125,27 @@ class EachPromise implements PromisorInterface
     private function refillPending()
     {
         if (!$this->concurrency) {
-                        while ($this->addPending() && $this->advanceIterator());
+            
+            while ($this->addPending() && $this->advanceIterator());
             return;
         }
 
-                $concurrency = is_callable($this->concurrency)
+        
+        $concurrency = is_callable($this->concurrency)
             ? call_user_func($this->concurrency, count($this->pending))
             : $this->concurrency;
         $concurrency = max($concurrency - count($this->pending), 0);
-                if (!$concurrency) {
+        
+        if (!$concurrency) {
             return;
         }
-                $this->addPending();
-                                        while (--$concurrency
+        
+        $this->addPending();
+        
+        
+        
+        
+        while (--$concurrency
             && $this->advanceIterator()
             && $this->addPending());
     }
@@ -148,7 +159,9 @@ class EachPromise implements PromisorInterface
         $promise = Create::promiseFor($this->iterable->current());
         $key = $this->iterable->key();
 
-                        $idx = $this->nextPendingIndex++;
+        
+        
+        $idx = $this->nextPendingIndex++;
 
         $this->pending[$idx] = $promise->then(
             function ($value) use ($idx, $key) {
@@ -180,7 +193,9 @@ class EachPromise implements PromisorInterface
 
     private function advanceIterator()
     {
-                        if ($this->mutex) {
+        
+        
+        if ($this->mutex) {
             return false;
         }
 
@@ -203,21 +218,27 @@ class EachPromise implements PromisorInterface
 
     private function step($idx)
     {
-                if (Is::settled($this->aggregate)) {
+        
+        if (Is::settled($this->aggregate)) {
             return;
         }
 
         unset($this->pending[$idx]);
 
-                                if ($this->advanceIterator() && !$this->checkIfFinished()) {
-                        $this->refillPending();
+        
+        
+        
+        if ($this->advanceIterator() && !$this->checkIfFinished()) {
+            
+            $this->refillPending();
         }
     }
 
     private function checkIfFinished()
     {
         if (!$this->pending && !$this->iterable->valid()) {
-                        $this->aggregate->resolve(null);
+            
+            $this->aggregate->resolve(null);
             return true;
         }
 

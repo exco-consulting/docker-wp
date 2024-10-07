@@ -30,13 +30,15 @@ class PrepareBodyMiddleware
     {
         $fn = $this->nextHandler;
 
-                if ($request->getBody()->getSize() === 0) {
+        
+        if ($request->getBody()->getSize() === 0) {
             return $fn($request, $options);
         }
 
         $modify = [];
 
-                if (!$request->hasHeader('Content-Type')) {
+        
+        if (!$request->hasHeader('Content-Type')) {
             if ($uri = $request->getBody()->getMetadata('uri')) {
                 if (is_string($uri) && $type = Psr7\MimeType::fromFilename($uri)) {
                     $modify['set_headers']['Content-Type'] = $type;
@@ -44,7 +46,8 @@ class PrepareBodyMiddleware
             }
         }
 
-                if (!$request->hasHeader('Content-Length')
+        
+        if (!$request->hasHeader('Content-Length')
             && !$request->hasHeader('Transfer-Encoding')
         ) {
             $size = $request->getBody()->getSize();
@@ -55,7 +58,8 @@ class PrepareBodyMiddleware
             }
         }
 
-                $this->addExpectHeader($request, $options, $modify);
+        
+        $this->addExpectHeader($request, $options, $modify);
 
         return $fn(Psr7\Utils::modifyRequest($request, $modify), $options);
     }
@@ -65,26 +69,32 @@ class PrepareBodyMiddleware
      */
     private function addExpectHeader(RequestInterface $request, array $options, array &$modify): void
     {
-                if ($request->hasHeader('Expect')) {
+        
+        if ($request->hasHeader('Expect')) {
             return;
         }
 
         $expect = $options['expect'] ?? null;
 
-                if ($expect === false || $request->getProtocolVersion() < 1.1) {
+        
+        if ($expect === false || $request->getProtocolVersion() < 1.1) {
             return;
         }
 
-                if ($expect === true) {
+        
+        if ($expect === true) {
             $modify['set_headers']['Expect'] = '100-Continue';
             return;
         }
 
-                if ($expect === null) {
+        
+        if ($expect === null) {
             $expect = 1048576;
         }
 
-                        $body = $request->getBody();
+        
+        
+        $body = $request->getBody();
         $size = $body->getSize();
 
         if ($size === null || $size >= (int) $expect || !$body->isSeekable()) {

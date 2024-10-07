@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\BillingPortal;
 
 class ConfigurationService extends \Stripe\Service\AbstractService

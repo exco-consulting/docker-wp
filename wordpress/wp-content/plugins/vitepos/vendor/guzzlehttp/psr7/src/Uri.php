@@ -104,7 +104,8 @@ class Uri implements UriInterface, \JsonSerializable
      */
     private static function parse(string $url)
     {
-                $prefix = '';
+        
+        $prefix = '';
         if (preg_match('%^(.*://\[[0-9:a-f]+\])(.*?)$%', $url, $matches)) {
             /** @var array{0:string, 1:string, 2:string} $matches */
             $prefix = $matches[1];
@@ -166,7 +167,8 @@ class Uri implements UriInterface, \JsonSerializable
     {
         $uri = '';
 
-                if ($scheme != '') {
+        
+        if ($scheme != '') {
             $uri .= $scheme . ':';
         }
 
@@ -656,7 +658,10 @@ class Uri implements UriInterface, \JsonSerializable
 
     private static function generateQueryString(string $key, ?string $value): string
     {
-                                $queryString = strtr($key, self::QUERY_SEPARATORS_REPLACEMENT);
+        
+        
+        
+        $queryString = strtr($key, self::QUERY_SEPARATORS_REPLACEMENT);
 
         if ($value !== null) {
             $queryString .= '=' . strtr($value, self::QUERY_SEPARATORS_REPLACEMENT);

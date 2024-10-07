@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class SetupAttemptService extends \Stripe\Service\AbstractService

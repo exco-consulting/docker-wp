@@ -33,16 +33,20 @@ class ParagonIE_Sodium_Core32_ChaCha20 extends ParagonIE_Sodium_Core32_Util
         /** @var ParagonIE_Sodium_Core32_Int32 $c */
         /** @var ParagonIE_Sodium_Core32_Int32 $d */
 
-                $a = $a->addInt32($b);
+        
+        $a = $a->addInt32($b);
         $d = $d->xorInt32($a)->rotateLeft(16);
 
-                $c = $c->addInt32($d);
+        
+        $c = $c->addInt32($d);
         $b = $b->xorInt32($c)->rotateLeft(12);
 
-                $a = $a->addInt32($b);
+        
+        $a = $a->addInt32($b);
         $d = $d->xorInt32($a)->rotateLeft(8);
 
-                $c = $c->addInt32($d);
+        
+        $c = $c->addInt32($d);
         $b = $b->xorInt32($c)->rotateLeft(7);
 
         return array($a, $b, $c, $d);
@@ -138,22 +142,31 @@ class ParagonIE_Sodium_Core32_ChaCha20 extends ParagonIE_Sodium_Core32_Util
             $x14 = clone $j14;
             $x15 = clone $j15;
 
-                        for ($i = 20; $i > 0; $i -= 2) {
-                                list($x0, $x4, $x8, $x12) = self::quarterRound($x0, $x4, $x8, $x12);
+            
+            for ($i = 20; $i > 0; $i -= 2) {
+                
+                list($x0, $x4, $x8, $x12) = self::quarterRound($x0, $x4, $x8, $x12);
 
-                                list($x1, $x5, $x9, $x13) = self::quarterRound($x1, $x5, $x9, $x13);
+                
+                list($x1, $x5, $x9, $x13) = self::quarterRound($x1, $x5, $x9, $x13);
 
-                                list($x2, $x6, $x10, $x14) = self::quarterRound($x2, $x6, $x10, $x14);
+                
+                list($x2, $x6, $x10, $x14) = self::quarterRound($x2, $x6, $x10, $x14);
 
-                                list($x3, $x7, $x11, $x15) = self::quarterRound($x3, $x7, $x11, $x15);
+                
+                list($x3, $x7, $x11, $x15) = self::quarterRound($x3, $x7, $x11, $x15);
 
-                                list($x0, $x5, $x10, $x15) = self::quarterRound($x0, $x5, $x10, $x15);
+                
+                list($x0, $x5, $x10, $x15) = self::quarterRound($x0, $x5, $x10, $x15);
 
-                                list($x1, $x6, $x11, $x12) = self::quarterRound($x1, $x6, $x11, $x12);
+                
+                list($x1, $x6, $x11, $x12) = self::quarterRound($x1, $x6, $x11, $x12);
 
-                                list($x2, $x7, $x8, $x13) = self::quarterRound($x2, $x7, $x8, $x13);
+                
+                list($x2, $x7, $x8, $x13) = self::quarterRound($x2, $x7, $x8, $x13);
 
-                                list($x3, $x4, $x9, $x14) = self::quarterRound($x3, $x4, $x9, $x14);
+                
+                list($x3, $x4, $x9, $x14) = self::quarterRound($x3, $x4, $x9, $x14);
             }
             
             $x0 = $x0->addInt32($j0);

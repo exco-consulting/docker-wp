@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\TestHelpers\Treasury;
 
 class ReceivedCreditService extends \Stripe\Service\AbstractService

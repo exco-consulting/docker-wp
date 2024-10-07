@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Treasury;
 
 class ReceivedDebitService extends \Stripe\Service\AbstractService

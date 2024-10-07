@@ -61,8 +61,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Time_Log' ) ) {
 			$event_obj->logs .= "\t\tUpdated : " . $event_obj->end_time . "\n";
 			$execution_time   = ( $event_obj->end_time - $event_obj->start_time );
 			$event_obj->logs .= "\t\tIt takes " . $execution_time . " seconds to execute the script\n";
-
-			self::$events[ $event ]->end_time = $event_obj->end_time = $event_obj->start_time;
+			$event_obj->end_time = $event_obj->start_time;
+			self::$events[ $event ]->end_time = $event_obj->end_time;
 		}
 
 		/**
@@ -86,7 +86,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Time_Log' ) ) {
 			if ( empty( $filename ) ) {
 				$filename = $event;
 			}
-			
 		}
 	}
 }

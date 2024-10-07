@@ -65,7 +65,8 @@ class SearchResult extends StripeObject implements \Countable, \IteratorAggregat
     /**
      * @return mixed
      */
-        public function offsetGet($k)
+    #[\ReturnTypeWillChange]
+    public function offsetGet($k)
     {
         if (\is_string($k)) {
             return parent::offsetGet($k);
@@ -106,7 +107,8 @@ class SearchResult extends StripeObject implements \Countable, \IteratorAggregat
     /**
      * @return int the number of objects in the current page
      */
-        public function count()
+    #[\ReturnTypeWillChange]
+    public function count()
     {
         return \count($this->data);
     }
@@ -115,7 +117,8 @@ class SearchResult extends StripeObject implements \Countable, \IteratorAggregat
      * @return \ArrayIterator an iterator that can be used to iterate
      *    across objects in the current page
      */
-        public function getIterator()
+    #[\ReturnTypeWillChange]
+    public function getIterator()
     {
         return new \ArrayIterator($this->data);
     }
@@ -222,7 +225,9 @@ class SearchResult extends StripeObject implements \Countable, \IteratorAggregat
         }
 
         if (isset($url['query'])) {
-                                    $query = [];
+            
+            
+            $query = [];
             \parse_str($url['query'], $query);
             $params = \array_merge($params ?: [], $query);
         }

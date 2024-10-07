@@ -1,9 +1,12 @@
 <?php
 
 
+
 require __DIR__ . '/lib/Util/ApiVersion.php';
 
+
 require __DIR__ . '/lib/Stripe.php';
+
 
 require __DIR__ . '/lib/Util/CaseInsensitiveArray.php';
 require __DIR__ . '/lib/Util/LoggerInterface.php';
@@ -14,9 +17,11 @@ require __DIR__ . '/lib/Util/Set.php';
 require __DIR__ . '/lib/Util/Util.php';
 require __DIR__ . '/lib/Util/ObjectTypes.php';
 
+
 require __DIR__ . '/lib/HttpClient/ClientInterface.php';
 require __DIR__ . '/lib/HttpClient/StreamingClientInterface.php';
 require __DIR__ . '/lib/HttpClient/CurlClient.php';
+
 
 require __DIR__ . '/lib/Exception/ExceptionInterface.php';
 require __DIR__ . '/lib/Exception/ApiErrorException.php';
@@ -33,6 +38,7 @@ require __DIR__ . '/lib/Exception/SignatureVerificationException.php';
 require __DIR__ . '/lib/Exception/UnexpectedValueException.php';
 require __DIR__ . '/lib/Exception/UnknownApiErrorException.php';
 
+
 require __DIR__ . '/lib/Exception/OAuth/ExceptionInterface.php';
 require __DIR__ . '/lib/Exception/OAuth/OAuthErrorException.php';
 require __DIR__ . '/lib/Exception/OAuth/InvalidClientException.php';
@@ -42,6 +48,7 @@ require __DIR__ . '/lib/Exception/OAuth/InvalidScopeException.php';
 require __DIR__ . '/lib/Exception/OAuth/UnknownOAuthErrorException.php';
 require __DIR__ . '/lib/Exception/OAuth/UnsupportedGrantTypeException.php';
 require __DIR__ . '/lib/Exception/OAuth/UnsupportedResponseTypeException.php';
+
 
 require __DIR__ . '/lib/ApiOperations/All.php';
 require __DIR__ . '/lib/ApiOperations/Create.php';
@@ -53,6 +60,7 @@ require __DIR__ . '/lib/ApiOperations/Search.php';
 require __DIR__ . '/lib/ApiOperations/SingletonRetrieve.php';
 require __DIR__ . '/lib/ApiOperations/Update.php';
 
+
 require __DIR__ . '/lib/ApiResponse.php';
 require __DIR__ . '/lib/RequestTelemetry.php';
 require __DIR__ . '/lib/StripeObject.php';
@@ -62,11 +70,13 @@ require __DIR__ . '/lib/SingletonApiResource.php';
 require __DIR__ . '/lib/Service/AbstractService.php';
 require __DIR__ . '/lib/Service/AbstractServiceFactory.php';
 
+
 require __DIR__ . '/lib/BaseStripeClientInterface.php';
 require __DIR__ . '/lib/StripeClientInterface.php';
 require __DIR__ . '/lib/StripeStreamingClientInterface.php';
 require __DIR__ . '/lib/BaseStripeClient.php';
 require __DIR__ . '/lib/StripeClient.php';
+
 
 require __DIR__ . '/lib/Account.php';
 require __DIR__ . '/lib/AccountLink.php';
@@ -177,6 +187,7 @@ require __DIR__ . '/lib/UsageRecord.php';
 require __DIR__ . '/lib/UsageRecordSummary.php';
 require __DIR__ . '/lib/WebhookEndpoint.php';
 
+
 require __DIR__ . '/lib/Service/AccountService.php';
 require __DIR__ . '/lib/Service/AccountLinkService.php';
 require __DIR__ . '/lib/Service/ApplePayDomainService.php';
@@ -267,6 +278,7 @@ require __DIR__ . '/lib/Service/Treasury/TransactionService.php';
 require __DIR__ . '/lib/Service/Treasury/TransactionEntryService.php';
 require __DIR__ . '/lib/Service/WebhookEndpointService.php';
 
+
 require __DIR__ . '/lib/Service/Apps/AppsServiceFactory.php';
 require __DIR__ . '/lib/Service/BillingPortal/BillingPortalServiceFactory.php';
 require __DIR__ . '/lib/Service/Checkout/CheckoutServiceFactory.php';
@@ -285,9 +297,11 @@ require __DIR__ . '/lib/Service/TestHelpers/TestHelpersServiceFactory.php';
 require __DIR__ . '/lib/Service/TestHelpers/Treasury/TreasuryServiceFactory.php';
 require __DIR__ . '/lib/Service/Treasury/TreasuryServiceFactory.php';
 
+
 require __DIR__ . '/lib/OAuth.php';
 require __DIR__ . '/lib/OAuthErrorObject.php';
 require __DIR__ . '/lib/Service/OAuthService.php';
+
 
 require __DIR__ . '/lib/Webhook.php';
 require __DIR__ . '/lib/WebhookSignature.php';

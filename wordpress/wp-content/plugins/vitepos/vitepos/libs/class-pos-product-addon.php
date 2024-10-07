@@ -37,7 +37,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Pos_Product_Addon' ) ) {
 		 *
 		 * @var int
 		 */
-		public $opt_limit = 0;		/**
+		public $opt_limit = 0;
+		/**
 		 * Its property des
 		 *
 		 * @var string
@@ -48,7 +49,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Pos_Product_Addon' ) ) {
 		 *
 		 * @var string
 		 */
-		public $addon_type = 'T';		/**
+		public $addon_type = 'T';
+		/**
 		 * Its property addon options
 		 *
 		 * @var array
@@ -67,6 +69,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Pos_Product_Addon' ) ) {
 		 * @var string
 		 */
 		public $is_required = 'Y';
+		/**
+		 * Its property is_required
+		 *
+		 * @var string
+		 */
+		public $def_value = '';
 		/**
 		 * Its property status
 		 *
@@ -118,6 +126,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Pos_Product_Addon' ) ) {
 				$sf->addon_type  = $field->type;
 				$sf->help_text   = $field->placeholder;
 				$sf->is_required = $field->is_required;
+				$sf->def_value   = $field->def_value;
 				$sf->opt_limit   = $field->field_limit;
 				$sf->add_option( $field->options, $wc_product );
 				$product_addons[] = $sf;

@@ -149,7 +149,8 @@ abstract class ParagonIE_Sodium_Core_Salsa20 extends ParagonIE_Sodium_Core_Util
         while ($len >= 64) {
             $c .= self::core_salsa20($in, $kcopy, null);
             $u = 1;
-                        for ($i = 8; $i < 16; ++$i) {
+            
+            for ($i = 8; $i < 16; ++$i) {
                 $u += self::chrToInt($in[$i]);
                 $in[$i] = self::intToChr($u & 0xff);
                 $u >>= 8;
@@ -190,7 +191,8 @@ abstract class ParagonIE_Sodium_Core_Salsa20 extends ParagonIE_Sodium_Core_Util
         }
         $kcopy = self::substr($k, 0, 32);
         $in = self::substr($n, 0, 8);
-                $in .= ParagonIE_Sodium_Core_Util::store64_le($ic);
+        
+        $in .= ParagonIE_Sodium_Core_Util::store64_le($ic);
 
         $c = '';
         while ($mlen >= 64) {

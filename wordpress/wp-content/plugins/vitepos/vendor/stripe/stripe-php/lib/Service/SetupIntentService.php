@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class SetupIntentService extends \Stripe\Service\AbstractService

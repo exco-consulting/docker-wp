@@ -19,6 +19,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @final
  */
+#[\AllowDynamicProperties]
 class CurlMultiHandler
 {
     /**
@@ -103,7 +104,8 @@ class CurlMultiHandler
         $this->_mh = $multiHandle;
 
         foreach ($this->options as $option => $value) {
-                        curl_multi_setopt($this->_mh, $option, $value);
+            
+            curl_multi_setopt($this->_mh, $option, $value);
         }
 
         return $this->_mh;
@@ -139,7 +141,8 @@ class CurlMultiHandler
      */
     public function tick(): void
     {
-                if ($this->delays) {
+        
+        if ($this->delays) {
             $currentTime = Utils::currentTime();
             foreach ($this->delays as $id => $delay) {
                 if ($currentTime >= $delay) {
@@ -152,10 +155,13 @@ class CurlMultiHandler
             }
         }
 
-                P\Utils::queue()->run();
+        
+        P\Utils::queue()->run();
 
         if ($this->active && \curl_multi_select($this->_mh, $this->selectTimeout) === -1) {
-                                    \usleep(250);
+            
+            
+            \usleep(250);
         }
 
         while (\curl_multi_exec($this->_mh, $this->active) === \CURLM_CALL_MULTI_PERFORM);
@@ -171,7 +177,8 @@ class CurlMultiHandler
         $queue = P\Utils::queue();
 
         while ($this->handles || !$queue->isEmpty()) {
-                        if (!$this->active && $this->delays) {
+            
+            if (!$this->active && $this->delays) {
                 \usleep($this->timeToNext());
             }
             $this->tick();
@@ -203,7 +210,8 @@ class CurlMultiHandler
             trigger_deprecation('guzzlehttp/guzzle', '7.4', 'Not passing an integer to %s::%s() is deprecated and will cause an error in 8.0.', __CLASS__, __FUNCTION__);
         }
 
-                if (!isset($this->handles[$id])) {
+        
+        if (!isset($this->handles[$id])) {
             return false;
         }
 
@@ -219,13 +227,15 @@ class CurlMultiHandler
     {
         while ($done = \curl_multi_info_read($this->_mh)) {
             if ($done['msg'] !== \CURLMSG_DONE) {
-                                continue;
+                
+                continue;
             }
             $id = (int) $done['handle'];
             \curl_multi_remove_handle($this->_mh, $done['handle']);
 
             if (!isset($this->handles[$id])) {
-                                continue;
+                
+                continue;
             }
 
             $entry = $this->handles[$id];

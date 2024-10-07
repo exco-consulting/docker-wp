@@ -41,11 +41,13 @@ final class LimitStream implements StreamInterface
 
     public function eof(): bool
     {
-                if ($this->stream->eof()) {
+        
+        if ($this->stream->eof()) {
             return true;
         }
 
-                if ($this->limit === -1) {
+        
+        if ($this->limit === -1) {
             return false;
         }
 
@@ -110,7 +112,8 @@ final class LimitStream implements StreamInterface
         $current = $this->stream->tell();
 
         if ($current !== $offset) {
-                        if ($this->stream->isSeekable()) {
+            
+            if ($this->stream->isSeekable()) {
                 $this->stream->seek($offset);
             } elseif ($current > $offset) {
                 throw new \RuntimeException("Could not seek to stream offset $offset");
@@ -140,9 +143,13 @@ final class LimitStream implements StreamInterface
             return $this->stream->read($length);
         }
 
-                        $remaining = ($this->offset + $this->limit) - $this->stream->tell();
+        
+        
+        $remaining = ($this->offset + $this->limit) - $this->stream->tell();
         if ($remaining > 0) {
-                                    return $this->stream->read(min($remaining, $length));
+            
+            
+            return $this->stream->read(min($remaining, $length));
         }
 
         return '';

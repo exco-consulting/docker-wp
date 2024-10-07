@@ -721,7 +721,8 @@ class ParagonIE_Sodium_File extends ParagonIE_Sodium_Core_Util
         /** @var bool The original value of ParagonIE_Sodium_Compat::$fastMult */
         $orig = ParagonIE_Sodium_Compat::$fastMult;
 
-                ParagonIE_Sodium_Compat::$fastMult = true;
+        
+        ParagonIE_Sodium_Compat::$fastMult = true;
 
         /** @var ParagonIE_Sodium_Core_Curve25519_Ge_P3 $A */
         $A = ParagonIE_Sodium_Core_Ed25519::ge_frombytes_negate_vartime($publicKey);
@@ -747,9 +748,11 @@ class ParagonIE_Sodium_File extends ParagonIE_Sodium_Core_Util
         /** @var string $rcheck */
         $rcheck = ParagonIE_Sodium_Core_Ed25519::ge_tobytes($R);
 
-                fclose($fp);
+        
+        fclose($fp);
 
-                ParagonIE_Sodium_Compat::$fastMult = $orig;
+        
+        ParagonIE_Sodium_Compat::$fastMult = $orig;
         return self::verify_32($rcheck, self::substr($sig, 0, 32));
     }
 
@@ -881,7 +884,8 @@ class ParagonIE_Sodium_File extends ParagonIE_Sodium_Core_Util
             )
         );
 
-                $start = self::ftell($ofp);
+        
+        $start = self::ftell($ofp);
         fwrite($ofp, str_repeat("\x00", 16));
 
         /** @var string $c */
@@ -1105,7 +1109,8 @@ class ParagonIE_Sodium_File extends ParagonIE_Sodium_Core_Util
         /** @var int $originalPosition */
         $originalPosition = self::ftell($fp);
 
-                fseek($fp, 0, SEEK_SET);
+        
+        fseek($fp, 0, SEEK_SET);
         for ($i = 0; $i < $size; $i += self::BUFFER_SIZE) {
             /** @var string|bool $message */
             $message = fread(
@@ -1121,7 +1126,8 @@ class ParagonIE_Sodium_File extends ParagonIE_Sodium_Core_Util
             /** @psalm-suppress InvalidArgument */
             self::hash_update($hash, $message);
         }
-                fseek($fp, $originalPosition, SEEK_SET);
+        
+        fseek($fp, $originalPosition, SEEK_SET);
         return $hash;
     }
 
@@ -1243,7 +1249,8 @@ class ParagonIE_Sodium_File extends ParagonIE_Sodium_Core_Util
         /** @var bool The original value of ParagonIE_Sodium_Compat::$fastMult */
         $orig = ParagonIE_Sodium_Compat::$fastMult;
 
-                ParagonIE_Sodium_Compat::$fastMult = true;
+        
+        ParagonIE_Sodium_Compat::$fastMult = true;
 
         /** @var ParagonIE_Sodium_Core32_Curve25519_Ge_P3 $A */
         $A = ParagonIE_Sodium_Core32_Ed25519::ge_frombytes_negate_vartime($publicKey);
@@ -1269,9 +1276,11 @@ class ParagonIE_Sodium_File extends ParagonIE_Sodium_Core_Util
         /** @var string $rcheck */
         $rcheck = ParagonIE_Sodium_Core32_Ed25519::ge_tobytes($R);
 
-                fclose($fp);
+        
+        fclose($fp);
 
-                ParagonIE_Sodium_Compat::$fastMult = $orig;
+        
+        ParagonIE_Sodium_Compat::$fastMult = $orig;
         return self::verify_32($rcheck, self::substr($sig, 0, 32));
     }
 
@@ -1326,7 +1335,8 @@ class ParagonIE_Sodium_File extends ParagonIE_Sodium_Core_Util
             )
         );
 
-                $start = self::ftell($ofp);
+        
+        $start = self::ftell($ofp);
         fwrite($ofp, str_repeat("\x00", 16));
 
         /** @var string $c */

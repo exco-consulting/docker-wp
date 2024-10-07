@@ -74,22 +74,31 @@ final class CachingStream implements StreamInterface
         $diff = $byte - $this->stream->getSize();
 
         if ($diff > 0) {
-                                    while ($diff > 0 && !$this->remoteStream->eof()) {
+            
+            
+            while ($diff > 0 && !$this->remoteStream->eof()) {
                 $this->read($diff);
                 $diff = $byte - $this->stream->getSize();
             }
         } else {
-                        $this->stream->seek($byte);
+            
+            $this->stream->seek($byte);
         }
     }
 
     public function read($length): string
     {
-                $data = $this->stream->read($length);
+        
+        $data = $this->stream->read($length);
         $remaining = $length - strlen($data);
 
-                if ($remaining) {
-                                                            $remoteData = $this->remoteStream->read(
+        
+        if ($remaining) {
+            
+            
+            
+            
+            $remoteData = $this->remoteStream->read(
                 $remaining + $this->skipReadBytes
             );
 
@@ -108,7 +117,11 @@ final class CachingStream implements StreamInterface
 
     public function write($string): int
     {
-                                        $overflow = (strlen($string) + $this->tell()) - $this->remoteStream->tell();
+        
+        
+        
+        
+        $overflow = (strlen($string) + $this->tell()) - $this->remoteStream->tell();
         if ($overflow > 0) {
             $this->skipReadBytes += $overflow;
         }

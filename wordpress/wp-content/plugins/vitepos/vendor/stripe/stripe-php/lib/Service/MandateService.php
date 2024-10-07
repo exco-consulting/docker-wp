@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class MandateService extends \Stripe\Service\AbstractService

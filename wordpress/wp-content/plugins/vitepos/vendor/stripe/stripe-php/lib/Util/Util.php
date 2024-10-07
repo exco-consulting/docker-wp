@@ -232,7 +232,10 @@ abstract class Util
     {
         $s = \urlencode((string) $key);
 
-                                $s = \str_replace('%5B', '[', $s);
+        
+        
+        
+        $s = \str_replace('%5B', '[', $s);
 
         return \str_replace('%5D', ']', $s);
     }

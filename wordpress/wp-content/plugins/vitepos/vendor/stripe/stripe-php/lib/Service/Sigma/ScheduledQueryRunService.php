@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Sigma;
 
 class ScheduledQueryRunService extends \Stripe\Service\AbstractService

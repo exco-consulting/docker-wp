@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class ShippingRateService extends \Stripe\Service\AbstractService

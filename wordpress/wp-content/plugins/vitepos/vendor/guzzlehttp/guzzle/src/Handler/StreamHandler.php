@@ -35,16 +35,20 @@ class StreamHandler
      */
     public function __invoke(RequestInterface $request, array $options): PromiseInterface
     {
-                if (isset($options['delay'])) {
+        
+        if (isset($options['delay'])) {
             \usleep($options['delay'] * 1000);
         }
 
         $startTime = isset($options['on_stats']) ? Utils::currentTime() : null;
 
         try {
-                        $request = $request->withoutHeader('Expect');
+            
+            $request = $request->withoutHeader('Expect');
 
-                                    if (0 === $request->getBody()->getSize()) {
+            
+            
+            if (0 === $request->getBody()->getSize()) {
                 $request = $request->withHeader('Content-Length', '0');
             }
 
@@ -57,9 +61,13 @@ class StreamHandler
         } catch (\InvalidArgumentException $e) {
             throw $e;
         } catch (\Exception $e) {
-                        $message = $e->getMessage();
-                        if (false !== \strpos($message, 'getaddrinfo')                 || false !== \strpos($message, 'Connection refused')
-                || false !== \strpos($message, "couldn't connect to host")                 || false !== \strpos($message, "connection attempt failed")
+            
+            $message = $e->getMessage();
+            
+            if (false !== \strpos($message, 'getaddrinfo') 
+                || false !== \strpos($message, 'Connection refused')
+                || false !== \strpos($message, "couldn't connect to host") 
+                || false !== \strpos($message, "connection attempt failed")
             ) {
                 $e = new ConnectException($e->getMessage(), $request, $e);
             } else {
@@ -126,7 +134,9 @@ class StreamHandler
             }
         }
 
-                        if ($sink !== $stream) {
+        
+        
+        if ($sink !== $stream) {
             $this->drain($stream, $sink, $response->getHeaderLine('Content-Length'));
         }
 
@@ -151,7 +161,8 @@ class StreamHandler
      */
     private function checkDecode(array $options, array $headers, $stream): array
     {
-                if (!empty($options['decode_content'])) {
+        
+        if (!empty($options['decode_content'])) {
             $normalizedKeys = Utils::normalizeHeaderKeys($headers);
             if (isset($normalizedKeys['content-encoding'])) {
                 $encoding = $headers[$normalizedKeys['content-encoding']];
@@ -159,9 +170,11 @@ class StreamHandler
                     $stream = new Psr7\InflateStream(Psr7\Utils::streamFor($stream));
                     $headers['x-encoded-content-encoding'] = $headers[$normalizedKeys['content-encoding']];
 
-                                        unset($headers[$normalizedKeys['content-encoding']]);
+                    
+                    unset($headers[$normalizedKeys['content-encoding']]);
 
-                                        if (isset($normalizedKeys['content-length'])) {
+                    
+                    if (isset($normalizedKeys['content-length'])) {
                         $headers['x-encoded-content-length'] = $headers[$normalizedKeys['content-length']];
                         $length = (int) $stream->getSize();
                         if ($length === 0) {
@@ -187,7 +200,11 @@ class StreamHandler
      */
     private function drain(StreamInterface $source, StreamInterface $sink, string $contentLength): StreamInterface
     {
-                                        Psr7\Utils::copyToStream(
+        
+        
+        
+        
+        Psr7\Utils::copyToStream(
             $source,
             $sink,
             (\strlen($contentLength) > 0 && (int) $contentLength > 0) ? (int) $contentLength : -1
@@ -253,13 +270,16 @@ class StreamHandler
             throw new RequestException(\sprintf("The scheme '%s' is not supported.", $request->getUri()->getScheme()), $request);
         }
 
-                        if ($request->getProtocolVersion() == '1.1'
+        
+        
+        if ($request->getProtocolVersion() == '1.1'
             && !$request->hasHeader('Connection')
         ) {
             $request = $request->withHeader('Connection', 'close');
         }
 
-                if (!isset($options['verify'])) {
+        
+        if (!isset($options['verify'])) {
             $options['verify'] = true;
         }
 
@@ -286,7 +306,8 @@ class StreamHandler
             $context = \array_replace_recursive($context, $options['stream_context']);
         }
 
-                if (isset($options['auth'][2]) && 'ntlm' === $options['auth'][2]) {
+        
+        if (isset($options['auth'][2]) && 'ntlm' === $options['auth'][2]) {
             throw new \InvalidArgumentException('Microsoft NTLM authentication only supported with curl handler');
         }
 
@@ -369,7 +390,8 @@ class StreamHandler
 
         if (!empty($body)) {
             $context['http']['content'] = $body;
-                        if (!$request->hasHeader('Content-Type')) {
+            
+            if (!$request->hasHeader('Content-Type')) {
                 $context['http']['header'] .= "Content-Type:\r\n";
             }
         }
@@ -433,7 +455,8 @@ class StreamHandler
             }
         }
 
-                return [
+        
+        return [
             'proxy' => $url,
             'auth' => null,
         ];
@@ -501,7 +524,9 @@ class StreamHandler
             $params,
             static function ($code, $a, $b, $c, $transferred, $total) use ($value) {
                 if ($code == \STREAM_NOTIFY_PROGRESS) {
-                                                            $value($total, $transferred, 0, 0);
+                    
+                    
+                    $value($total, $transferred, 0, 0);
                 }
             }
         );
@@ -546,7 +571,8 @@ class StreamHandler
 
     private static function addNotification(array &$params, callable $notify): void
     {
-                if (!isset($params['notification'])) {
+        
+        if (!isset($params['notification'])) {
             $params['notification'] = $notify;
         } else {
             $params['notification'] = self::callArray([

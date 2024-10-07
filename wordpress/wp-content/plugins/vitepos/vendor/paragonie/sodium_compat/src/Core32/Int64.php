@@ -223,7 +223,8 @@ class ParagonIE_Sodium_Core32_Int64
         $return = new ParagonIE_Sodium_Core32_Int64();
         $return->unsignedInt = $this->unsignedInt;
 
-                $ret0 = 0;
+        
+        $ret0 = 0;
         $ret1 = 0;
         $ret2 = 0;
         $ret3 = 0;
@@ -343,7 +344,8 @@ class ParagonIE_Sodium_Core32_Int64
      */
     public function mulIntFast($int)
     {
-                $aNeg = ($this->limbs[0] >> 15) & 1;
+        
+        $aNeg = ($this->limbs[0] >> 15) & 1;
         $bNeg = ($int >> 31) & 1;
         $a = array_reverse($this->limbs);
         $b = array(
@@ -364,13 +366,16 @@ class ParagonIE_Sodium_Core32_Int64
             }
             ++$b[0];
         }
-                $res = $this->multiplyLong($a, $b);
+        
+        $res = $this->multiplyLong($a, $b);
 
-                if ($aNeg !== $bNeg) {
+        
+        if ($aNeg !== $bNeg) {
             for ($i = 0; $i < 4; ++$i) {
                 $res[$i] = (0xffff ^ $res[$i]) & 0xffff;
             }
-                        $c = 1;
+            
+            $c = 1;
             for ($i = 0; $i < 4; ++$i) {
                 $res[$i] += $c;
                 $c = $res[$i] >> 16;
@@ -378,7 +383,8 @@ class ParagonIE_Sodium_Core32_Int64
             }
         }
 
-                $return = new ParagonIE_Sodium_Core32_Int64();
+        
+        $return = new ParagonIE_Sodium_Core32_Int64();
         $return->limbs = array(
             $res[3] & 0xffff,
             $res[2] & 0xffff,
@@ -464,7 +470,8 @@ class ParagonIE_Sodium_Core32_Int64
         $return = new ParagonIE_Sodium_Core32_Int64();
         $return->unsignedInt = $this->unsignedInt;
 
-                $ret0 = 0;
+        
+        $ret0 = 0;
         $ret1 = 0;
         $ret2 = 0;
         $ret3 = 0;
@@ -573,7 +580,8 @@ class ParagonIE_Sodium_Core32_Int64
         $return->unsignedInt = $this->unsignedInt;
         $c &= 63;
         if ($c === 0) {
-                        $return->limbs = $this->limbs;
+            
+            $return->limbs = $this->limbs;
         } else {
             /** @var array<int, int> $limbs */
             $limbs =& $return->limbs;
@@ -624,7 +632,8 @@ class ParagonIE_Sodium_Core32_Int64
         $c &= 63;
         /** @var int $c */
         if ($c === 0) {
-                        $return->limbs = $this->limbs;
+            
+            $return->limbs = $this->limbs;
         } else {
             /** @var array<int, int> $limbs */
             $limbs =& $return->limbs;
@@ -1042,7 +1051,8 @@ class ParagonIE_Sodium_Core32_Int64
         try {
             return $this->toString();
         } catch (TypeError $ex) {
-                        return '';
+            
+            return '';
         }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Composer\Autoload;
 
 class ComposerStaticInit6e0b9ccb694bccf9a8caa4c18f8246e4

@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class TaxCodeService extends \Stripe\Service\AbstractService

@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service\Identity;
 
 class VerificationReportService extends \Stripe\Service\AbstractService

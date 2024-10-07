@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: ;__;_e;_ee;___;add_error;add_info;SetTitle;AddInfo;AddError;SetSubtitle;___;AddModel;AddModelNonSearchable\n"
 "X-Poedit-Flags-xgettext: --no-location\n"
@@ -158,6 +158,30 @@ msgstr ""
 msgid "No cash drawer info found"
 msgstr ""
 
+msgid "Request outlet or counter empty"
+msgstr ""
+
+msgid "Withdraw is not possible, no cash drawer found"
+msgstr ""
+
+msgid "Cash withdraw failed"
+msgstr ""
+
+msgid "Cash withdraw succeeded and closed"
+msgstr ""
+
+msgid "Drawer close failed"
+msgstr ""
+
+msgid "Cash withdraw succeeded"
+msgstr ""
+
+msgid "You can not close current cash drawer"
+msgstr ""
+
+msgid "Drawer closed successfully"
+msgstr ""
+
 msgid "Invalid request"
 msgstr ""
 
@@ -213,9 +237,6 @@ msgid "No item found to transfer"
 msgstr ""
 
 msgid "Not valid"
-msgstr ""
-
-msgid "Purchased failed"
 msgstr ""
 
 msgid "Unknown"
@@ -275,13 +296,7 @@ msgstr ""
 msgid "You don't have permission to view waiter of this outlet"
 msgstr ""
 
-msgid "Request outlet or counter empty"
-msgstr ""
-
 msgid "Successfully closed"
-msgstr ""
-
-msgid "Drawer close failed"
 msgstr ""
 
 msgid "Drawer list not found"
@@ -303,6 +318,9 @@ msgid "Vendor delete failed"
 msgstr ""
 
 msgid "No vendor found with this param"
+msgstr ""
+
+msgid "Nonce error"
 msgstr ""
 
 msgid "Missing dependency"
@@ -1574,6 +1592,132 @@ msgstr ""
 msgid "Barcode Position"
 msgstr ""
 
+msgid "Form Customization"
+msgstr ""
+
+msgid "Item wise interaction"
+msgstr ""
+
+msgid "Enabling this will allow item wise interaction for a single order where the status of that order items can be change individually"
+msgstr ""
+
+msgid "Send Email To Cashier"
+msgstr ""
+
+msgid "Enabling this feature, will trigger an email to be sent to the user who will completed the order form vitepos."
+msgstr ""
+
+msgid "Price Customization"
+msgstr ""
+
+msgid "Enabling this feature, will enable user to change price of any product while ordering (on cart)."
+msgstr ""
+
+msgid "Enable RTL"
+msgstr ""
+
+msgid "Enabling this feature, will enable RTL mode on POS."
+msgstr ""
+
+msgid "Customer Custom Fields"
+msgstr ""
+
+msgid "Order Custom Fields"
+msgstr ""
+
+msgid "Customization"
+msgstr ""
+
+msgid "Loading.."
+msgstr ""
+
+msgid "Select Panel"
+msgstr ""
+
+msgid "Select/Search user to add"
+msgstr ""
+
+msgid "Are you sure to make this field not required?"
+msgstr ""
+
+msgid "Are you sure to make this field hidden?"
+msgstr ""
+
+msgid "Field Name"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Required"
+msgstr ""
+
+msgid "Enable Single Cash Drawer"
+msgstr ""
+
+msgid "Enabling this feature, will enable single cash drawer by outlet and counter.After enabling this feature you can not create multiple cash drawer on same outlet with same counter."
+msgstr ""
+
+msgid "This will close all drawers previously opened except the last drawer opened in any counter."
+msgstr ""
+
+msgid "Use camera on barcode scanning"
+msgstr ""
+
+msgid "Large Screen"
+msgstr ""
+
+msgid "Mobile Screen"
+msgstr ""
+
+msgid "Margin Left"
+msgstr ""
+
+msgid "Margin Right"
+msgstr ""
+
+msgid "I agree to delete the %{rolename} and move all users of %{rolename} to the selected role"
+msgstr ""
+
+msgid "On Cart/Invoice"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "On Printed Receipt/Invoice"
+msgstr ""
+
+msgid "Custom"
+msgstr ""
+
+msgid "Swipe"
+msgstr ""
+
+msgid "Is Required Card Last 4 Digit"
+msgstr ""
+
+msgid "Swipe Settings"
+msgstr ""
+
+msgid "Position"
+msgstr ""
+
+msgid "Into the buttons"
+msgstr ""
+
+msgid "Above the buttons"
+msgstr ""
+
+msgid "Below the buttons"
+msgstr ""
+
+msgid "Customer Form Fields "
+msgstr ""
+
+msgid "No change to update"
+msgstr ""
+
 msgid "Download PDF"
 msgstr ""
 
@@ -1868,9 +2012,6 @@ msgstr ""
 msgid "Others"
 msgstr ""
 
-msgid "Loading.."
-msgstr ""
-
 msgid "No Customer found"
 msgstr ""
 
@@ -1902,9 +2043,6 @@ msgid "Select Role"
 msgstr ""
 
 msgid "Role"
-msgstr ""
-
-msgid "I agree to delete the %{rolename} and move all users of %{rolename} to the selected role"
 msgstr ""
 
 msgid "Designation"
@@ -3434,7 +3572,7 @@ msgstr ""
 msgid "Grand-total :"
 msgstr ""
 
-msgid "Refund Info\""
+msgid "Refund Info"
 msgstr ""
 
 msgid "Aprox"
@@ -3500,6 +3638,180 @@ msgstr ""
 msgid "others"
 msgstr ""
 
+msgid "Clear Cache"
+msgstr ""
+
+msgid "Remove Item"
+msgstr ""
+
+msgid "Remove item"
+msgstr ""
+
+msgid "Update order"
+msgstr ""
+
+msgid "(Items : %{totalItem} and quantity : %{totalQty} )"
+msgstr ""
+
+msgid "Deny item"
+msgstr ""
+
+msgid "Start preparing item"
+msgstr ""
+
+msgid "Why are you denying this item?"
+msgstr ""
+
+msgid "Item is ready"
+msgstr ""
+
+msgid "Ready"
+msgstr ""
+
+msgid "Serve this item"
+msgstr ""
+
+msgid "Request to cancel this item"
+msgstr ""
+
+msgid "Request Cancel"
+msgstr ""
+
+msgid "Are you sure,want to make cancel request for this item?"
+msgstr ""
+
+msgid "Requested Cancel"
+msgstr ""
+
+msgid "Accept Cancel Request"
+msgstr ""
+
+msgid "Deny Cancel Request"
+msgstr ""
+
+msgid "Requested for cancel"
+msgstr ""
+
+msgid "Requested to cancel"
+msgstr ""
+
+msgid "TABLE :"
+msgstr ""
+
+msgid "Are you sure to remove this item?"
+msgstr ""
+
+msgid "Item denied from kitchen"
+msgstr ""
+
+msgid "Deny reason is required"
+msgstr ""
+
+msgid "Request failed: %{errorMsg}"
+msgstr ""
+
+msgid "Item is ready to serve"
+msgstr ""
+
+msgid "Choose Waiters"
+msgstr ""
+
+msgid "Table-wise"
+msgstr ""
+
+msgid "All items refunded"
+msgstr ""
+
+msgid "Item started successfully"
+msgstr ""
+
+msgid "Are you sure to deny cancel for this item?"
+msgstr ""
+
+msgid "Are you sure to accept cancel for this item?"
+msgstr ""
+
+msgid "Item has been cancelled"
+msgstr ""
+
+msgid "Accepted Cancel"
+msgstr ""
+
+msgid "Denied"
+msgstr ""
+
+msgid "%{fld_name} is invalid"
+msgstr ""
+
+msgid "Current Balance"
+msgstr ""
+
+msgid "Close Drawer"
+msgstr ""
+
+msgid "Show cash drawer log"
+msgstr ""
+
+msgid "Withdraw from cash drawer"
+msgstr ""
+
+msgid "Full Withdraw"
+msgstr ""
+
+msgid "Withdraw"
+msgstr ""
+
+msgid "Partial"
+msgstr ""
+
+msgid "Withdraw amount"
+msgstr ""
+
+msgid "Withdraw and close"
+msgstr ""
+
+msgid "Withdrawn"
+msgstr ""
+
+msgid "New Drawer"
+msgstr ""
+
+msgid "Go With Current Drawer"
+msgstr ""
+
+msgid "This drawer will close on create new drawer."
+msgstr ""
+
+msgid "Custom Price"
+msgstr ""
+
+msgid "Discount "
+msgstr ""
+
+msgid "Price will be "
+msgstr ""
+
+msgid "Scan to search"
+msgstr ""
+
+msgid "Log"
+msgstr ""
+
+msgid "Update failed"
+msgstr ""
+
+msgid "Update failed unknown error"
+msgstr ""
+
+msgid "Order requires payment process"
+msgstr ""
+
+msgid "Stripe configuration error in server"
+msgstr ""
+
+msgid "Empty intend id"
+msgstr ""
+
 msgid "Email already exist."
 msgstr ""
 
@@ -3555,7 +3867,7 @@ msgstr ""
 msgid "You can not checkout this in current status"
 msgstr ""
 
-msgid "Order successfully completed"
+msgid "Order successful"
 msgstr ""
 
 msgid "Order already in completed status, it is not cancelable"
@@ -3567,16 +3879,16 @@ msgstr ""
 msgid "Order not found"
 msgstr ""
 
-msgid "Order requires payment process"
-msgstr ""
-
-msgid "Stripe configuration error in server"
-msgstr ""
-
-msgid "Empty intend id"
-msgstr ""
-
 msgid "Payment data missing"
+msgstr ""
+
+msgid "Item deny not possible"
+msgstr ""
+
+msgid "Item remove is not possible"
+msgstr ""
+
+msgid "Item cancel request is not possible"
 msgstr ""
 
 msgid "Stock update process does not finished properly"
@@ -3639,6 +3951,10 @@ msgstr ""
 msgid "Save failed"
 msgstr ""
 
+#, php-format
+msgid "%s field is required"
+msgstr ""
+
 msgid "No outlet found"
 msgstr ""
 
@@ -3651,16 +3967,10 @@ msgstr ""
 msgid "Stock reduced"
 msgstr ""
 
-msgid "Successfully added"
-msgstr ""
-
-msgid "Delete is temporary disabled"
-msgstr ""
-
-msgid "Delete failed try again"
-msgstr ""
-
 msgid "Custom Field List"
+msgstr ""
+
+msgid "Successfully added"
 msgstr ""
 
 msgid "Update Failed"
@@ -3672,25 +3982,25 @@ msgstr ""
 msgid "No custom field found with these ids"
 msgstr ""
 
+msgid "Delete failed try again"
+msgstr ""
+
+msgid "Order updated successfully"
+msgstr ""
+
+msgid "Order update failed"
+msgstr ""
+
+msgid "Updated successfully"
+msgstr ""
+
+msgid "Update failed,please try again"
+msgstr ""
+
+msgid "No action initialize"
+msgstr ""
+
 msgid "Invalid param"
-msgstr ""
-
-msgid "Update failed"
-msgstr ""
-
-msgid "Purchase Item"
-msgstr ""
-
-msgid "View All Purchase Item"
-msgstr ""
-
-msgid "Are you sure to delete?"
-msgstr ""
-
-msgid "Pos Purchase"
-msgstr ""
-
-msgid "View All Purchase"
 msgstr ""
 
 msgid "User Role"
@@ -3727,6 +4037,9 @@ msgid "Update failed try again"
 msgstr ""
 
 msgid "Failed to update"
+msgstr ""
+
+msgid "No change for update "
 msgstr ""
 
 msgid "It is custom barcode data of woocommerce for vitepos"

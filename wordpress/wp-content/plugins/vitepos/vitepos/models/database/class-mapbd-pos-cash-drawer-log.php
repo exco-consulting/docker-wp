@@ -174,6 +174,7 @@ class Mapbd_Pos_Cash_Drawer_Log extends ViteposModel {
 				$return_obj = array(
 					'O' => 'Order',
 					'C' => 'Close',
+					'W' => 'Withdraw',
 				);
 				break;
 			default:
@@ -206,7 +207,10 @@ class Mapbd_Pos_Cash_Drawer_Log extends ViteposModel {
 		$newobj->note( $note );
 		$newobj->pre_balance( $pre_balance );
 		$newobj->amount( $amount );
-		$newobj->log_type( $log_type ); 		$newobj->ref_type( $ref_type ); 		$newobj->ref_id( $ref_id ); 		$newobj->entry_time( gmdate( 'Y-m-d' ) );
+		$newobj->log_type( $log_type ); 
+		$newobj->ref_type( $ref_type ); 
+		$newobj->ref_id( $ref_id ); 
+		$newobj->entry_time( gmdate( 'Y-m-d' ) );
 		return $newobj->save();
 	}
 	/**
@@ -225,7 +229,7 @@ class Mapbd_Pos_Cash_Drawer_Log extends ViteposModel {
 					  `amount` decimal(10,2) unsigned NOT NULL DEFAULT 0.00,
 					  `user_id` int(11) NOT NULL,
 					  `log_type` char(1) NOT NULL DEFAULT 'C' COMMENT 'radio(D=Debit,C=Credit)',
-					  `ref_type` char(1) NOT NULL DEFAULT 'O' COMMENT 'radio(O=Order,C=Close)',
+					  `ref_type` char(1) NOT NULL DEFAULT 'O' COMMENT 'radio(O=Order,C=Close,W=Withdraw)',
 					  `closing_balance` decimal(10,2) unsigned DEFAULT 0.00,
 					  `entry_time` timestamp NULL DEFAULT current_timestamp(),
 					  PRIMARY KEY (`id`) USING BTREE

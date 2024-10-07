@@ -156,7 +156,7 @@ class Pos_Product_Api extends API_Base {
 		$limit                = $this->get_payload( 'limit', 20 );
 		$src_props            = $this->get_payload( 'src_by', array() );
 		$sort_by_props        = $this->get_payload( 'sort_by', array() );
-		$response_product     = POS_Product::get_product_from_woo_products_with_variations(
+		$response_product     = POS_Product::get_product_from_woo_products_without_variables(
 			$page,
 			$limit,
 			$src_props,
@@ -441,7 +441,7 @@ class Pos_Product_Api extends API_Base {
 					$product->set_sku( str_replace( ' ', '-', strtolower( $this->payload['name'] ) ) );
 				}
 				$product->set_sku( $this->payload['sku'] );
-				$product->set_status( $this->get_payload( 'status', 'publish' ));
+				$product->set_status( $this->get_payload( 'status', 'publish' ) );
 				$product->set_attributes( $this->get_attributes( $this->payload['attributes'], $this->payload['type'] ) );
 				$product->set_tax_status( $this->get_payload( 'tax_status', '' ) );
 				$product->set_tax_class( $this->get_payload( 'tax_class', 'standard' ) );
@@ -494,7 +494,7 @@ class Pos_Product_Api extends API_Base {
 				if ( ! empty( $tax_class ) ) {
 					$new_product->set_tax_class( $tax_class );
 				}
-				$new_product->set_status($this->get_payload( 'status', 'publish' ));
+				$new_product->set_status( $this->get_payload( 'status', 'publish' ) );
 				$new_product->set_weight( $this->get_payload( 'weight', '0.00' ) );
 				$new_product->set_height( $this->get_payload( 'height', '0.00' ) );
 				$new_product->set_length( $this->get_payload( 'length', '0.00' ) );
@@ -553,18 +553,29 @@ class Pos_Product_Api extends API_Base {
 							$product->set_low_stock_amount( $low_stock_amount );
 							$product_id = $product->save();
 							$product    = wc_get_product( $product_id );
-													if ( ! empty( $this->get_outlet_id() ) && POS_Settings::is_stockable() ) {
-							if(POS_Settings::is_default_stock()){
-								if ( ! POS_Product::update_product_stock( $product, 0,
-									$this->get_current_user_id(), $quantity, false ) ) {
+							
+						if ( ! empty( $this->get_outlet_id() ) && POS_Settings::is_stockable() ) {
+							if ( POS_Settings::is_default_stock() ) {
+								if ( ! POS_Product::update_product_stock(
+									$product,
+									0,
+									$this->get_current_user_id(),
+									$quantity,
+									false
+								) ) {
 									$this->add_error( 'Stock add is not possible' );
 									$this->set_response( false, '', null );
 
 									return $this->response->get_response();
 								}
-							}else {
-								if ( ! POS_Product::update_product_stock( $product, $this->get_outlet_id(),
-									$this->get_current_user_id(), $quantity, false ) ) {
+							} else {
+								if ( ! POS_Product::update_product_stock(
+									$product,
+									$this->get_outlet_id(),
+									$this->get_current_user_id(),
+									$quantity,
+									false
+								) ) {
 									$this->add_error( 'Stock add is not possible' );
 									$this->set_response( false, '', null );
 
@@ -573,7 +584,7 @@ class Pos_Product_Api extends API_Base {
 							}
 						} else {
 							$product->set_stock_quantity( $quantity );
-							if($product->get_stock_quantity()>0) {
+							if ( $product->get_stock_quantity() > 0 ) {
 								$product->set_stock_status( 'instock' );
 							}
 							$product->save();
@@ -614,7 +625,7 @@ class Pos_Product_Api extends API_Base {
 			}
 			$new_product->set_regular_price( floatval( $this->get_payload( 'regular_price', 0.00 ) ) );
 			$new_product->set_category_ids( $this->get_payload( 'categories', array() ) );
-			$new_product->set_status($this->get_payload( 'status', 'publish' ));
+			$new_product->set_status( $this->get_payload( 'status', 'publish' ) );
 			$new_product->set_upsell_ids( $this->get_payload( 'up_sale', array() ) );
 			$new_product->set_cross_sell_ids( $this->get_payload( 'cross_sale', array() ) );
 			$new_product->set_description( $this->get_payload( 'description', '' ) );
@@ -683,34 +694,42 @@ class Pos_Product_Api extends API_Base {
 					$product_id = $product->save();
 					$product    = wc_get_product( $product_id );
 					
+
 					if ( ! empty( $this->get_outlet_id() ) && POS_Settings::is_stockable() ) {
-						if(POS_Settings::is_default_stock()){
-							if ( ! POS_Product::update_product_stock( $product, 0,
-								$this->get_current_user_id(), $quantity, true ) ) {
+						if ( POS_Settings::is_default_stock() ) {
+							if ( ! POS_Product::update_product_stock(
+								$product,
+								0,
+								$this->get_current_user_id(),
+								$quantity,
+								true
+							) ) {
 								$this->add_error( 'Stock update is not possible' );
 								$this->set_response( false, '', null );
 
 								return $this->response->get_response();
 							}
-						}else {
-							if ( ! POS_Product::update_product_stock( $product, $this->get_outlet_id(),
-								$this->get_current_user_id(), $quantity, true ) ) {
+						} else {
+							if ( ! POS_Product::update_product_stock(
+								$product,
+								$this->get_outlet_id(),
+								$this->get_current_user_id(),
+								$quantity,
+								true
+							) ) {
 								$this->add_error( 'Stock update is not possible' );
 								$this->set_response( false, '', null );
 
 								return $this->response->get_response();
 							}
 						}
-						
 					} else {
 						$product->set_stock_quantity( $quantity );
-						if($product->get_stock_quantity()>0) {
+						if ( $product->get_stock_quantity() > 0 ) {
 							$product->set_stock_status( 'instock' );
 						}
 						$product->save();
 					}
-
-
 				}
 			}
 			$this->call_product_action( $product_id );
@@ -734,7 +753,7 @@ class Pos_Product_Api extends API_Base {
 			$product->set_upsell_ids( $this->get_payload( 'up_sale', array() ) );
 			$product->set_cross_sell_ids( $this->get_payload( 'cross_sale', array() ) );
 			$product->set_description( $this->get_payload( 'description', '' ) );
-			$product->set_status($this->get_payload( 'status', 'publish' ));
+			$product->set_status( $this->get_payload( 'status', 'publish' ) );
 			if ( '' != $this->payload['slug'] ) {
 				$product->set_slug( $this->payload['slug'] );
 			}
@@ -780,7 +799,8 @@ class Pos_Product_Api extends API_Base {
 				if ( count( $diff ) > 0 ) {
 					foreach ( $diff as $child ) {
 						POS_Product::delete_variation_product( $child );
-											}
+						
+					}
 				}
 				foreach ( $this->get_payload( 'variations', array() ) as $v_ind => $vari ) {
 					$varation = $this->add_variation_product( $product_id, $vari, $product->get_name() );
@@ -821,7 +841,8 @@ class Pos_Product_Api extends API_Base {
 			$variation = new \WC_Product_Variation();
 		}
 		$variation->set_parent_id( $parent_id );
-				if ( floatval( $vari['sale_price'] ) > 0 ) {
+		
+		if ( floatval( $vari['sale_price'] ) > 0 ) {
 			$variation->set_sale_price( floatval( $vari['sale_price'] ) );
 		} else {
 			$variation->set_sale_price( floatval( $vari['regular_price'] ) );
@@ -830,7 +851,8 @@ class Pos_Product_Api extends API_Base {
 		$attributes = array();
 		foreach ( $vari['attributes'] as $attr ) {
 			if ( ! empty( $attr['slug'] ) ) {
-								$attributes[ $attr['slug'] ] = $attr['option'];
+				
+				$attributes[ $attr['slug'] ] = $attr['option'];
 				unset( $attr['slug'] );
 			}
 		}
@@ -902,9 +924,14 @@ class Pos_Product_Api extends API_Base {
 				$variation->set_low_stock_amount( $low_stock_amount );
 				$variation->save();
 				if ( ! empty( $this->get_outlet_id() ) && POS_Settings::is_stockable() ) {
-					if(POS_Settings::is_default_stock()){
-						if ( ! POS_Product::update_product_stock( $variation, 0,
-							$this->get_current_user_id(), $quantity,  ! empty( $vari['id'] )) ) {
+					if ( POS_Settings::is_default_stock() ) {
+						if ( ! POS_Product::update_product_stock(
+							$variation,
+							0,
+							$this->get_current_user_id(),
+							$quantity,
+							! empty( $vari['id'] )
+						) ) {
 							$this->add_error( 'Stock add is not possible' );
 							$this->set_response( false, '', null );
 
@@ -912,19 +939,24 @@ class Pos_Product_Api extends API_Base {
 						}
 
 						
-					}else {
-						if ( ! POS_Product::update_product_stock( $variation, $this->get_outlet_id(),
-							$this->get_current_user_id(), $quantity,  ! empty( $vari['id']) ) ) {
+
+					} else {
+						if ( ! POS_Product::update_product_stock(
+							$variation,
+							$this->get_outlet_id(),
+							$this->get_current_user_id(),
+							$quantity,
+							! empty( $vari['id'] )
+						) ) {
 							$this->add_error( 'Stock add is not possible' );
 							$this->set_response( false, '', null );
 
 							return $this->response->get_response();
 						}
 					}
-					
 				} else {
 					$variation->set_stock_quantity( $quantity );
-					if($variation->get_stock_quantity()>0) {
+					if ( $variation->get_stock_quantity() > 0 ) {
 						$variation->set_stock_status( 'instock' );
 					}
 					$variation->save();
@@ -984,7 +1016,8 @@ class Pos_Product_Api extends API_Base {
 			$attribute_id   = 0;
 			$attribute_name = '';
 
-						if ( ! empty( $attribute['id'] ) ) {
+			
+			if ( ! empty( $attribute['id'] ) ) {
 				$attribute_id   = absint( $attribute['id'] );
 				$attribute_name = wc_attribute_taxonomy_name_by_id( $attribute_id );
 			} elseif ( ! empty( $attribute['name'] ) ) {

@@ -137,7 +137,8 @@ class Stream implements StreamInterface
             return null;
         }
 
-                if ($this->uri) {
+        
+        if ($this->uri) {
             clearstatcache(true, $this->uri);
         }
 
@@ -248,7 +249,8 @@ class Stream implements StreamInterface
             throw new \RuntimeException('Cannot write to a non-writable stream');
         }
 
-                $this->size = null;
+        
+        $this->size = null;
         $result = fwrite($this->stream, $string);
 
         if ($result === false) {

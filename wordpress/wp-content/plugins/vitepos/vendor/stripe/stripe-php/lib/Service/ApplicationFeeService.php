@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Stripe\Service;
 
 class ApplicationFeeService extends \Stripe\Service\AbstractService

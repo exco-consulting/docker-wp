@@ -39,9 +39,12 @@ final class UriResolver
         $newPath = implode('/', $results);
 
         if ($path[0] === '/' && (!isset($newPath[0]) || $newPath[0] !== '/')) {
-                        $newPath = '/' . $newPath;
+            
+            $newPath = '/' . $newPath;
         } elseif ($newPath !== '' && ($segment === '.' || $segment === '..')) {
-                                    $newPath .= '/';
+            
+            
+            $newPath .= '/';
         }
 
         return $newPath;
@@ -55,7 +58,8 @@ final class UriResolver
     public static function resolve(UriInterface $base, UriInterface $rel): UriInterface
     {
         if ((string) $rel === '') {
-                        return $base;
+            
+            return $base;
         }
 
         if ($rel->getScheme() != '') {
@@ -130,24 +134,33 @@ final class UriResolver
         }
 
         if (Uri::isRelativePathReference($target)) {
-                                                return $target;
+            
+            
+            
+            return $target;
         }
 
         if ($target->getAuthority() !== '' && $base->getAuthority() !== $target->getAuthority()) {
             return $target->withScheme('');
         }
 
-                                $emptyPathUri = $target->withScheme('')->withPath('')->withUserInfo('')->withPort(null)->withHost('');
+        
+        
+        
+        $emptyPathUri = $target->withScheme('')->withPath('')->withUserInfo('')->withPort(null)->withHost('');
 
         if ($base->getPath() !== $target->getPath()) {
             return $emptyPathUri->withPath(self::getRelativePath($base, $target));
         }
 
         if ($base->getQuery() === $target->getQuery()) {
-                        return $emptyPathUri->withQuery('');
+            
+            return $emptyPathUri->withQuery('');
         }
 
-                        if ($target->getQuery() === '') {
+        
+        
+        if ($target->getQuery() === '') {
             $segments = explode('/', $target->getPath());
             /** @var string $lastSegment */
             $lastSegment = end($segments);
@@ -174,11 +187,15 @@ final class UriResolver
         $targetSegments[] = $targetLastSegment;
         $relativePath = str_repeat('../', count($sourceSegments)) . implode('/', $targetSegments);
 
-                                if ('' === $relativePath || false !== strpos(explode('/', $relativePath, 2)[0], ':')) {
+        
+        
+        
+        if ('' === $relativePath || false !== strpos(explode('/', $relativePath, 2)[0], ':')) {
             $relativePath = "./$relativePath";
         } elseif ('/' === $relativePath[0]) {
             if ($base->getAuthority() != '' && $base->getPath() === '') {
-                                $relativePath = ".$relativePath";
+                
+                $relativePath = ".$relativePath";
             } else {
                 $relativePath = "./$relativePath";
             }
@@ -189,5 +206,6 @@ final class UriResolver
 
     private function __construct()
     {
-            }
+        
+    }
 }
